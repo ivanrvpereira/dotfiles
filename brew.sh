@@ -84,20 +84,21 @@ brew install python3
 
 
 # my tools
-brew install zsh
-brew install the_silver_searcher
-brew install trash # moves files to trash on osx
 brew install boot2docker
-brew install toggle-osx-shadows
-brew install unrar
-brew install htop-osx
-brew install percona-server
-brew install midnight-commander
-brew install wget
-brew install weechat
 brew install collordiff
-brew install tmux
+brew install docker
 brew install fasd
+brew install htop-osx
+brew install midnight-commander
+brew install percona-server
+brew install the_silver_searcher
+brew install tmux
+brew install toggle-osx-shadows
+brew install trash # moves files to trash on osx
+brew install unrar
+brew install weechat
+brew install wget
+brew install zsh
 
 # Remove outdated versions from the cellar.
 brew cleanup
