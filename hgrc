@@ -1,0 +1,26 @@
+[ui]
+username = Ivan Pereira <ivan@plugidea.pt>
+ignore = ~/.hgignore
+
+
+
+[merge-tools]
+filemerge.executable = /Volumes/home/balsagoth/lusr/bin/opendiff-w
+filemerge.args = $local $other -ancestor $base -merge $output
+
+[hgk]
+path=/Users/balsagoth/bin/hgk
+
+[extensions]
+hgext.graphlog = 
+hgext.extdiff =
+hgk=
+rebase=
+hgext.convert=
+#prompt = /Volumes/home/balsagoth/lusr/src/hg-prompt/prompt.py
+#hgshelve = /Volumes/home/balsagoth/lusr/hgshelve.py
+hggit=
+
+[extdiff]
+cmd.interdiff = hg-interdiff
+cmd.opendiff = opendiff-w
