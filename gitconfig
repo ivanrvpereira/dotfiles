@@ -1,185 +1,137 @@
 [user]
 	name = Ivan Pereira
 	email = ivan@zivan.org
-
-[difftool "sourcetree"]
-  jcmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-
-[alias]
-
-	# View abbreviated SHA, description, and history graph of the latest 20 commits
-	l = log --pretty=oneline -n 20 --graph --abbrev-commit
-
-	# View the current working tree status using the short format
-	s = status -s
-
-	# Show the diff between the latest commit and the current state
-	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
-
-	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
-	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
-
-	# Pull in remote changes for the current repository and all its submodules
-	p = !"git pull; git submodule foreach git pull origin master"
-
-	# Clone a repository including all submodules
-	c = clone --recursive
-
-	# Commit all changes
-	ca = !git add -A && git commit -av
-
-	# Switch to a branch, creating it if necessary
-	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-
-	# Show verbose output about tags, branches or remotes
-	tags = tag -l
-	branches = branch -a
-	remotes = remote -v
-
-	# Amend the currently staged files to the latest commit
-	amend = commit --amend --reuse-message=HEAD
-
-	# Credit an author on the latest commit
-	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
-
-	# Interactive rebase with the given number of latest commits
-	reb = "!r() { git rebase -i HEAD~$1; }; r"
-
-	# Remove the old tag with this name and tag the latest commit with it.
-	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
-
-	# Find branches containing commit
-	fb = "!f() { git branch -a --contains $1; }; f"
-
-	# Find tags containing commit
-	ft = "!f() { git describe --always --contains $1; }; f"
-
-	# Find commits by source code
-	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
-
-	# Find commits by commit message
-	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
-
-	# Remove branches that have already been merged with master
-	# a.k.a. ‘delete merged’
-	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-
-	# List contributors with number of commits
-	contributors = shortlog --summary --numbered
-
-	# Merge GitHub pull request on top of the `master` branch
-	mpr = "!f() { \
-		if [ $(printf \"%s\" \"$1\" | grep '^[0-9]\\+$' > /dev/null; printf $?) -eq 0 ]; then \
-			git fetch origin refs/pull/$1/head:pr/$1 && \
-			git rebase master pr/$1 && \
-			git checkout master && \
-			git merge pr/$1 && \
-			git branch -D pr/$1 && \
-			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
-		fi \
-	}; f"
-
-[apply]
-
-	# Detect whitespace errors when applying a patch
-	whitespace = fix
-
+[include]
+  # secrets
+  #path = ~/.gitconfig.local
 [core]
-
-	# Use custom `.gitignore` and `.gitattributes`
-	excludesfile = ~/.gitignore
-	attributesfile = ~/.gitattributes
-
-	# Treat spaces before tabs and all kinds of trailing whitespace as an error
-	# [default] trailing-space: looks for spaces at the end of a line
-	# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
-	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
-
-	# Make `git rebase` safer on OS X
-	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
-	trustctime = false
-
-	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
-	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
-	precomposeunicode = false
-
-[color]
-
-	# Use colors in Git commands that are capable of colored output when
-	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
-	ui = auto
-
-[color "branch"]
-
-	current = yellow reverse
-	local = yellow
-	remote = green
-
-[color "diff"]
-
-	meta = yellow bold
-	frag = magenta bold # line info
-	old = red # deletions
-	new = green # additions
-
-[color "status"]
-
-	added = yellow
-	changed = green
-	untracked = cyan
-
-[diff]
-
-	# Detect copies as well as renames
-	renames = copies
-
-[diff "bin"]
-	# Use `hexdump` to diff binary files
-	textconv = hexdump -v -C
-
-[help]
-
-	# Automatically correct and execute mistyped commands
-	autocorrect = 1
-
+  editor = /usr/local/bin/nvim
+  excludesfile = ~/.gitignore
 [merge]
+  tool = opendiff
+[branch]
+  mergeoptions = no-ff
+  autosetupmerge = always
+  autosetuprebase = always
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = auto
+[alias]
+  b     = branch
+  p     = pull
+  co    = checkout
+  ci    = commit -a
+  lol   = log --pretty=oneline --abbrev-commit --graph --decorate
+  c     = commit -m
+  a     = add
+  st    = status
+  graph = log --graph --pretty = format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date = relative
 
-	# Include summaries of merged commits in newly created merge commit messages
-	log = true
+  lg    = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 
+  addw  = "!git diff -w --no-color | git apply --cached --ignore-whitespace"
+
+  # Show the diff between the latest commit and the current state
+  d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+  # `git di $number` shows the diff between the state `$number` revisions ago and the current state
+  di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+
+  #
+  # Working with branches
+  #
+
+  # Get the current branch name (not so useful in itself, but used in
+  # other aliases)
+  branch-name = "!git rev-parse --abbrev-ref HEAD"
+  # Push the current branch to the remote "origin", and set it to track
+  # the upstream branch
+  publish = "!git push -u origin $(git branch-name):$(git branch-name)"
+  # Delete the remote version of the current branch
+  unpublish = "!git push origin :$(git branch-name)"
+  # Delete a branch and recreate it from master — useful if you have, say,
+  # a development branch and a master branch and they could conceivably go
+  # out of sync
+  recreate = "!f() { [[ -n $@ ]] && git checkout \"$@\" && git unpublish && git checkout master && git branch -D \"$@\" && git checkout -b \"$@\" && git publish; }; f"
+
+  # Fire up your difftool (e.g. Kaleidescope) with all the changes that
+  # are on the current branch.
+  code-review = difftool origin/master...
+
+  # Given a merge commit, find the span of commits that exist(ed) on that
+  # branch. Again, not so useful in itself, but used by other aliases.
+  merge-span = "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f"
+
+  # Find the commits that were introduced by a merge
+  merge-log = "!git log `git merge-span .. $1`"
+  # Show the changes that were introduced by a merge
+  merge-diff = "!git diff `git merge-span ... $1`"
+  # As above, but in your difftool
+  merge-difftool = "!git difftool `git merge-span ... $1`"
+
+  # Interactively rebase all the commits on the current branch
+  rebase-branch = "!git rebase -i `git merge-base master HEAD`"
+
+  #
+  # Working with files
+  #
+
+  # Unstage any files that have been added to the staging area
+  unstage = reset HEAD
+  # Show changes that have been staged
+  diffc = diff --cached
+
+  # Mark a file as "assume unchanged", which means that Git will treat it
+  # as though there are no changes to it even if there are. Useful for
+  # temporary changes to tracked files
+  assume = update-index --assume-unchanged
+  # Reverse the above
+  unassume = update-index --no-assume-unchanged
+  # Show the files that are currently assume-unchanged
+  assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+
+  # Checkout our version of a file and add it
+  ours = "!f() { git checkout --ours $@ && git add $@; }; f"
+  # Checkout their version of a file and add it
+  theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+
+  # Delete any branches that have been merged into current branch
+  # See also: https://gist.github.com/robmiller/5133264
+  cleanup-branches = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+
+[format]
+  pretty = %C(magenta reverse)%h%Creset %Cgreen[%cr]%Creset (%an) %s
+[diff]
+  # For Github-style word diffs
+  wordRegex = [^[:space:]]
+[status]
+  submodulesummary = true
+[apply]
+  whitespace = fix
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[format]
+  pretty = %Cblue%h%Creset %Cgreen[%cr]%Creset (%an) %s
 [push]
-
-	# Use the Git 1.x.x default to avoid errors on machines with old Git
-	# installations. To use `simple` instead, add this to your `~/.extra` file:
-	# `git config --global push.default simple`. See http://git.io/mMah-w.
-	default = matching
-	# Make `git push` push relevant annotated tags when pushing branches out.
-	followTags = true
-
-# URL shorthands
-
-[url "git@github.com:"]
-
-	insteadOf = "gh:"
-	pushInsteadOf = "github:"
-	pushInsteadOf = "git://github.com/"
-
-[url "git://github.com/"]
-
-	insteadOf = "github:"
-
-[url "git@gist.github.com:"]
-
-	insteadOf = "gst:"
-	pushInsteadOf = "gist:"
-	pushInsteadOf = "git://gist.github.com/"
-
-[url "git://gist.github.com/"]
-
-	insteadOf = "gist:"
+  default = simple
+[sendemail]
+  smtpserver = smtp.gmail.com
+  smtpserverport = 587
+  smtpencryption = tls
+  smtpuser = report@zivan.org
+[credential]
+  helper = osxkeychain
+[hub]
+  protocol = https
+[difftool "sourcetree"]
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
+[mergetool "sourcetree"]
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true

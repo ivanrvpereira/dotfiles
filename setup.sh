@@ -16,6 +16,8 @@ ln -s $DOTDIR/dircolors $HOME/.dircolors
 ln -s $DOTDIR/inputrc $HOME/.inputrc
 ln -s $DOTDIR/.janus-modules $HOME/.janus
 ln -s $DOTDIR/oh-my-zsh $HOME/.oh-my-zsh
+ln -s $DOTDIR/ackrc $HOME/.ackrc
+ln -s $DOTDIR/agignore $HOME/.agignore
 
 
 
