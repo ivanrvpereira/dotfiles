@@ -1,0 +1,33 @@
+[submodule "lucius"]
+	path = lucius
+	url = https://github.com/jonathanfilip/lucius.git
+[submodule "janus"]
+	path = janus
+	url = https://github.com/carlhuda/janus.git
+[submodule "janus-modules/vim-surround"]
+	path = janus-modules/vim-surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "janus-modules/auto-pairs"]
+	path = janus-modules/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs.git
+[submodule "janus-modules/phpcomplete.vim"]
+	path = janus-modules/phpcomplete.vim
+	url = https://github.com/shawncplus/phpcomplete.vim.git
+[submodule "janus-modules/ultisnips"]
+	path = janus-modules/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
+[submodule "janus-modules/vim-airline"]
+	path = janus-modules/vim-airline
+	url = https://github.com/bling/vim-airline.git
+[submodule "janus-modules/rainbow_parentheses.vim"]
+	path = janus-modules/rainbow_parentheses.vim
+	url = https://github.com/kien/rainbow_parentheses.vim.git
+[submodule "janus-modules/gundo.vim"]
+	path = janus-modules/gundo.vim
+	url = https://github.com/sjl/gundo.vim.git
+[submodule "janus-modules/YouCompleteMe"]
+	path = janus-modules/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git

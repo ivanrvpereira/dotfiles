@@ -1,0 +1,287 @@
+colorscheme lucius
+LuciusDark
+
+set guifont=Inconsolata-dz\ for\ Powerline:h14
+if &term == 'xterm' || &term == 'screen'
+    set t_Co=256                 " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+endif
+
+" Copy to osx clipboard
+set clipboard=unnamed
+" Mouse selects text
+set mouse=a
+
+" Fuck you, help key.
+noremap  <F1> :checktime<cr>
+inoremap <F1> <esc>:checktime<cr>
+
+" MY configs
+"set backupdir=~/tmp/vimswap,.
+"set directory=~/tmp/vimswap,.
+
+
+"let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_checker_args='--ignore=E501'
+
+" maintain selected indentation
+vnoremap < <gv
+vnoremap > >gv
+
+set colorcolumn=80
+set wrap
+
+set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
+
+set history=1000         " remember more commands and search history
+set undolevels=1000      " use many muchos levels of undo
+set undofile
+set undodir=~/.vim/_undo
+set wildignore=*.swp,*.bak,*.pyc,*.class
+
+if !exists("my_auto_commands_loaded")
+  let my_auto_commands_loaded = 1
+  " Large files are > 10M
+  " Set options:
+  " eventignore+=FileType (no syntax highlighting etc
+  " assumes FileType always on)
+  " noswapfile (save copy of file)
+  " bufhidden=unload (save memory when other file is viewed)
+  " buftype=nowritefile (is read-only)
+  " undolevels=-1 (no undo possible)
+  let g:LargeFile = 1024 * 1024 * 3
+  augroup LargeFile
+    autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:LargeFile | set eventignore+=FileType | setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 | else | set eventignore-=FileType | endif
+    augroup END
+endif
+
+" Directional Keys {{{
+" It's 2013.
+noremap j gj
+noremap k gk
+noremap gj j
+noremap gk k
+
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+noremap <leader>v <C-w>v
+
+set pastetoggle=<F3>
+
+" lets sudo save file
+cmap w!! w !sudo tee % >/dev/null
+
+" remap ctag jump to definition
+nnoremap t <C-]>
+
+" Diffoff
+nnoremap <leader>D :diffoff!<cr>
+
+" Formatting, TextMate-style
+nnoremap Q gqip
+vnoremap Q gq
+
+" Reformat line.
+" I never use l as a macro register anyway.
+nnoremap ql gqq
+
+" Keep the cursor in place while joining lines
+nnoremap J mzJ`z
+
+" Toggle [i]nvisible characters
+nnoremap <leader>i :set list!<cr>
+
+" Unfuck my screen
+nnoremap U :syntax sync fromstart<cr>:redraw!<cr>
+
+set scrolloff=5
+set sidescroll=1
+set sidescrolloff=10
+set gdefault
+set visualbell
+
+
+""""""" Plugins config """"""""""
+
+"YouCompleteme
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+
+" auto-pairs
+let g:AutoPairsFlyMode = 1
+let g:AutoPairsShortcutBackInsert = '<M-b>'
+
+"rainbow parentheses
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" NerdTree
+noremap  <F2> :NERDTreeToggle<cr>
+inoremap <F2> <esc>:NERDTreeToggle<cr>
+augroup ps_nerdtree
+    au!
+
+    au Filetype nerdtree setlocal nolist
+    au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
+    au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
+    " au Filetype nerdtree nnoremap <buffer> K :q<cr>
+augroup END
+
+let NERDTreeHighlightCursorline = 1
+let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
+                    \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
+                    \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$', '.*\.mid$',
+                    \ '.*\.midi$']
+
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDChristmasTree = 1
+let NERDTreeChDirMode = 2
+let NERDTreeMapJumpFirstChild = 'gK'
+
+
+
+""""""""""" Languages """""""""""""""""
+
+" CSS and LessCSS {{{
+
+augroup ft_css
+    au!
+
+    au BufNewFile,BufRead *.less setlocal filetype=less
+
+    au Filetype less,css setlocal foldmethod=marker
+    au Filetype less,css setlocal foldmarker={,}
+    au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
+    au Filetype less,css setlocal iskeyword+=-
+
+    " Use <leader>S to sort properties.  Turns this:
+    "
+    "     p {
+    "         width: 200px;
+    "         height: 100px;
+    "         background: red;
+    "
+    "         ...
+    "     }
+    "
+    " into this:
+
+    "     p {
+    "         background: red;
+    "         height: 100px;
+    "         width: 200px;
+    "
+    "         ...
+    "     }
+    au BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+
+    " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
+    " positioned inside of them AND the following code doesn't get unfolded.
+    au BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+augroup END
+
+" }}}
+" Django {{{
+
+augroup ft_django
+    au!
+
+    au BufNewFile,BufRead urls.py           setlocal nowrap
+    au BufNewFile,BufRead urls.py           normal! zR
+    au BufNewFile,BufRead dashboard.py      normal! zR
+    au BufNewFile,BufRead local_settings.py normal! zR
+
+    au BufNewFile,BufRead admin.py     setlocal filetype=python.django
+    au BufNewFile,BufRead urls.py      setlocal filetype=python.django
+    au BufNewFile,BufRead models.py    setlocal filetype=python.django
+    au BufNewFile,BufRead views.py     setlocal filetype=python.django
+    au BufNewFile,BufRead settings.py  setlocal filetype=python.django
+    au BufNewFile,BufRead settings.py  setlocal foldmethod=marker
+    au BufNewFile,BufRead forms.py     setlocal filetype=python.django
+    au BufNewFile,BufRead common_settings.py  setlocal filetype=python.django
+    au BufNewFile,BufRead common_settings.py  setlocal foldmethod=marker
+augroup END
+
+" }}}
+
+" Haskell {{{
+
+augroup ft_haskell
+    au!
+    au BufEnter *.hs compiler ghc
+augroup END
+
+" }}}
+" HTML, Django, Jinja, Dram {{{
+
+let g:html_indent_tags = ['p', 'li']
+
+augroup ft_html
+    au!
+
+    au BufNewFile,BufRead *.html setlocal filetype=htmldjango
+    au BufNewFile,BufRead *.dram setlocal filetype=htmldjango
+
+    au FileType html,jinja,htmldjango setlocal foldmethod=manual
+
+    " Use <localleader>f to fold the current tag.
+    au FileType html,jinja,htmldjango nnoremap <buffer> <localleader>f Vatzf
+
+    " Use <localleader>t to fold the current templatetag.
+    au FileType html,jinja,htmldjango nmap <buffer> <localleader>t viikojozf
+
+    " Indent tag
+    au FileType html,jinja,htmldjango nnoremap <buffer> <localleader>= Vat=
+
+    " Django tags
+    au FileType jinja,htmldjango inoremap <buffer> <c-t> {%<space><space>%}<left><left><left>
+
+    " Django variables
+    au FileType jinja,htmldjango inoremap <buffer> <c-b> {{<space><space>}}<left><left><left>
+augroup END
+
+" }}}
+
+" Javascript {{{
+
+augroup ft_javascript
+    au!
+
+    au FileType javascript setlocal foldmethod=marker
+    au FileType javascript setlocal foldmarker={,}
+    au FileType javascript call MakeSpacelessBufferIabbrev('clog', 'console.log();<left><left>')
+
+    " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
+    " positioned inside of them AND the following code doesn't get unfolded.
+    au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+    " }
+
+    " Prettify a hunk of JSON with <localleader>p
+    au FileType javascript nnoremap <buffer> <localleader>p ^vg_:!python -m json.tool<cr>
+    au FileType javascript vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
+augroup END
+
+" }}}
+" Markdown {{{
+
+augroup ft_markdown
+    au!
+
+    au BufNewFile,BufRead *.m*down setlocal filetype=markdown foldlevel=1
+
+    " Use <localleader>1/2/3 to add headings.
+    au Filetype markdown nnoremap <buffer> <localleader>1 yypVr=:redraw<cr>
+    au Filetype markdown nnoremap <buffer> <localleader>2 yypVr-:redraw<cr>
+    au Filetype markdown nnoremap <buffer> <localleader>3 mzI###<space><esc>`zllll
+    au Filetype markdown nnoremap <buffer> <localleader>4 mzI####<space><esc>`zlllll
+
+    au Filetype markdown nnoremap <buffer> <localleader>p VV:'<,'>!python -m json.tool<cr>
+    au Filetype markdown vnoremap <buffer> <localleader>p :!python -m json.tool<cr>
+augroup END
+
+" }}}
