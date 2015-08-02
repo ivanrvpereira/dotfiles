@@ -31,3 +31,6 @@
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule "janus-modules/vim-lucius"]
+	path = janus-modules/vim-lucius
+	url = https://github.com/jonathanfilip/vim-lucius.git
