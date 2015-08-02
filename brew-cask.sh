@@ -12,6 +12,7 @@ brew cask install google-chrome-canary
 brew cask install hipchat
 brew cask install iterm2
 brew cask install limechat
+brew cask install mou
 brew cask install quicklook-json
 brew cask install rescuetime
 brew cask install sequel-pro
