@@ -74,6 +74,8 @@ set pastetoggle=<F3>
 " lets sudo save file
 cmap w!! w !sudo tee % >/dev/null
 
+nmap <silent> ,/ :nohlsearch<CR>
+
 " remap ctag jump to definition
 nnoremap t <C-]>
 
@@ -146,6 +148,37 @@ let NERDTreeMapJumpFirstChild = 'gK'
 
 
 """"""""""" Languages """""""""""""""""
+" Abbreviations ----------------------------------------------------------- {{{
+
+function! EatChar(pat)
+    let c = nr2char(getchar(0))
+    return (c =~ a:pat) ? '' : c
+endfunction
+
+function! MakeSpacelessIabbrev(from, to)
+    execute "iabbrev <silent> ".a:from." ".a:to."<C-R>=EatChar('\\s')<CR>"
+endfunction
+function! MakeSpacelessBufferIabbrev(from, to)
+    execute "iabbrev <silent> <buffer> ".a:from." ".a:to."<C-R>=EatChar('\\s')<CR>"
+endfunction
+
+call MakeSpacelessIabbrev('sl/',  'http://stevelosh.com/')
+call MakeSpacelessIabbrev('bb/',  'http://bitbucket.org/')
+call MakeSpacelessIabbrev('bbs/', 'http://bitbucket.org/sjl/')
+call MakeSpacelessIabbrev('gh/',  'http://github.com/')
+call MakeSpacelessIabbrev('ghs/', 'http://github.com/sjl/')
+
+iabbrev ldis ಠ_ಠ
+iabbrev lsad ಥ_ಥ
+iabbrev lhap ಥ‿ಥ
+iabbrev lmis ಠ‿ಠ
+
+iabbrev sl@ steve@stevelosh.com
+iabbrev vrcf `~/.vimrc` file
+
+iabbrev pcf Participatory Culture Foundation
+
+" }}}
 
 " CSS and LessCSS {{{
 
