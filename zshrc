@@ -36,6 +36,9 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/exports
 source $HOME/.dotfiles/aliases
 
+# PHPBREW
+source ~/.phpbrew/bashrc
+
 [[ -s "$HOME/.tmuxinator/scripts/tmuxinator" ]] && source "$HOME/.tmuxinator/scripts/tmuxinator"
 
 source virtualenvwrapper_lazy.sh
