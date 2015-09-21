@@ -1,0 +1,5 @@
+ipython
+requests
+virtualenv
+virtualenvwrapper
+neovim
