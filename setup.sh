@@ -12,13 +12,14 @@ ln -s $DOTDIR/tmux.conf $HOME/.tmux.conf
 ln -s $DOTDIR/wgetrc $HOME/.wgetrc
 ln -s $DOTDIR/vimrc.after $HOME/.vimrc.after
 ln -s $DOTDIR/vimrc.before $HOME/.vimrc.before
+ln -s $DOTDIR/vimrc.before $HOME/.vimrc.before
 ln -s $DOTDIR/dircolors $HOME/.dircolors
 ln -s $DOTDIR/inputrc $HOME/.inputrc
-ln -s $DOTDIR/.janus-modules $HOME/.janus
+ln -s $DOTDIR/janus-modules $HOME/.janus
 ln -s $DOTDIR/oh-my-zsh $HOME/.oh-my-zsh
 ln -s $DOTDIR/ackrc $HOME/.ackrc
 ln -s $DOTDIR/agignore $HOME/.agignore
-
+ln -s $DOTDIR/../.vim/janus/vim/vimrc $HOME/.nvimrc
 
 
 #ln -s zshrc ~/.zshrc

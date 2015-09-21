@@ -41,10 +41,6 @@ brew install wget --with-iri
 #brew install ringojs
 #brew install narwhal
 
-# Install more recent versions of some OS X tools.
-brew tap neovim/neovim
-brew install --HEAD neovim
-brew install vim --override-system-vi
 
 brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
@@ -99,6 +95,11 @@ brew install unrar
 brew install weechat
 brew install wget
 brew install zsh
+
+# Install more recent versions of some OS X tools.
+brew tap neovim/neovim
+brew install --HEAD neovim
+#brew install vim --override-system-vi
 
 # Remove outdated versions from the cellar.
 brew cleanup
