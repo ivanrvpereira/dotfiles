@@ -4,6 +4,7 @@
 [submodule "janus"]
 	path = janus
 	url = https://github.com/carlhuda/janus.git
+  ignore = dirty
 [submodule "janus-modules/vim-surround"]
 	path = janus-modules/vim-surround
 	url = https://github.com/tpope/vim-surround.git
@@ -28,6 +29,7 @@
 [submodule "janus-modules/YouCompleteMe"]
 	path = janus-modules/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
+  ignore = dirty
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
