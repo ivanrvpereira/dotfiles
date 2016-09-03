@@ -1,5 +1,3 @@
-brew install caskroom/cask/brew-cask
-
 brew cask install amethyst
 brew cask install appcleaner
 brew cask install battery-guardian

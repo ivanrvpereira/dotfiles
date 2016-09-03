@@ -12,7 +12,6 @@ ln -s $DOTDIR/tmux.conf $HOME/.tmux.conf
 ln -s $DOTDIR/wgetrc $HOME/.wgetrc
 ln -s $DOTDIR/vimrc.after $HOME/.vimrc.after
 ln -s $DOTDIR/vimrc.before $HOME/.vimrc.before
-ln -s $DOTDIR/vimrc.before $HOME/.vimrc.before
 ln -s $DOTDIR/dircolors $HOME/.dircolors
 ln -s $DOTDIR/inputrc $HOME/.inputrc
 ln -s $DOTDIR/janus-modules $HOME/.janus
