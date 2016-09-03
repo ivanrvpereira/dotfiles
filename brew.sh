@@ -44,7 +44,6 @@ brew install wget --with-iri
 
 brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
-brew install homebrew/dupes/screen
 
 # Install font tools.
 brew tap bramstein/webfonttools
@@ -58,10 +57,9 @@ brew install ack
 brew install git
 brew install git-flow
 brew install git-lfs
+brew install legit
 brew install imagemagick --with-webp
-brew install lynx
 brew install p7zip
-brew install pigz
 brew install pv
 brew install rename
 brew install rhino
@@ -78,16 +76,16 @@ brew install psysh
 brew install ctags-better-php
 brew install python
 brew install python3
+brew intalll haskkell-stack
+brew install go
 
 
 # my tools
-brew install boot2docker
 brew install collordiff
-brew install docker
 brew install fasd
+brew install fzf
 brew install htop-osx
 brew install midnight-commander
-brew install percona-server
 brew install the_silver_searcher
 brew install tmux
 brew install toggle-osx-shadows
