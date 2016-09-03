@@ -27,3 +27,4 @@ brew cask install virtualbox
 brew cask install vlc
 brew cask install transmit
 brew cask install transmission
+brew cask install postman
