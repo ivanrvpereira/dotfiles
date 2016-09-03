@@ -6,11 +6,11 @@
   #path = ~/.gitconfig.local
 [core]
   editor = /usr/local/bin/nvim
-  excludesfile = ~/.gitignore
+	excludesfile = /Users/balsagoth/.gitignore
 [merge]
   tool = opendiff
 [branch]
-  mergeoptions = no-ff
+  #mergeoptions = no-ff
   autosetupmerge = always
   autosetuprebase = always
 [color]
@@ -28,6 +28,7 @@
   c     = commit -m
   a     = add
   st    = status
+  stb    = status -sb
   graph = log --graph --pretty = format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date = relative
 
   lg    = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
@@ -50,9 +51,9 @@
   branch-name = "!git rev-parse --abbrev-ref HEAD"
   # Push the current branch to the remote "origin", and set it to track
   # the upstream branch
-  publish = "!git push -u origin $(git branch-name):$(git branch-name)"
+	publish = !legit publish
   # Delete the remote version of the current branch
-  unpublish = "!git push origin :$(git branch-name)"
+	unpublish = !legit unpublish
   # Delete a branch and recreate it from master — useful if you have, say,
   # a development branch and a master branch and they could conceivably go
   # out of sync
@@ -84,6 +85,7 @@
   unstage = reset HEAD
   # Show changes that have been staged
   diffc = diff --cached
+  diffw = diff --word-diff
 
   # Mark a file as "assume unchanged", which means that Git will treat it
   # as though there are no changes to it even if there are. Useful for
@@ -102,6 +104,13 @@
   # Delete any branches that have been merged into current branch
   # See also: https://gist.github.com/robmiller/5133264
   cleanup-branches = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+	branches = !legit branches
+	graft = !legit graft
+	harvest = !legit harvest
+	sprout = !legit sprout
+	sync = !legit sync
+	switch = !legit switch
+	resync = !legit resync
 
 [format]
   pretty = %C(magenta reverse)%h%Creset %Cgreen[%cr]%Creset (%an) %s
@@ -135,3 +144,5 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[fetch]
+	prune = true
