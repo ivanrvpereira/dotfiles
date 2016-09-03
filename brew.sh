@@ -74,6 +74,7 @@ brew install webkit2png
 # languages
 brew install homebrew/php/php55 --with-gmp
 curl https://raw.githubusercontent.com/shawncplus/phpcomplete.vim/master/misc/ctags-better-php.rb > /usr/local/Library/Formula/ctags-better-php.rb
+brew install psysh
 brew install ctags-better-php
 brew install python
 brew install python3

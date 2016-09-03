@@ -1,5 +1,6 @@
 let mapleader = ","
 call janus#disable_plugin('vim-snipmate')
+call janus#disable_plugin('ctrlp')
 
 let g:UltiSnipsExpandTrigger = '<C-j>'
 let g:UltiSnipsJumpForwardTrigger = '<C-j>'
