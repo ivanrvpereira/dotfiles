@@ -9,6 +9,8 @@ brew cask install dropbox
 brew cask install evernote
 brew cask install google-chrome
 brew cask install google-chrome-canary
+brew cask install opera
+brew cask install opera-developer
 brew cask install hipchat
 brew cask install iterm2
 brew cask install limechat
@@ -25,4 +27,3 @@ brew cask install virtualbox
 brew cask install vlc
 brew cask install transmit
 brew cask install transmission
-
