@@ -36,11 +36,23 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/exports
 source $HOME/.dotfiles/aliases
 
-# PHPBREW
-source ~/.phpbrew/bashrc
+# PHP version
+source $(brew --prefix php-version)/php-version.sh && php-version 5
+
 
 [[ -s "$HOME/.tmuxinator/scripts/tmuxinator" ]] && source "$HOME/.tmuxinator/scripts/tmuxinator"
 
 source virtualenvwrapper_lazy.sh
 
 
+# Overrrides
+# fasd plugin
+alias v='f -e nvim'
+
+# FZF
+export FZF_DEFAULT_COMMAND='ag -g ""'
+
+# ITERM2
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
