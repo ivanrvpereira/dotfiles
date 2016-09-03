@@ -38,7 +38,7 @@ export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 #virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Devel
+export PROJECT_HOME=$HOME/work/projects
 
 # Django stuff
 export DJANGO_ENVIRONMENT="dev"
