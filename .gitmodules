@@ -1,10 +1,6 @@
 [submodule "lucius"]
 	path = lucius
 	url = https://github.com/jonathanfilip/lucius.git
-[submodule "janus"]
-	path = janus
-	url = https://github.com/carlhuda/janus.git
-  ignore = dirty
 [submodule "janus-modules/vim-surround"]
 	path = janus-modules/vim-surround
 	url = https://github.com/tpope/vim-surround.git
