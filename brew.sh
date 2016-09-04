@@ -71,12 +71,13 @@ brew install webkit2png
 
 # languages
 brew install homebrew/php/php55 --with-gmp
+brew install php-version
 curl https://raw.githubusercontent.com/shawncplus/phpcomplete.vim/master/misc/ctags-better-php.rb > /usr/local/Library/Formula/ctags-better-php.rb
 brew install psysh
 brew install ctags-better-php
 brew install python
 brew install python3
-brew intalll haskkell-stack
+brew install haskell-stack
 brew install go
 
 
@@ -88,7 +89,7 @@ brew install htop-osx
 brew install midnight-commander
 brew install the_silver_searcher
 brew install tmux
-brew install toggle-osx-shadows
+#brew install toggle-osx-shadows
 brew install trash # moves files to trash on osx
 brew install unrar
 brew install weechat

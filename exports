@@ -43,3 +43,8 @@ export PROJECT_HOME=$HOME/work/projects
 # Django stuff
 export DJANGO_ENVIRONMENT="dev"
 export FLASK_ENV="dev"
+
+# GO stuff
+export GOROOT=/usr/local/opt/go/libexec
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
