@@ -3,3 +3,7 @@ requests
 virtualenv
 virtualenvwrapper
 neovim
+jupyter
+pandas
+sqlalchemy
+pymysql
