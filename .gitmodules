@@ -50,3 +50,6 @@
 [submodule "janus-modules/braceless.vim"]
 	path = janus-modules/braceless.vim
 	url = https://github.com/tweekmonster/braceless.vim.git
+[submodule "janus-modules/vim-hardtime"]
+	path = janus-modules/vim-hardtime
+	url = https://github.com/takac/vim-hardtime.git

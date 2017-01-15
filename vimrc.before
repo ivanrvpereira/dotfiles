@@ -1,4 +1,4 @@
-let mapleader = ","
+let mapleader = "\<Space>"
 call janus#disable_plugin('vim-snipmate')
 call janus#disable_plugin('ctrlp')
 
