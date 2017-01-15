@@ -1,7 +1,7 @@
 colorscheme lucius
 LuciusDark
 
-set guifont=Inconsolata-dz\ for\ Powerline:h14
+"set guifont=Inconsolata-dz\ for\ Powerline:h14
 if &term == 'xterm' || &term == 'screen'
     set t_Co=256                 " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
 endif
@@ -19,6 +19,7 @@ inoremap <F1> <esc>:checktime<cr>
 "set backupdir=~/tmp/vimswap,.
 "set directory=~/tmp/vimswap,.
 
+let g:ackprg = 'ag --vimgrep'
 
 "let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_checker_args='--ignore=E501'
@@ -58,11 +59,38 @@ map <C-p> :FZF<CR>
 " https://github.com/junegunn/fzf.vim/issues/121
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
+
+"""""EASYMOTION
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_smartcase = 1
 
 " JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
+map <C-j> <Plug>(easymotion-j)
+map <C-k> <Plug>(easymotion-k)
+map <C-l> <Plug>(easymotion-lineforward)
+map <C-h> <Plug>(easymotion-linebackward)
+nmap s <Plug>(easymotion-overwin-f)
+nmap s <Plug>(easymotion-overwin-f2)
+
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+" Without these mappings, `n` & `N` works fine. (These mappings just provide
+" different highlight method and have some other features )
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+"""""""
+
+""" VIM Hardtime
+let g:hardtime_default_on = 1
+HardTimeOn " it seems the setting before is not working
+let g:hardtime_allow_different_key = 1
+let g:hardtime_ignore_quickfix = 1
+let g:hardtime_maxcount = 2
+let g:hardtime_showmsg = 1
+let g:hardtime_timeout = 500
+"""""""
 
 
 if !exists("my_auto_commands_loaded")
@@ -89,10 +117,10 @@ noremap gj j
 noremap gk k
 
 " Easy window navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+"map <C-h> <C-w>h
+"map <C-j> <C-w>j
+"map <C-k> <C-w>k
+"map <C-l> <C-w>l
 
 map <C-1> :bp<cr>
 map <C-2> :bn<cr>
@@ -107,7 +135,7 @@ cmap w!! w !sudo tee % >/dev/null
 nmap <silent> ,/ :nohlsearch<CR>
 
 " remap ctag jump to definition
-nnoremap t <C-]>
+"nnoremap t <C-]>
 
 " Diffoff
 nnoremap <leader>D :diffoff!<cr>
@@ -135,6 +163,8 @@ set sidescrolloff=10
 set gdefault
 set visualbell
 
+" http://stackoverflow.com/questions/1444322/how-can-i-close-a-buffer-without-closing-the-window
+map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>.
 
 """"""" Plugins config """"""""""
 
