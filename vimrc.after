@@ -177,7 +177,12 @@ let g:AutoPairsFlyMode = 0
 "let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 "rainbow parentheses
-let g:rainbow_active = 1
+" Activation based on file type
+augroup rainbow_lisp
+  autocmd!
+  autocmd FileType lisp,clojure,scheme,php,python RainbowParentheses
+augroup END
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}'], ['{%', '%}']]
 
 " NerdTree
 noremap  <F2> :NERDTreeToggle<cr>
