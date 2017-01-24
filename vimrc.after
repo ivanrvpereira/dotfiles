@@ -89,9 +89,9 @@ let g:hardtime_allow_different_key = 1
 let g:hardtime_ignore_quickfix = 1
 let g:hardtime_maxcount = 2
 let g:hardtime_showmsg = 1
-let g:hardtime_timeout = 500
+let g:hardtime_timeout = 800
+let g:list_of_normal_keys = ["h", "j", "k", "l"]
 """""""
-
 
 if !exists("my_auto_commands_loaded")
   let my_auto_commands_loaded = 1
@@ -177,10 +177,7 @@ let g:AutoPairsFlyMode = 0
 "let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 "rainbow parentheses
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+let g:rainbow_active = 1
 
 " NerdTree
 noremap  <F2> :NERDTreeToggle<cr>
