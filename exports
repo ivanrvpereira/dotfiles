@@ -29,8 +29,7 @@ export MANPAGER='less -X';
 
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:$HOME/lusr/bin:$HOME/lusr/gocode/bin:$PATH"
 
-#COMPOSER
-export PATH="$HOME/.composer/vendor/bin:$PATH"
+export PATH=$PATH:/Applications/VimR.app/Contents/Resources/
 
 # POSTGRESQL
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin

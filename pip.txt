@@ -1,3 +1,4 @@
+pip
 ipython
 requests
 virtualenv
@@ -5,5 +6,12 @@ virtualenvwrapper
 neovim
 jupyter
 pandas
+xlrd
 sqlalchemy
 pymysql
+httpie
+jedi
+stormssh
+mysqlclient
+pgcli
+mycli
