@@ -21,10 +21,6 @@ inoremap <F1> <esc>:checktime<cr>
 
 let g:ackprg = 'ag --vimgrep'
 
-"let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_python_checker_args='--ignore=E501'
-let g:syntastic_python_flake8_args='--ignore=E501'
-
 let g:ultisnips_python_style="google"
 let g:snips_author="Ivan Pereira <ivan@zivan.org>"
 
@@ -87,9 +83,9 @@ let g:hardtime_default_on = 1
 HardTimeOn " it seems the setting before is not working
 let g:hardtime_allow_different_key = 1
 let g:hardtime_ignore_quickfix = 1
-let g:hardtime_maxcount = 2
+let g:hardtime_maxcount = 8
 let g:hardtime_showmsg = 1
-let g:hardtime_timeout = 800
+let g:hardtime_timeout = 600
 let g:list_of_normal_keys = ["h", "j", "k", "l"]
 """""""
 
@@ -172,6 +168,39 @@ map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>.
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 let g:ycm_autoclose_preview_window_after_completion = 1  " Closes preview window after leave insert mode
 
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_enable_signs=1
+" Better :sign interface symbols
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_style_error_symbol = '✗s'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_style_warning_symbol = '⚠s'
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_loc_list_height = 5
+"let g:syntastic_sort_aggregated_errors=0
+"let g:syntastic_aggregate_errors = 0
+let g:syntastic_mode_map = { 'mode': 'active' }
+
+let g:syntastic_python_flake8_sort = 1
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_checker_args='--ignore=E501'
+let g:syntastic_python_flake8_args='--ignore=E501'
+
+
+
+let g:syntastic_css_csslint_args = '--ignore="important"'
+
+
+
+set diffopt+=iwhite
 " auto-pairs
 let g:AutoPairsFlyMode = 0
 "let g:AutoPairsShortcutBackInsert = '<M-b>'

@@ -15,3 +15,5 @@ stormssh
 mysqlclient
 pgcli
 mycli
+flake8
+records
