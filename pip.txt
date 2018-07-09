@@ -17,3 +17,7 @@ pgcli
 mycli
 flake8
 records
+autopep8
+click
+Pygments
+pdbpp
