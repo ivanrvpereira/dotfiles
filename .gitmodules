@@ -29,9 +29,6 @@
 [submodule "janus-modules/vim-lucius"]
 	path = janus-modules/vim-lucius
 	url = https://github.com/jonathanfilip/vim-lucius.git
-[submodule "janus-modules/dash.vim"]
-	path = janus-modules/dash.vim
-	url = https://github.com/rizzatti/dash.vim.git
 [submodule "janus-modules/fzf.vim"]
 	path = janus-modules/fzf.vim
 	url = https://github.com/junegunn/fzf.vim.git
