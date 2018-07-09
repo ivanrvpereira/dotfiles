@@ -6,7 +6,7 @@
   #path = ~/.gitconfig.local
 [core]
   editor = /usr/local/bin/nvim
-	excludesfile = /Users/balsagoth/.gitignore
+	excludesfile = ~/.gitignore
 [merge]
   tool = opendiff
 [branch]
