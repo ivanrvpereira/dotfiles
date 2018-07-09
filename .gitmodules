@@ -47,9 +47,6 @@
 [submodule "janus-modules/braceless.vim"]
 	path = janus-modules/braceless.vim
 	url = https://github.com/tweekmonster/braceless.vim.git
-[submodule "janus-modules/vim-hardtime"]
-	path = janus-modules/vim-hardtime
-	url = https://github.com/takac/vim-hardtime.git
 [submodule "janus-modules/rainbow_parentheses.vim"]
 	path = janus-modules/rainbow_parentheses.vim
 	url = https://github.com/junegunn/rainbow_parentheses.vim.git
