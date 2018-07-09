@@ -78,16 +78,6 @@ map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
 """""""
 
-""" VIM Hardtime
-let g:hardtime_default_on = 1
-HardTimeOn " it seems the setting before is not working
-let g:hardtime_allow_different_key = 1
-let g:hardtime_ignore_quickfix = 1
-let g:hardtime_maxcount = 8
-let g:hardtime_showmsg = 1
-let g:hardtime_timeout = 600
-let g:list_of_normal_keys = ["h", "j", "k", "l"]
-"""""""
 
 if !exists("my_auto_commands_loaded")
   let my_auto_commands_loaded = 1

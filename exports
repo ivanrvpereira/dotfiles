@@ -47,3 +47,6 @@ export FLASK_ENV="dev"
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+# Docker stuff
+export COMPOSE_FILE=local.yml
