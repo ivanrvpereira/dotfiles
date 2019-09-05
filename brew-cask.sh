@@ -1,8 +1,10 @@
+brew tap caskroom/fonts
+brew cask install font-fira-code
 brew cask install amethyst
 brew cask install appcleaner
 brew cask install battery-guardian
 brew cask install caffeine
-brew cask install dropbox
+#brew cask install dropbox
 brew cask install boostnote
 brew cask install google-chrome
 brew cask install firefox
@@ -21,10 +23,11 @@ brew cask install transmission
 brew cask install vlc
 
 brew cask install iterm2
+brew cask install java
 brew cask install postman
 brew cask install sourcetree
 brew cask install robo-3t
 brew cask install dbeaver-community
 brew cask install font-fira-code
-brew cask install vscode
+brew cask install visual-studio-code
 brew cask install docker

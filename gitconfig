@@ -6,7 +6,7 @@
   #path = ~/.gitconfig.local
 [core]
   editor = /usr/local/bin/nvim
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/ivanpereira/.gitignore
 [merge]
   tool = opendiff
 [branch]
@@ -49,19 +49,10 @@
   # Get the current branch name (not so useful in itself, but used in
   # other aliases)
   branch-name = "!git rev-parse --abbrev-ref HEAD"
-  # Push the current branch to the remote "origin", and set it to track
-  # the upstream branch
-	publish = !legit publish
-  # Delete the remote version of the current branch
-	unpublish = !legit unpublish
   # Delete a branch and recreate it from master — useful if you have, say,
   # a development branch and a master branch and they could conceivably go
   # out of sync
   recreate = "!f() { [[ -n $@ ]] && git checkout \"$@\" && git unpublish && git checkout master && git branch -D \"$@\" && git checkout -b \"$@\" && git publish; }; f"
-
-  # Fire up your difftool (e.g. Kaleidescope) with all the changes that
-  # are on the current branch.
-  code-review = difftool origin/master...
 
   # Given a merge commit, find the span of commits that exist(ed) on that
   # branch. Again, not so useful in itself, but used by other aliases.
@@ -75,7 +66,10 @@
   merge-difftool = "!git difftool `git merge-span ... $1`"
 
   # Interactively rebase all the commits on the current branch
-  rebase-branch = "!git rebase -i `git merge-base master HEAD`"
+  rebase-branch = "!git rebase -i `git merge-base develop HEAD`"
+
+  # Cleans local branches already deleted on remote 
+  clean-local= "!git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}' | xargs git branch -d "
 
   #
   # Working with files
@@ -103,14 +97,11 @@
 
   # Delete any branches that have been merged into current branch
   # See also: https://gist.github.com/robmiller/5133264
-  cleanup-branches = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-	branches = !legit branches
-	graft = !legit graft
-	harvest = !legit harvest
-	sprout = !legit sprout
-	sync = !legit sync
-	switch = !legit switch
-	resync = !legit resync
+  cleanup-branches = "!git branch --merged | grep -v '\\*' | grep -v '^[ *]*develop$'  | grep -v 'master' | grep -v 'production/'"
+  merged = "!git branch -r --merged | grep -v HEAD | xargs -L1 git --no-pager log --pretty=tformat:'%Cgreen%d%Creset - %h by %an (%Cblue%ar%Creset)' -1"
+  unmerged = "!git branch -r --no-merged | grep -v HEAD | xargs -L3 git --no-pager log --pretty=tformat:'%Cgreen%d%Creset - %h by %an (%Cblue%ar%Creset)' -1"
+
+
 
 [format]
   pretty = %C(magenta reverse)%h%Creset %Cgreen[%cr]%Creset (%an) %s
@@ -128,7 +119,7 @@
 [format]
   pretty = %Cblue%h%Creset %Cgreen[%cr]%Creset (%an) %s
 [push]
-  default = simple
+	default = current
 [sendemail]
   smtpserver = smtp.gmail.com
   smtpserverport = 587
@@ -142,7 +133,7 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [fetch]
 	prune = true

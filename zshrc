@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="juanghurtado"
+ZSH_THEME="ys"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -30,7 +30,7 @@ ZSH_THEME="juanghurtado"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(history history-substring-search battery terminalapp colored-man colorize git git-flow gitfast pip django npm osx python postgres ssh-agent pyenv brew tmux vagrant docker docker-compose fasd httpie rsync virtualenvwrapper zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(history history-substring-search battery terminalapp colored-man colorize git git-flow gitfast pip django npm osx python postgres ssh-agent pyenv tmux docker docker-compose fasd httpie rsync virtualenvwrapper zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.dotfiles/exports
@@ -40,7 +40,7 @@ source $HOME/.dotfiles/aliases
 # source $(brew --prefix php-version)/php-version.sh && php-version 5
 
 
-[[ -s "$HOME/.tmuxinator/scripts/tmuxinator" ]] && source "$HOME/.tmuxinator/scripts/tmuxinator"
+#[[ -s "$HOME/.tmuxinator/scripts/tmuxinator" ]] && source "$HOME/.tmuxinator/scripts/tmuxinator"
 
 source virtualenvwrapper_lazy.sh
 
