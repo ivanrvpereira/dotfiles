@@ -46,10 +46,10 @@ brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
 
 # Install font tools.
-brew tap bramstein/webfonttools
-brew install sfnt2woff
-brew install sfnt2woff-zopfli
-brew install woff2
+#brew tap bramstein/webfonttools
+#brew install sfnt2woff
+#brew install sfnt2woff-zopfli
+#brew install woff2
 
 
 # Install other useful binaries.
@@ -63,25 +63,30 @@ brew install p7zip
 brew install pv
 brew install rename
 brew install rhino
-brew install speedtest_cli
 brew install ssh-copy-id
 brew install tree
 brew install webkit2png
 
 
 # languages
-brew install homebrew/php/php55 --with-gmp
-brew install php-version
-curl https://raw.githubusercontent.com/shawncplus/phpcomplete.vim/master/misc/ctags-better-php.rb > /usr/local/Library/Formula/ctags-better-php.rb
-brew install psysh
-brew install ctags-better-php
+#brew install homebrew/php/php55 --with-gmp
+#brew install php-version
+#curl https://raw.githubusercontent.com/shawncplus/phpcomplete.vim/master/misc/ctags-better-php.rb > /usr/local/Library/Formula/ctags-better-php.rb
+#brew install psysh
+#brew install ctags-better-php
 brew install python
 brew install python3
-brew install haskell-stack
-brew install go
+brew install node
+brew install yarn
+#brew install dotnet
+#brew install haskell-stack
+#brew install go
 
 
 # my tools
+brew instal calc
+brew install watch
+brew install telnet
 brew install collordiff
 brew install fasd
 brew install fzf

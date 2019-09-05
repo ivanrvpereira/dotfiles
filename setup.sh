@@ -29,7 +29,12 @@ ln -s $DOTDIR/ackrc $HOME/.ackrc
 ln -s $DOTDIR/agignore $HOME/.agignore
 
 
+# install fonts
+# https://github.com/powerline/fonts
+# install fira code font
+#https://github.com/tonsky/FiraCode
 echo "setup zsh"
+# install zsh from repo and then link
 ln -s $DOTDIR/zshrc $HOME/.zshrc
 ln -s $DOTDIR/oh-my-zsh $HOME/.oh-my-zsh
 
@@ -49,8 +54,14 @@ echo "install fzf shell extensions"
 /usr/local/opt/fzf/install
 
 
+# need to install brew first
 echo "pip install global"
 pip install -r $DOTDIR/pip.txt
 pip3 install -r $DOTDIR/pip.txt
 
+# dircolors
+# https://github.com/seebi/dircolors-solarized.git
+# criar ~/.dotfiles
+# meter no .config/fish/config.fish o eval (eval (dircolors -c ~/.dircolors/dircolors.ansi-dark)
+# aliases meter o --color=auto
 echo "Done"

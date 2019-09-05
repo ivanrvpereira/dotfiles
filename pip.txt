@@ -12,8 +12,8 @@ pymysql
 httpie
 jedi
 stormssh
-mysqlclient
-pgcli
+#mysqlclient
+#pgcli
 mycli
 flake8
 records
