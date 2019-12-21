@@ -82,6 +82,9 @@ brew install yarn
 #brew install haskell-stack
 #brew install go
 
+brew install jesseduffield/lazydocker/lazydocker
+brew install lazydocker
+
 
 # my tools
 brew instal calc
@@ -108,3 +111,4 @@ brew install --HEAD neovim
 
 # Remove outdated versions from the cellar.
 brew cleanup
+

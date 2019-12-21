@@ -23,6 +23,7 @@
   b     = branch
   p     = pull
   co    = checkout
+  sw    = switch
   ci    = commit -a
   lol   = log --pretty=oneline --abbrev-commit --graph --decorate
   c     = commit -m
@@ -142,3 +143,5 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+[rerere]
+	enabled = true

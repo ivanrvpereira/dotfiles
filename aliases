@@ -39,6 +39,7 @@ alias homestead='function __homestead() { (cd ~/work/Homestead && vagrant $*); u
 
 # docker
 alias dockup="boot2docker init && boot2docker up && eval \"\$(boot2docker shellinit)\""
+alias dockenv="eval (docker-machine env promserver1)"
 
 # vim
 alias vim="nvim"
