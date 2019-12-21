@@ -1,6 +1,7 @@
 alias vim='nvim'
 alias vi='nvim'
 alias dco='docker-compose'
+alias dcs='eval (docker-machine env promserver1)'
 
 alias ls='gls --color=auto'
 
@@ -47,3 +48,4 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update'
 
 alias code2='/Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code'
+
