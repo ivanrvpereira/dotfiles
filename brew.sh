@@ -14,6 +14,13 @@ brew update
 # Upgrade any already-installed formulae.
 brew upgrade
 
+brew install fish
+sudo bash -c 'echo /usr/local/bin/fish >> /etc/shells'
+chsh -s /usr/local/bin/fish
+
+
+
+
 # Install GNU core utilities (those that come with OS X are outdated).
 # Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
 brew install coreutils
@@ -24,7 +31,8 @@ brew install moreutils
 # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
 brew install findutils
 # Install GNU `sed`, overwriting the built-in `sed`.
-brew install gnu-sed --with-default-names
+brew install gnu-sed 
+
 # Install Bash 4.
 # Note: don’t forget to add `/usr/local/bin/bash` to `/etc/shells` before
 # running `chsh`.
@@ -33,58 +41,54 @@ brew tap homebrew/versions
 #brew install bash-completion2
 
 # Install `wget` with IRI support.
-brew install wget --with-iri
+brew install wget
 
-# Install RingoJS and Narwhal.
-# Note that the order in which these are installed is important;
-# see http://git.io/brew-narwhal-ringo.
-#brew install ringojs
-#brew install narwhal
 
+brew tap homebrew/services
+brew tap homebrew/cask
+brew tap homebrew/core
 
 brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
-
-# Install font tools.
-#brew tap bramstein/webfonttools
-#brew install sfnt2woff
-#brew install sfnt2woff-zopfli
-#brew install woff2
-
 
 # Install other useful binaries.
 brew install ack
 brew install git
 brew install git-flow
 brew install git-lfs
-brew install legit
 brew install imagemagick --with-webp
 brew install p7zip
 brew install pv
 brew install rename
-brew install rhino
 brew install ssh-copy-id
 brew install tree
 brew install webkit2png
 
 
 # languages
+#PHP
 #brew install homebrew/php/php55 --with-gmp
 #brew install php-version
+#brew install ctags-better-php
 #curl https://raw.githubusercontent.com/shawncplus/phpcomplete.vim/master/misc/ctags-better-php.rb > /usr/local/Library/Formula/ctags-better-php.rb
 #brew install psysh
-#brew install ctags-better-php
+
+brew install ctags
 brew install python
-brew install python3
 brew install node
 brew install yarn
 #brew install dotnet
 #brew install haskell-stack
 #brew install go
 
+brew install editorconfig
+
 brew install jesseduffield/lazydocker/lazydocker
 brew install lazydocker
 
+brew install libuv
+brew install tldr
+brew install msgpack
 
 # my tools
 brew instal calc
@@ -93,8 +97,8 @@ brew install telnet
 brew install collordiff
 brew install fasd
 brew install fzf
-brew install htop-osx
-brew install midnight-commander
+brew install ctop
+brew install htop
 brew install the_silver_searcher
 brew install tmux
 #brew install toggle-osx-shadows
@@ -102,12 +106,15 @@ brew install trash # moves files to trash on osx
 brew install unrar
 brew install weechat
 brew install wget
-brew install zsh
+brew install thefuck
+
 
 # Install more recent versions of some OS X tools.
 brew tap neovim/neovim
-brew install --HEAD neovim
-#brew install vim --override-system-vi
+brew install neovim
+
+brew install dnsmasq
+brew install direnv
 
 # Remove outdated versions from the cellar.
 brew cleanup
