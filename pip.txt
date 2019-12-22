@@ -1,25 +1,13 @@
 pip
 ipython
 requests
-virtualenv
-virtualenvwrapper
 neovim
-jupyter
-pandas
-xlrd
 sqlalchemy
-pymysql
 httpie
-jedi
 stormssh
-#mysqlclient
-#pgcli
-mycli
+#pgcli --only-binary psycopg2
 flake8
-records
-autopep8
-click
 Pygments
 pdbpp
-legit
 pipenv
+awscli

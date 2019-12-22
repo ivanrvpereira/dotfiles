@@ -3,17 +3,17 @@
 DOTDIR=$HOME/.dotfiles
 
 
-echo "install janus"
-curl -L https://bit.ly/janus-bootstrap | bash
-
-
-echo "setup vim"
-mkdir -p $HOME/.config/nvim
-ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
-ln -s $DOTDIR/vimrc.after $HOME/.vimrc.after
-ln -s $DOTDIR/vimrc.before $HOME/.vimrc.before
-ln -s $DOTDIR/janus-modules $HOME/.janus
-
+#echo "install janus"
+#curl -L https://bit.ly/janus-bootstrap | bash
+#
+#
+#echo "setup vim"
+#mkdir -p $HOME/.config/nvim
+#ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
+#ln -s $DOTDIR/vimrc.after $HOME/.vimrc.after
+#ln -s $DOTDIR/vimrc.before $HOME/.vimrc.before
+#ln -s $DOTDIR/janus-modules $HOME/.janus
+#
 
 echo "setup other stuff"
 ln -s $DOTDIR/curlrc $HOME/.curlrc
@@ -33,17 +33,19 @@ ln -s $DOTDIR/agignore $HOME/.agignore
 # https://github.com/powerline/fonts
 # install fira code font
 #https://github.com/tonsky/FiraCode
-echo "setup zsh"
-# install zsh from repo and then link
-ln -s $DOTDIR/zshrc $HOME/.zshrc
-ln -s $DOTDIR/oh-my-zsh $HOME/.oh-my-zsh
 
-zshrc="$HOME/.zshrc"
-if [ -e "$zshrc"  ]
-then
-    mv $zshrc "$zshrc.1"
-fi
-ln -s $DOTDIR/zshrc $zshrc
+
+#echo "setup zsh"
+## install zsh from repo and then link
+#ln -s $DOTDIR/zshrc $HOME/.zshrc
+#ln -s $DOTDIR/oh-my-zsh $HOME/.oh-my-zsh
+
+#zshrc="$HOME/.zshrc"
+#if [ -e "$zshrc"  ]
+#then
+#    mv $zshrc "$zshrc.1"
+#fi
+#ln -s $DOTDIR/zshrc $zshrc
 
 read -p "Add this /usr/local/bin/zsh >> /etc/shells " yn
 #change shell to zsh
@@ -56,7 +58,7 @@ echo "install fzf shell extensions"
 
 # need to install brew first
 echo "pip install global"
-pip install -r $DOTDIR/pip.txt
+#pip install -r $DOTDIR/pip.txt
 pip3 install -r $DOTDIR/pip.txt
 
 # dircolors
