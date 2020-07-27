@@ -54,7 +54,7 @@ brew install homebrew/dupes/openssh
 # Install other useful binaries.
 brew install ack
 brew install git
-brew install git-flow
+brew install git-flow-avh
 brew install git-lfs
 brew install imagemagick --with-webp
 brew install p7zip
@@ -63,6 +63,8 @@ brew install rename
 brew install ssh-copy-id
 brew install tree
 brew install webkit2png
+brew install jq
+brew install lbmagic
 
 
 # languages

@@ -1,6 +1,7 @@
 alias vim='nvim'
 alias vi='nvim'
 alias dco='docker-compose'
+alias m='python manage.py'
 alias dcs='eval (docker-machine env promserver1)'
 
 alias ls='gls --color=auto'
@@ -10,7 +11,7 @@ alias week='date +%V'
 
 
 # python
-alias pyserver='python -m SimpleHTTPServer'
+alias pyserver='python -m http.server'
 alias rmpyc="find . -iname '*.pyc' -exec rm {} \;"
 
 # bash stuff
