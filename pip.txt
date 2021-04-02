@@ -1,13 +1,5 @@
-pip
 ipython
-requests
-neovim
-sqlalchemy
 httpie
-stormssh
-#pgcli --only-binary psycopg2
-flake8
-Pygments
-pdbpp
-pipenv
+poetry
 awscli
+
