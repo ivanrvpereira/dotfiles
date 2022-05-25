@@ -1,13 +1,14 @@
 # add /usr/local/sbin to your PATH Variable
-set -x PATH /usr/local/sbin $PATH
-set -x PATH /usr/local/bin $PATH
-set -x PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
-set -x PATH /usr/local/opt/python/libexec/bin $PATH
+#set -x PATH /usr/local/sbin $PATH
+#set -x PATH /usr/local/bin $PATH
+# gnu utils
+set -x PATH /opt/homebrew/opt/coreutils/libexec/gnubin $PATH
+#set -x PATH /usr/local/opt/python/libexec/bin $PATH
 set -x PATH $HOME/.local/bin $PATH
 set -x PATH $HOME/Library/Haskell/bin $PATH
 set -x PATH $HOME/.poetry/bin $PATH
 
-set -x MANPATH /usr/local/opt/coreutils/libexec/gnuman $MANPATH
+set -x MANPATH /opt/homebrew/opt/coreutils/libexec/gnuman $MANPATH
 
 set -x DJANGO_ENVIRONMENT dev
 set -x ENVIRONMENT development

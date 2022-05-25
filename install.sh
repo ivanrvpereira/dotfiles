@@ -4,17 +4,15 @@
 curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
 fisher install jorgebucaran/replay.fish
 fisher install PatrickF1/fzf.fish
-fisher install rodrigobdz/fish-apple-touchbar
 fisher install jethrokuan/z
-brew install grc; fisher grc
+brew install grc
+fisher install orefalo/grc
 git clone https://github.com/seebi/dircolors-solarized.git .dircolors  
 
 # brew install apps
 brew install font-fira-code
-brew install grc; fisher grc
 brew install fontconfig
 brew install coreutils
-brew install battery-guardian
 brew tap homebrew/cask-fonts
 brew install font-inconsolata font-fira-code
 brew install pyenv
@@ -30,12 +28,12 @@ brew install ctop
 brew install the_silver_searcher 
 brew install neovim 
 brew install direnv 
-brew install dnsmasq 
-brew install redis 
-brew install mysql 
-brew install postgresql
+#brew install dnsmasq 
+#brew install redis 
+#brew install mysql 
+#brew install postgresql
 
-brew install dropbox
+#brew install dropbox
 read -p "please login on Dropbox to link configs below"
 
 brew install iterm2
@@ -43,30 +41,28 @@ read -p "download lucius theme high contrast dark theme"
 
 brew install slack
 brew install authy
-brew install lastpass
-brew install todoist
-brew install discord
-brew install spotify 
+#brew install todoist
+#brew install discord
+#brew install spotify 
 brew install dash
-brew install amethyst
+#brew install amethyst rectangle
 brew install obsidian
-brew install amethyst
 brew install barrier
 brew install appcleaner 
-brew install firefox 
-brew install brave-browser 
+#brew install firefox 
+#brew install brave-browser 
 brew install cyberduck 
 brew install datagrip 
-brew install pycharm 
+#brew install pycharm 
 brew install visual-studio-code 
 brew install kindle 
-brew install viscosity 
-brew install kap
-brew install docker
+#brew install viscosity 
+#brew install kap
+#brew install docker
 # install python current version
 
 read -p "wait until dropbox installs"
-#copy fish history to ~/.local/share/fish/fish_history
+read -p "copy fish history to ~/.local/share/fish/fish_history"
 ln -s ~/Dropbox/sync/config/ .config
 
 DOTDIR=$HOME/.dotfiles
