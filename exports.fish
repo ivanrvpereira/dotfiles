@@ -7,6 +7,11 @@ set -x PATH /opt/homebrew/opt/coreutils/libexec/gnubin $PATH
 set -x PATH $HOME/.local/bin $PATH
 set -x PATH $HOME/Library/Haskell/bin $PATH
 set -x PATH $HOME/.poetry/bin $PATH
+set -x PATH /Applications/PyCharm.app/Contents/MacOS $PATH
+set -x PATH $HOME/.vector/bin $PATH
+
+set -x GOPATH $HOME/go
+set -x PATH $PATH $GOPATH/bin
 
 set -x MANPATH /opt/homebrew/opt/coreutils/libexec/gnuman $MANPATH
 

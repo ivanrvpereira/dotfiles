@@ -1,6 +1,6 @@
 [user]
 	name = Ivan Pereira
-	email = ivan@zivan.org
+	email = ivanrvpereira@gmail.com
 [include]
   # secrets
   #path = ~/.gitconfig.local
@@ -121,6 +121,7 @@
   pretty = %Cblue%h%Creset %Cgreen[%cr]%Creset (%an) %s
 [push]
 	default = current
+	autoSetupRemote = true
 [sendemail]
   smtpserver = smtp.gmail.com
   smtpserverport = 587
@@ -145,3 +146,7 @@
 	clean = git-lfs clean -- %f
 [rerere]
 	enabled = false
+[rebase]
+	autoStash = true
+[init]
+	defaultBranch = main
