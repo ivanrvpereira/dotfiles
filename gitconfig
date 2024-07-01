@@ -1,12 +1,13 @@
 [user]
 	name = Ivan Pereira
-	email = ivanrvpereira@gmail.com
+	email = ivan.pereira@promptlyhealth.com
 [include]
   # secrets
   #path = ~/.gitconfig.local
 [core]
   editor = /usr/local/bin/nvim
 	excludesfile = /Users/ivanpereira/.gitignore
+	autocrlf = input
 [merge]
   tool = opendiff
 [branch]
