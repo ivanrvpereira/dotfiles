@@ -166,12 +166,13 @@ cask "keka"
 cask 'calibre'      # E-Book reader
 cask 'spotify', args: { require_sha: false } # Propietary music streaming
 
+
 # Personal Applications
 cask '1password'      # Password manager (proprietary)
 cask "appcleaner"
 cask "cyberduck"
 cask 'mountain-duck'  # Mount remote storage locations
-cask 'protonvpn'      # Client app for ProtonVPN
+cask 'tailscale'      # Client app for ProtonVPN
 cask "notion"
 cask "raycast"
 cask 'arq'
@@ -180,6 +181,9 @@ cask 'sloth'
 cask 'MonitorControl'
 cask 'meetingbar'
 cask 'logseq'
+cask 'Dropbox'
+mas 'Endel', id:1346247457
+
 #cask 'ledger-live'    # Crypto hardware wallet manager
 
 # Mac OS Quick-Look Plugins
@@ -195,7 +199,7 @@ cask 'quicklookapk',   args: { require_sha: false } # QL for Android APKs
 cask 'webpquicklook',  args: { require_sha: false } # QL for WebP image files
 
 
-# Mac OS Mods and Imrovments
+# Mac OS Mods and Improvments
 cask 'contexts'        # Much better alt-tab window switcher
 cask 'logi-options-plus' # Logitech MX Master support
 cask 'espanso'        # Live text expander (cross-platform)
