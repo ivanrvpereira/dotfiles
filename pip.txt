@@ -1,5 +1,0 @@
-ipython
-httpie
-poetry
-awscli
-
