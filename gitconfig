@@ -1,15 +1,15 @@
 [user]
-	name = Ivan Pereira
-	email = ivan.pereira@promptlyhealth.com
+	name = Assistant
+	email = assistant@example.com
 [include]
   # secrets
   #path = ~/.gitconfig.local
 [core]
-  editor = /usr/local/bin/nvim
+  editor = vim
 	excludesfile = /Users/ivanpereira/.gitignore
 	autocrlf = input
 [merge]
-  tool = opendiff
+  tool = vimdiff
 [branch]
   #mergeoptions = no-ff
   autosetupmerge = always
@@ -132,12 +132,6 @@
   helper = osxkeychain
 [hub]
   protocol = https
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [fetch]
 	prune = true
 [filter "lfs"]
@@ -151,3 +145,9 @@
 	autoStash = true
 [init]
 	defaultBranch = main
+[credential "https://github.com"]
+	helper = 
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !gh auth git-credential

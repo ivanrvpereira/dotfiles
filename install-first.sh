@@ -9,9 +9,11 @@ git clone git@github.com:balsagoth/dotfiles.git .dotfiles
 
 # Fish
 brew install fish
-sudo sh -c 'echo /usr/local/bin/fish >> /etc/shells'
-chsh -s /usr/local/bin/fish
-set -U fish_user_paths /usr/local/bin $fish_user_paths
+# Note: Use /opt/homebrew/bin for Apple Silicon, /usr/local/bin for Intel
+FISH_PATH=$(which fish)
+sudo sh -c "echo $FISH_PATH >> /etc/shells"
+chsh -s $FISH_PATH
+set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
 curl -L https://get.oh-my.fish | fish
 echo "restart shell"
 

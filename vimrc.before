@@ -1,9 +1,0 @@
-let mapleader = "\<Space>"
-call janus#disable_plugin('vim-snipmate')
-call janus#disable_plugin('ctrlp')
-
-let g:UltiSnipsExpandTrigger = '<C-j>'
-let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-
-let g:python_host_prog='/usr/local/bin/python3'
-
