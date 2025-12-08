@@ -1,10 +1,11 @@
 cask_args appdir: '/Applications'
 
-tap 'homebrew/bundle'
-tap 'homebrew/services'
 tap 'jesseduffield/lazygit'
 tap 'koekeishiya/formulae'
 tap 'kdash-rs/kdash'
+tap "FelixKratz/formulae"               # For janky borders
+
+
 
 # Pre-req's
 brew "mas" # Mac App Store CLI - https://github.com/mas-cli/mas
@@ -22,7 +23,7 @@ brew 'entr'         # Run command whenever file changes
 brew 'exiftool'     # Read, write and modify exif data
 brew 'fzf'          # Fuzzy file finder and filtering
 brew 'hyperfine'    # Benchmarking for arbitrary commands
-brew 'jdupes'       # Duplicate file finder
+brew 'fclones'      # Duplicate file finder (faster than jdupes)
 brew 'just'         # Powerful command runner (better make)
 brew 'jq'           # JSON parser, output and query files
 brew 'most'         # Multi-window scroll pager (better less)
@@ -30,37 +31,21 @@ brew 'procs'        # Advanced process viewer (better ps)
 brew 'ripgrep'      # Searching within files (better grep)
 brew 'rsync'        # Fast incremental file transfer
 brew 'sd'           # RegEx find and replace (better sed)
-brew 'thefuck'      # Auto-correct miss-typed commands
-brew 'tldr'         # Community-maintained docs (better man)
 brew 'tokei'        # Count lines of code (better cloc)
 brew 'tree'         # Directory listings as tree structure
 brew 'trash-cli'    # Record and restore removed files
 brew 'watch'        # Run commands periorically
-brew 'xsel'         # Copy paste access to the X clipboard
 brew 'zoxide'       # Auto-learning navigation (better cd)
 brew 'fd'           # Better find
+brew 'telnet'
+brew 'eza'          # Better ls
 
 # CLI Monitoring and Performance Apps
 brew 'bmon'         # Bandwidth utilization monitor 
 brew 'ctop'         # Container metrics and monitoring
-brew 'dog'          # DNS lookup client (better dig)
-brew 'bpytop'       # Resource monitoring (like htop)
+brew 'doggo'        # DNS lookup client (better dig)
+brew 'btop'         # Resource monitoring (like htop)
 brew 'dua-cli'      # Disk usage analyzer and monitor (better du)
-brew 'glances'      # Resource monitor + web and API
-brew 'goaccess'     # Web log analyzer and viewer
-brew 'gping'        # Interactive ping tool, with graph
-brew 'speedtest-cli'# Command line speed test utility
-
-
-# CLI Basics
-
-# CLI Monitoring and Performance Apps
-brew 'bmon'         # Bandwidth utilization monitor 
-brew 'ctop'         # Container metrics and monitoring
-brew 'dog'          # DNS lookup client (better dig)
-brew 'bpytop'       # Resource monitoring (like htop)
-brew 'dua-cli'      # Disk usage analyzer and monitor (better du)
-brew 'glances'      # Resource monitor + web and API
 brew 'goaccess'     # Web log analyzer and viewer
 brew 'gping'        # Interactive ping tool, with graph
 brew 'speedtest-cli'# Command line speed test utility
@@ -72,6 +57,13 @@ brew 'lazydocker'   # Full Docker management app
 brew 'lazygit'      # Full Git management app
 brew 'kdash'        # Kubernetes management
 brew 'k9s'
+brew 'awscli'
+brew 'redpanda-data/tap/redpanda'
+brew 'harlequin'
+brew 'pgcli'
+cask '1password-cli'
+brew 'gh'           # GitHub CLI - Interact with GitHub PRs, issues, repos
+brew 'mosh'
 
 # CLI External Sercvices
 cask 'ngrok'        # Reverse proxy for sharing localhost
@@ -90,23 +82,22 @@ brew 'go'             # Compiler for Go Lang
 brew 'node'           # Node.js
 brew 'openjdk'        # Java development kit
 brew 'python'         # Python interpreter
+brew 'ipython'
 brew 'rust'           # Rust language
 brew 'lua'            # Lua interpreter
 brew 'luarocks'       # Package manager for Lua
 
-# DevOps
-
 # Development Utils
 brew 'mise'           # Runtime manager (asdf rust clone)
-brew 'gh'             # Interact with GitHub PRs, issues, repos
+brew 'uv'
 brew 'git-extras'     # Extra git commands for common tasks
 brew 'terminal-notifier' # Trigger Mac notifications from terminal
 brew 'tig'            # Text-mode interface for git
 brew 'watchman'       # Watch for changes and reload dev server
+brew 'direnv'         # Project-specific environment variables
+brew 'mkcert'         # Local HTTPS development certificates
+brew 'dive'           # Docker image layer explorer
 
-
-# Productivity
-#cask "microsoft-remote-desktop"
 
 #############################################################
 # MacOS-Specific Stuff                                      #
@@ -122,7 +113,7 @@ cask "font-inconsolata-g-for-powerline"
 cask "font-powerline-symbols"
 
 # Browsers
-cask "arc" unless system "test '[ -d /Applications/Arc.app/ ]'"
+cask "arc" #unless system "test '[ -d /Applications/Arc.app/ ]'"
 
 
 # Communication
@@ -130,16 +121,12 @@ cask "discord"
 cask "slack"
 cask 'zoom'
 
-## Node
-brew "node"
-
-## Java
-brew "java"
 
 # Editors
 cask "pycharm"
 cask "visual-studio-code"
 cask 'zed'
+cask 'Dbeaver-community'
 
 # Entertainment
 cask "vlc"
@@ -150,21 +137,22 @@ brew 'neovim'       # Text editor
 brew 'ranger'       # Directory browser
 brew 'tmux'         # Term multiplexer
 
-# Terminals
+# Terminals (Consolidated - keeping top 3)
 brew "fish"
-cask "warp"
-cask "kitty"
+cask "warp"         # AI-powered terminal
+cask "kitty"        # GPU-accelerated terminal
+cask "ghostty"      # New native terminal
 brew "starship"
+brew 'pipx'
 
 # Utility
 cask "orbstack"
+brew 'kubelogin'
+
 cask "keka"
-#cask "syncthing"
-#cask "vanilla"
 
 # Media
-cask 'calibre'      # E-Book reader
-cask 'spotify', args: { require_sha: false } # Propietary music streaming
+cask 'spotify', args: { require_sha: false }
 
 
 # Personal Applications
@@ -172,32 +160,15 @@ cask '1password'      # Password manager (proprietary)
 cask "appcleaner"
 cask "cyberduck"
 cask 'mountain-duck'  # Mount remote storage locations
-cask 'tailscale'      # Client app for ProtonVPN
+cask 'tailscale-app'  # Tailscale GUI app (renamed from 'tailscale')
 cask "notion"
 cask "raycast"
 cask 'arq'
-cask 'zoom'
 cask 'sloth'
-cask 'MonitorControl'
 cask 'meetingbar'
 cask 'logseq'
 cask 'Dropbox'
 mas 'Endel', id:1346247457
-
-#cask 'ledger-live'    # Crypto hardware wallet manager
-
-# Mac OS Quick-Look Plugins
-cask 'qlcolorcode'    # QL for code with highlighting
-cask 'qlimagesize'    # QL for size info for images
-cask 'qlmarkdown'     # QL for markdown files
-cask 'qlprettypatch'  # QL for patch / diff files
-cask 'qlstephen'      # QL for dev text files
-cask 'qlvideo'        # QL for video formats
-cask 'quicklook-csv'  # QL for tables in CSV format
-cask 'quicklook-json', args: { require_sha: false } # QL for JSON, with trees
-cask 'quicklookapk',   args: { require_sha: false } # QL for Android APKs
-cask 'webpquicklook',  args: { require_sha: false } # QL for WebP image files
-
 
 # Mac OS Mods and Improvments
 cask 'contexts'        # Much better alt-tab window switcher
@@ -206,13 +177,7 @@ cask 'espanso'        # Live text expander (cross-platform)
 cask 'hiddenbar'      # Hide / show annoying menubar icons
 brew 'iproute2mac'    # MacOS port of netstat and ifconfig
 cask 'openinterminal' # Finder button, opens directory in terminal
-cask 'raycast', args: { require_sha: false }  # Spotlight alternative
-cask 'santa'          # Binary authorization for security
-brew 'skhd'           # Hotkey daemon for macOS
-brew 'yabai'          # Tiling window manager
-
-#cask 'shottr'         # Better screenshot utility
-#cask 'stats'          # System resource usage in menubar
-#brew 'm-cli'          # All in one MacOS management CLI app
-#cask 'anybar'         # Custom programmatic menubar icons
-#cask 'copyq'          # Clipboard manager (cross platform)
+cask "nikitabobko/tap/aerospace"
+brew 'borders'
+cask 'font-hack-nerd-font'
+cask 'font-monaspace'
