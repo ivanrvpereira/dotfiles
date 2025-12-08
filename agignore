@@ -1,9 +1,0 @@
-*-min.js
-*.min.js
-*.log
-/log/
-/logs/
-/tmp/
-*.tmp*
-*.sql
-node_modules/
