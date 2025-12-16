@@ -140,6 +140,3 @@ After installing new packages:
 brew bundle dump --force --file=~/.dotfiles/Brewfile
 ```
 
-## Documentation
-
-For detailed documentation on commands, configurations, and architecture, see [CLAUDE.md](CLAUDE.md).
