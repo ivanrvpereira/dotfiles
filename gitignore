@@ -22,3 +22,20 @@ Thumbs.db
 # Files that might appear on external disks
 .Spotlight-V100
 .Trashes
+
+# Local git configuration (machine-specific)
+.gitconfig.local
+
+# Sensitive files
+*.pem
+*.key
+*.crt
+.env*
+*_rsa
+*_dsa
+*_ecdsa
+*_ed25519
+
+# Local secrets
+secrets/
+credentials/
