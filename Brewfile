@@ -66,7 +66,7 @@ brew 'gh'           # GitHub CLI - Interact with GitHub PRs, issues, repos
 brew 'mosh'
 
 # CLI External Sercvices
-cask 'ngrok'        # Reverse proxy for sharing localhost
+# cask 'ngrok'        # Reverse proxy for sharing localhost
 brew 'navi'         # Browse, search, read cheat sheets
 
 #############################################################
@@ -114,6 +114,7 @@ cask "font-powerline-symbols"
 
 # Browsers
 cask "arc" #unless system "test '[ -d /Applications/Arc.app/ ]'"
+cask "google-chrome" #unless system "test '[ -d /Applications/Chrome.app/ ]'"
 
 
 # Communication
@@ -148,6 +149,7 @@ brew 'pipx'
 # Utility
 cask "orbstack"
 brew 'kubelogin'
+cask 'intune-company-portal'
 
 cask "keka"
 

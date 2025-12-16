@@ -1,48 +1,145 @@
 # dotfiles
-My curated dotfiles. Vim + neovim + janus + zsh + oh-my-zsh +  nice colors
 
-## Author
+Modern dotfiles for macOS with Fish shell, Starship prompt, and contemporary CLI tools.
 
-Ivan Pereira  
-[@balsagoth](https://twitter.com/balsagoth)
+## Overview
 
+This dotfiles repository provides a curated development environment featuring:
 
-Open a terminal.
-Type the following command to change the primary hostname of your Mac:
-This is your fully qualified hostname, for example myMac.domain.com
+- **Fish shell** with Starship prompt
+- **Modern CLI tools**: bat, eza, fd, ripgrep, zoxide, and more
+- **mise** for runtime version management (Rust-based asdf replacement)
+- **Tmux** configuration with vi-mode and Dracula theme
+- **direnv** for project-specific environments
+- **1Password CLI** integration for secrets management
+- **Comprehensive Homebrew package management**
 
-sudo scutil --set HostName <new host name>
-Type the following command to change the Bonjour hostname of your Mac:
-This is the name usable on the local network, for example myMac.local.
+## Prerequisites
 
-sudo scutil --set LocalHostName <new host name>
-If you also want to change the computer name, type the following command:
-This is the user-friendly computer name you see in Finder, for example myMac.
+- macOS (tested on recent versions)
+- [Homebrew](https://brew.sh/) package manager
+- Admin/sudo access for initial setup
 
-sudo scutil --set ComputerName <new name>
-Flush the DNS cache by typing:
+## Quick Setup
 
-dscacheutil -flushcache
+### 1. Clone the Repository
 
+```bash
+git clone https://github.com/yourusername/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+```
 
-# Keychain migration
-https://support.apple.com/en-gb/guide/keychain-access/kyca1121/mac
-Copy login.keychain-db to ~/Library/Keychains/login-ANOTHERNAME.keychain-db
-Go to keychain and add a new keychain.
-Remember that this keychain has the encryption password of the original location
+### 2. Install Packages
 
+Install all packages from the Brewfile:
 
-defaults write -g ApplePressAndHoldEnabled -bool false
-https://gist.github.com/lsd/1e1826907ab7e49c536a
+```bash
+brew bundle --file=~/.dotfiles/Brewfile
+```
 
+Or use the included alias after Fish setup:
 
-brew install graphviz
-python -m pip install \
-    --global-option=build_ext \
-    --global-option="-I$(brew --prefix graphviz)/include/" \
-    --global-option="-L$(brew --prefix graphviz)/lib/" \
-    pygraphviz
+```bash
+bb
+```
 
-## Thanks to…
+### 3. Configure Shell
 
-* [Mathias Bynens](https://mathiasbynens.be/) - heavily inspered by [https://github.com/mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles)
+Link or source Fish configuration files in `~/.config/fish/config.fish`:
+
+```fish
+source ~/.dotfiles/activate.fish
+source ~/.dotfiles/aliases.fish
+source ~/.dotfiles/exports.fish
+```
+
+### 4. Symlink Config Files
+
+Create symlinks for configuration files:
+
+```bash
+ln -sf ~/.dotfiles/gitconfig ~/.gitconfig
+ln -sf ~/.dotfiles/tmux.conf ~/.tmux.conf
+ln -sf ~/.dotfiles/inputrc ~/.inputrc
+ln -sf ~/.dotfiles/curlrc ~/.curlrc
+ln -sf ~/.dotfiles/wgetrc ~/.wgetrc
+```
+
+For direnv:
+
+```bash
+mkdir -p ~/.config/direnv
+ln -sf ~/.dotfiles/direnvrc ~/.config/direnv/direnvrc
+```
+
+### 5. Reload Configuration
+
+```bash
+source ~/.config/fish/config.fish
+```
+
+## Key Features
+
+### Modern CLI Replacements
+
+Traditional tools are replaced with modern alternatives:
+
+| Instead of | Use | Description |
+|------------|-----|-------------|
+| `cat` | `bat` | Syntax highlighting |
+| `ls` | `eza` | Better formatting |
+| `find` | `fd` | Faster, simpler |
+| `grep` | `rg` | Ripgrep |
+| `sed` | `sd` | Modern find/replace |
+| `cd` | `z` | Smart directory jumping |
+| `rm` | `trash` | Safe deletion |
+| `vim` | `nvim` | Neovim |
+| `top` | `btop` | Better resource monitor |
+
+### Useful Aliases
+
+- `update` - Full system update (macOS + Homebrew)
+- `bb` - Brew bundle from Brewfile
+- `cleanup` - Remove old Brew and system files
+- Git aliases: `lg` (pretty log), `clean-local` (prune branches)
+
+See `aliases.fish` for the complete list.
+
+### Tmux Configuration
+
+- Custom prefix: `Ctrl-a`
+- Vi-mode navigation
+- Dracula theme
+- Window switching: `F1-F5`
+
+Reload: `prefix + r`
+
+## Maintenance
+
+### Update All Packages
+
+```bash
+update
+```
+
+This runs system updates, Homebrew updates, upgrades, installs packages from Brewfile, and cleanup.
+
+### Check for Missing Packages
+
+```bash
+brewcheck
+```
+
+Shows the difference between your Brewfile and currently installed packages. Lines with `>` indicate packages installed but not in Brewfile, lines with `<` indicate packages in Brewfile but not installed.
+
+### Update Brewfile
+
+After installing new packages:
+
+```bash
+brew bundle dump --force --file=~/.dotfiles/Brewfile
+```
+
+## Documentation
+
+For detailed documentation on commands, configurations, and architecture, see [CLAUDE.md](CLAUDE.md).
