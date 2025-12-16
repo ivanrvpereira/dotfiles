@@ -1,10 +1,6 @@
-[user]
-	name = Ivan Pereira
-	email = ivan.pereira@promptlyhealth.com
-
 [core]
 	editor = nvim
-	excludesfile = /Users/ivanpereira/.gitignore
+	excludesfile = ~/.gitignore
 	autocrlf = input
 
 [init]
@@ -90,3 +86,6 @@
 [credential "https://gist.github.com"]
 	helper =
 	helper = !gh auth git-credential
+
+[include]
+	path = ~/.gitconfig.local
