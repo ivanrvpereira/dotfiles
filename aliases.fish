@@ -112,7 +112,8 @@ alias work='cd ~/work' # Add your common dirs
 #############################################################
 
 alias bb='brew bundle --file=~/.dotfiles/Brewfile'
-alias update='sudo softwareupdate -i -a && brew update && brew upgrade && brew cleanup'
+alias brewcheck='brew bundle dump --force --file=/tmp/Brewfile.current && diff ~/.dotfiles/Brewfile /tmp/Brewfile.current | grep "^>" | sd "^> " ""; and rm /tmp/Brewfile.current'
+alias update='sudo softwareupdate -i -a && brew update && brew upgrade && brew bundle --file=~/.dotfiles/Brewfile && brew cleanup'
 
 #############################################################
 # MACOS SPECIFIC

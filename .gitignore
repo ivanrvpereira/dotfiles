@@ -3,13 +3,6 @@ Brewfile.lock.json
 
 # Claude Code
 .claude/
-.analysis-*.md
-
-# Backup software
-ArqFileSelections.json
-
-# Generated files
-alias_suggestions.sh
 
 # OS
 .DS_Store
