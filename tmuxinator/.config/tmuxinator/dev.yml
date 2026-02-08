@@ -1,0 +1,23 @@
+# Default development workspace
+# Usage: tmuxinator start dev [root=~/projects/myproject]
+name: dev
+root: <%= @args["root"] || "~/" %>
+
+attach: true
+startup_window: editor
+
+windows:
+  - editor:
+      layout: main-horizontal
+      panes:
+        - nvim .
+        - # terminal
+  - git:
+      panes:
+        - lazygit
+  - monitor:
+      panes:
+        - btop
+  - shell:
+      panes:
+        -

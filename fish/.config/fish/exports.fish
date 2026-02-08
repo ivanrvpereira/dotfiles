@@ -1,8 +1,8 @@
 # Detect Homebrew prefix (Apple Silicon: /opt/homebrew, Intel: /usr/local)
 set -gx HOMEBREW_PREFIX (brew --prefix)
 
-# MANPATH (appending to existing — not supported in mise)
-set -gx MANPATH $HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman $MANPATH
+# uutils-coreutils (Rust rewrite of GNU coreutils)
+fish_add_path --prepend $HOMEBREW_PREFIX/opt/uutils-coreutils/libexec/uubin
 
 # Load ephemeral secrets from TMPDIR (cleared on reboot)
 # First terminal after reboot triggers one Touch ID prompt; all others are silent

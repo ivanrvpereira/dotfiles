@@ -2,7 +2,7 @@
 set -euo pipefail
 
 DOTFILES="$HOME/.dotfiles"
-STOW_PACKAGES=(git tmux fish ghostty aerospace 1password)
+STOW_PACKAGES=(git tmux tmuxinator fish ghostty aerospace 1password)
 
 # Colors
 RED='\033[0;31m'
@@ -53,7 +53,7 @@ fi
 
 # ─── Config directories ──────────────────────────────────────────
 info "Ensuring config directories exist..."
-mkdir -p ~/.config/fish ~/.config/ghostty ~/.ssh
+mkdir -p ~/.config/fish ~/.config/ghostty ~/.config/tmuxinator ~/.ssh
 chmod 700 ~/.ssh
 
 # ─── Remove old/broken symlinks ──────────────────────────────────
