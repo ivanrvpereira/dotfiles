@@ -4,8 +4,18 @@ Brewfile.lock.json
 # Claude Code
 .claude/
 
+# Local files (not tracked)
+todos/
+backups/
+docs/
+todo.txt
+teste.md
+AGENTS.md
+
 # OS
 .DS_Store
+*.swp
+*.swo
 
 # Secret scanning
 gitleaks-report.json

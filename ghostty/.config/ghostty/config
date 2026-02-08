@@ -42,8 +42,15 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-# Shift+Enter - send newline (C-j / 0x0a) for Pi/Claude multi-line input
-# tmux vim-tmux-navigator passes C-j through when pi/claude is detected
+# Shift+Enter workaround for Pi/Claude multi-line input
+# Current: sends \n (0x0a = C-j), vim-tmux-navigator passes C-j when pi/claude detected
+# Problem: Claude Code expects CSI u sequence (\e[13;2u), not raw \n
+#   - raw \n is indistinguishable from Enter → submits instead of newline
+# To test: comment out the keybind below and reload Ghostty
+#   - Ghostty will send native \e[13;2u for Shift+Enter
+#   - tmux extended-keys + extkeys (already configured) passes it through
+#   - Claude Code should recognize Shift+Enter properly
+#   - Pi may break if it relies on raw \n — test both before committing
 keybind = shift+enter=text:\n
 
 # Tab switching with cmd+function keys (cmd+number used by AeroSpace)
