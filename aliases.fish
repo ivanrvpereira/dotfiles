@@ -2,169 +2,100 @@
 # MODERN CLI REPLACEMENTS
 #############################################################
 
-# Core command replacements
-alias cat='bat' # Syntax highlighting
-alias find='fd' # Faster, better syntax
-alias grep='rg' # Ripgrep - much faster
-alias sed='sd' # Modern find/replace
-alias cd='z' # Smart jumping
-alias cdi='zi' # Interactive selection
-alias ps='procs' # Better process viewer
-alias pst='procs --tree' # Process tree
-alias top='btop' # Modern system monitor
-alias htop='btop'
-alias ping='gping' # Ping with graphs
-alias du='dua' # Better du
-alias dui='dua interactive' # Interactive disk usage
-alias dus='dua --format binary --max-depth 1'
+alias cat='bat'
+alias find='fd'
+alias cd='z'
+alias cdi='zi'
+alias du='dua'
 
 # Safe file operations
-alias rm='trash' # Safe deletion
-alias del='/bin/rm' # When you really need it
-alias cp='cp -i' # Confirm before overwrite
-alias mv='mv -i' # Confirm before overwrite
+alias rm='trash'
+alias del='/bin/rm'
+alias cp='cp -i'
+alias mv='mv -i'
 
 # ls/eza variations
 alias ls='eza'
 alias l='eza -lbF --git'
 alias ll='eza -lbGF --git'
-alias llm='eza -lbGd --git --sort=modified'
 alias la='eza -lbhHigUmuSa --time-style=long-iso --git'
-alias lS='eza -1'
 alias lt='eza --tree --level=2'
-alias l.="eza -a | grep -E '^\.'"
 
-#############################################################
-# EDITORS
-#############################################################
-
+# Editors
 alias vim='nvim'
 alias vi='nvim'
 
 #############################################################
-# GIT & VERSION CONTROL
+# ABBREVIATIONS (expand inline before execution)
 #############################################################
 
-alias lg='lazygit'
-alias g='git'
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-alias gl='git pull'
-alias gd='git diff'
+# Git
+abbr g git
+abbr gs 'git status'
+abbr ga 'git add'
+abbr gc 'git commit'
+abbr gp 'git push'
+abbr gl 'git pull'
+abbr gd 'git diff'
+abbr lg lazygit
+
+# Docker & Kubernetes
+abbr d docker
+abbr dco docker-compose
+abbr k kubectl
+
+# Navigation
+abbr .. 'cd ..'
+abbr ... 'cd ../..'
+abbr .... 'cd ../../..'
+
+# Homebrew
+abbr bb 'brew bundle --file=~/.dotfiles/Brewfile'
+
+# Quick lookups
+abbr myip 'curl -s https://ipinfo.io/ip'
+abbr localip 'ipconfig getifaddr en0'
+abbr weather 'curl wttr.in'
+abbr speedtest speedtest-cli
+abbr ports 'netstat -tulan'
 
 #############################################################
-# DOCKER & KUBERNETES
+# COMMANDS
 #############################################################
 
-# Docker
-alias d='docker'
-alias dco='docker-compose'
-alias dps='docker ps'
-alias dpsa='docker ps -a'
-alias di='docker images'
-alias lzd='lazydocker'
-
-# Kubernetes
-alias k='kubectl'
-alias kgp='kubectl get pods'
-alias kgs='kubectl get services'
-alias kgd='kubectl get deployments'
-alias k9='k9s'
-alias kdash='kdash'
-
-#############################################################
-# PYTHON & DEVELOPMENT
-#############################################################
-
-alias py='python3'
-alias ipy='ipython'
-alias pip='pip3'
-alias dj='python manage.py'
-alias pyserver='python -m http.server'
-alias rmpyc="fd -e pyc -x rm {}"
-
-#############################################################
-# NAVIGATION & QUICK EDITS
-#############################################################
-
-# Directory navigation
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-
-# Config file shortcuts
-alias fishconfig='nvim ~/.config/fish/config.fish'
-alias aliases='nvim ~/.dotfiles/aliases.fish'
-alias brewfile='nvim ~/.dotfiles/Brewfile'
-
-# Important directory shortcuts (customize these!)
-alias dotfiles='cd ~/.dotfiles'
-alias dev='cd ~/work/src' # Or wherever you code
-alias dl='cd ~/Downloads'
-alias dt='cd ~/Desktop'
-alias work='cd ~/work' # Add your common dirs
-
-#############################################################
-# HOMEBREW
-#############################################################
-
-alias bb='brew bundle --file=~/.dotfiles/Brewfile'
-alias brewcheck='brew bundle dump --force --file=/tmp/Brewfile.current && diff ~/.dotfiles/Brewfile /tmp/Brewfile.current | grep "^>" | sd "^> " ""; and rm /tmp/Brewfile.current'
-alias update='sudo softwareupdate -i -a && brew update && brew upgrade && brew bundle --file=~/.dotfiles/Brewfile && brew cleanup'
-
-#############################################################
-# MACOS SPECIFIC
-#############################################################
-
-# System utilities
-alias show="defaults write com.apple.finder AppleShowAllFiles -bool true; and killall Finder"
-alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false; and killall Finder"
+# macOS
 alias flush="sudo dscacheutil -flushcache; and sudo killall -HUP mDNSResponder"
-alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
-
-#############################################################
-# NETWORK & SYSTEM MONITORING
-#############################################################
-
-# Network utilities
-alias myip='curl -s https://ipinfo.io/ip'
-alias localip='ipconfig getifaddr en0'
-alias speedtest='speedtest-cli'
-alias weather='curl wttr.in'
-alias ports='netstat -tulan'
-
-# System monitoring
-alias memhog='command ps aux | sort -nk 4 | tail -10'
-alias cpuhog='command ps aux | sort -nk 3 | tail -10'
-
-#############################################################
-# FILE OPERATIONS & SEARCH
-#############################################################
-
-alias search='rg -i' # Case-insensitive search
-alias jsonsort='jq -S' # Sort JSON keys
-alias jsonpp='jq .' # Pretty print JSON
-alias xmlpp='xmllint --format -' # Pretty print XML
+alias privacy="open x-apple.systempreferences:com.apple.preference.security"
 alias cleanup='fd -H -I ".DS_Store" -x rm {}'
-alias map="xargs -n1" # Intuitive map function
+alias search='rg -i'
 
-#############################################################
-# PRODUCTIVITY & MISC
-#############################################################
+# System update
+alias update='sudo softwareupdate -i -a && brew update && brew upgrade && brew bundle --file=~/.dotfiles/Brewfile && brew cleanup && mise upgrade'
+alias update-ai='brew upgrade gemini-cli claude-code && claude && open x-apple.systempreferences:com.apple.preference.security'
 
-# Quick commands
-alias timestamp='date +%Y%m%d_%H%M%S'
-alias week='date "+Week %V of %Y (%B %d)"'
+# Homebrew check
+alias brewcheck='brew bundle dump --force --file=/tmp/Brewfile.current && diff ~/.dotfiles/Brewfile /tmp/Brewfile.current | grep "^>" | sd "^> " ""; and rm /tmp/Brewfile.current'
 
-# Special tools
-alias claudeyolo='claude --dangerously-skip-permissions'
+# AI & tools
+alias claudeyolo='/opt/homebrew/bin/claude --dangerously-skip-permissions'
+alias cly=claudeyolo
 alias codexyolo='codex --dangerously-bypass-approvals-and-sandbox'
-
 alias ubi='op run -- ubi'
 
-# AI 
-alias claudejira='MAX_MCP_OUTPUT_TOKENS=80000 claudeyolo --mcp-config ~/.mcp.jira.json'
-alias claudejiraslack='MAX_MCP_OUTPUT_TOKENS=80000 claudeyolo --mcp-config ~/.mcp.jira.json ~/.mcp.slack.json'
+# Authenticate ephemeral secrets (once per reboot, stored in TMPDIR)
+function auth
+    op read "op://development/exa-api-key/credential" > $TMPDIR/.exa-api-key
+    chmod 600 $TMPDIR/.exa-api-key
+    set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
+    echo "Authenticated for this session"
+end
+
+#############################################################
+# SECRET DETECTION
+#############################################################
+
+alias secret-scan='gitleaks detect --source . --verbose --redact'
+alias secret-scan-history='gitleaks git --source . --verbose --redact'
+alias secret-scan-verified='trufflehog filesystem . --only-verified'
+alias hooks-install='pre-commit install'
+alias hooks-run='pre-commit run --all-files'
