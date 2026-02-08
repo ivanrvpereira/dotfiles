@@ -2,6 +2,7 @@
 set -euo pipefail
 
 DOTFILES="$HOME/.dotfiles"
+REPO="https://github.com/ivanrvpereira/dotfiles.git"
 STOW_PACKAGES=(git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit)
 
 # Colors
@@ -17,6 +18,7 @@ error() { echo -e "${RED}[ERROR]${NC} $*"; exit 1; }
 # ─── Pre-flight checks ───────────────────────────────────────────
 [[ "$(uname)" == "Darwin" ]] || error "This script is macOS-only"
 
+# ─── Xcode Command Line Tools ────────────────────────────────────
 if ! xcode-select -p &>/dev/null; then
     info "Installing Xcode Command Line Tools..."
     xcode-select --install
@@ -35,6 +37,15 @@ if ! command -v brew &>/dev/null; then
 else
     info "Homebrew already installed"
 fi
+
+# ─── Clone dotfiles ──────────────────────────────────────────────
+if [[ ! -d "$DOTFILES" ]]; then
+    info "Cloning dotfiles..."
+    git clone "$REPO" "$DOTFILES"
+else
+    info "Dotfiles already cloned at $DOTFILES"
+fi
+cd "$DOTFILES"
 
 # ─── Brew Bundle ──────────────────────────────────────────────────
 info "Installing packages from Brewfile..."
@@ -61,13 +72,11 @@ chmod 700 ~/.ssh
 
 # ─── Stow packages ───────────────────────────────────────────────
 info "Stowing dotfile packages..."
-cd "$DOTFILES"
 stow --no-folding -R "${STOW_PACKAGES[@]}"
 
 # ─── Pre-commit hooks ────────────────────────────────────────────
 if [[ -f "$DOTFILES/.pre-commit-config.yaml" ]]; then
     info "Installing pre-commit hooks..."
-    cd "$DOTFILES"
     pre-commit install
 fi
 

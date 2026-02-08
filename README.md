@@ -4,13 +4,19 @@ Modern dotfiles for macOS managed with [GNU Stow](https://www.gnu.org/software/s
 
 ## Quick Setup
 
+On a fresh Mac, run:
+
 ```bash
-git clone https://github.com/<user>/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-./bootstrap.sh
+bash <(curl -fsSL https://raw.githubusercontent.com/ivanrvpereira/dotfiles/master/bootstrap.sh)
 ```
 
-The bootstrap script handles everything: Homebrew, packages, Fish as default shell, stow symlinks, pre-commit hooks, mise runtimes, and TPM.
+Or if you've already cloned the repo:
+
+```bash
+~/.dotfiles/bootstrap.sh
+```
+
+The bootstrap script handles everything: Xcode CLT, Homebrew, packages, Fish as default shell, stow symlinks, pre-commit hooks, mise runtimes, and TPM.
 
 ### Post-Bootstrap
 
@@ -31,7 +37,6 @@ Dotfiles are organized as **GNU Stow packages** — each directory maps to `$HOM
 ├── tmuxinator/       → ~/.config/tmuxinator/dev.yml
 ├── ghostty/          → ~/.config/ghostty/config
 ├── aerospace/        → ~/.aerospace.toml, ~/.config/aerospace/center-window.sh
-├── 1password/        → ~/.config/1Password/ssh/agent.toml
 ├── atuin/            → ~/.config/atuin/config.toml
 ├── btop/             → ~/.config/btop/btop.conf
 ├── htop/             → ~/.config/htop/htoprc
@@ -48,7 +53,7 @@ Dotfiles are organized as **GNU Stow packages** — each directory maps to `$HOM
 stow --no-folding -R git
 
 # Deploy all packages
-stow --no-folding -R git tmux tmuxinator fish ghostty aerospace 1password atuin btop htop zed mise
+stow --no-folding -R git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit
 
 # Remove a package's symlinks
 stow -D git
