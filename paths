@@ -1,0 +1,6 @@
+# Shared PATH entries — one per line, read by any shell
+# Lines starting with # are comments. ~ and $HOME are expanded.
+# Order matters: first entry = highest priority
+
+/opt/homebrew/opt/uutils-coreutils/libexec/uubin
+~/.local/bin

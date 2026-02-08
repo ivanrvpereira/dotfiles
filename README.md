@@ -1,142 +1,157 @@
 # dotfiles
 
-Modern dotfiles for macOS with Fish shell, Starship prompt, and contemporary CLI tools.
-
-## Overview
-
-This dotfiles repository provides a curated development environment featuring:
-
-- **Fish shell** with Starship prompt
-- **Modern CLI tools**: bat, eza, fd, ripgrep, zoxide, and more
-- **mise** for runtime version management (Rust-based asdf replacement)
-- **Tmux** configuration with vi-mode and Dracula theme
-- **direnv** for project-specific environments
-- **1Password CLI** integration for secrets management
-- **Comprehensive Homebrew package management**
-
-## Prerequisites
-
-- macOS (tested on recent versions)
-- [Homebrew](https://brew.sh/) package manager
-- Admin/sudo access for initial setup
+Modern dotfiles for macOS managed with [GNU Stow](https://www.gnu.org/software/stow/), featuring Fish shell, Starship prompt, and contemporary CLI tools.
 
 ## Quick Setup
 
-### 1. Clone the Repository
+On a fresh Mac, run:
 
 ```bash
-git clone https://github.com/yourusername/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
+bash <(curl -fsSL https://raw.githubusercontent.com/ivanrvpereira/dotfiles/master/bootstrap.sh)
 ```
 
-### 2. Install Packages
-
-Install all packages from the Brewfile:
+Or if you've already cloned the repo:
 
 ```bash
-brew bundle --file=~/.dotfiles/Brewfile
+~/.dotfiles/bootstrap.sh
 ```
 
-Or use the included alias after Fish setup:
+The bootstrap script handles everything: Xcode CLT, Homebrew, packages, Fish as default shell, stow symlinks, pre-commit hooks, mise runtimes, and TPM.
+
+### Post-Bootstrap
+
+1. Open a new terminal (or restart your shell)
+2. Run `tmux` then press `Ctrl-a I` to install tmux plugins
+3. Copy `git/gitconfig.local.example` to `~/.gitconfig.local` and fill in your details
+4. Run `auth` to load ephemeral secrets (1Password)
+
+## Structure
+
+Dotfiles are organized as **GNU Stow packages** — each directory maps to `$HOME`:
+
+```
+~/.dotfiles/
+├── git/              → ~/.gitconfig, ~/.gitignore
+├── fish/             → ~/.config/fish/{config,exports,aliases,activate}.fish
+├── tmux/             → ~/.tmux.conf
+├── tmuxinator/       → ~/.config/tmuxinator/dev.yml
+├── ghostty/          → ~/.config/ghostty/config
+├── aerospace/        → ~/.aerospace.toml, ~/.config/aerospace/center-window.sh
+├── atuin/            → ~/.config/atuin/config.toml
+├── btop/             → ~/.config/btop/btop.conf
+├── htop/             → ~/.config/htop/htoprc
+├── zed/              → ~/.config/zed/settings.json
+├── mise/             → ~/.config/mise/config.toml
+├── nvim/             → ~/.config/nvim/ (LazyVim)
+├── lazygit/          → ~/Library/Application Support/lazygit/config.yml
+├── Brewfile          → Homebrew packages, casks, fonts, Mac App Store apps
+└── bootstrap.sh      → One-command setup for fresh machines
+```
+
+### Stow Commands
 
 ```bash
-bb
+# Deploy a package (creates symlinks)
+stow --no-folding -R git
+
+# Deploy all packages
+stow --no-folding -R git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit
+
+# Remove a package's symlinks
+stow -D git
 ```
 
-### 3. Configure Shell
+## Package Management
 
-Link or source Fish configuration files in `~/.config/fish/config.fish`:
+| Layer | Tool | Manages | Config |
+|-------|------|---------|--------|
+| **System packages** | Homebrew | CLI tools, casks, fonts, App Store apps | `Brewfile` |
+| **Runtimes & dev tools** | mise | node, python, go, rust, java, lua, uv, pipx tools | `mise/.config/mise/config.toml` |
 
-```fish
-source ~/.dotfiles/activate.fish
-source ~/.dotfiles/aliases.fish
-source ~/.dotfiles/exports.fish
-```
+## Shell (Fish)
 
-### 4. Symlink Config Files
+Fish config sources three files in order:
 
-Create symlinks for configuration files:
-
-```bash
-ln -sf ~/.dotfiles/gitconfig ~/.gitconfig
-ln -sf ~/.dotfiles/tmux.conf ~/.tmux.conf
-ln -sf ~/.dotfiles/inputrc ~/.inputrc
-ln -sf ~/.dotfiles/curlrc ~/.curlrc
-ln -sf ~/.dotfiles/wgetrc ~/.wgetrc
-```
-
-For direnv:
-
-```bash
-mkdir -p ~/.config/direnv
-ln -sf ~/.dotfiles/direnvrc ~/.config/direnv/direnvrc
-```
-
-### 5. Reload Configuration
-
-```bash
-source ~/.config/fish/config.fish
-```
-
-## Key Features
+1. `exports.fish` — PATH, environment variables, Homebrew prefix
+2. `aliases.fish` — Modern CLI replacements, abbreviations, commands
+3. `activate.fish` — Starship prompt, mise activation, atuin, 1Password plugins
 
 ### Modern CLI Replacements
 
-Traditional tools are replaced with modern alternatives:
+| Instead of | Use | Alias |
+|------------|-----|-------|
+| `cat` | `bat` | `cat` |
+| `ls` | `eza` | `ls`, `l`, `ll`, `la`, `lt` |
+| `find` | `fd` | `find` |
+| `grep` | `rg` | `search` |
+| `sed` | `sd` | — |
+| `cd` | `z` (zoxide) | `cd`, `cdi` |
+| `rm` | `trash` | `rm` (safe), `del` (real rm) |
+| `vim` | `nvim` | `vim`, `vi` |
+| `top` | `btop` | — |
+| `du` | `dua` | `du` |
 
-| Instead of | Use | Description |
-|------------|-----|-------------|
-| `cat` | `bat` | Syntax highlighting |
-| `ls` | `eza` | Better formatting |
-| `find` | `fd` | Faster, simpler |
-| `grep` | `rg` | Ripgrep |
-| `sed` | `sd` | Modern find/replace |
-| `cd` | `z` | Smart directory jumping |
-| `rm` | `trash` | Safe deletion |
-| `vim` | `nvim` | Neovim |
-| `top` | `btop` | Better resource monitor |
+### Key Aliases
 
-### Useful Aliases
+```fish
+update          # Full system update: macOS + Homebrew + Brewfile + mise
+bb              # brew bundle from Brewfile
+brewcheck       # Diff Brewfile vs installed packages
+cleanup         # Remove .DS_Store files recursively
+lg              # lazygit
+mux             # tmuxinator
+auth            # Load ephemeral secrets from 1Password
+secret-scan     # Gitleaks scan on current repo
+```
 
-- `update` - Full system update (macOS + Homebrew)
-- `bb` - Brew bundle from Brewfile
-- `cleanup` - Remove old Brew and system files
-- Git aliases: `lg` (pretty log), `clean-local` (prune branches)
+## Tmux
 
-See `aliases.fish` for the complete list.
+- **Prefix:** `Ctrl-a`
+- **Vi mode** enabled
+- **Pane navigation:** `prefix + h/j/k/l` and `Ctrl-h/j/k/l` (vim-tmux-navigator)
+- **Window switching:** `F1`–`F5`
+- **Reload config:** `prefix + r`
+- **Theme:** Dracula
+- **Plugins:** TPM, vim-tmux-navigator, tmux-yank, tmux-resurrect, tmux-continuum
 
-### Tmux Configuration
+## Git
 
-- Custom prefix: `Ctrl-a`
-- Vi-mode navigation
-- Dracula theme
-- Window switching: `F1-F5`
+- Default branch: `main`
+- Auto-setup rebase on pull, auto-prune on fetch
+- `push.autoSetupRemote = true`
+- Auth via `gh` CLI
+- Local overrides in `~/.gitconfig.local` (untracked — see `git/gitconfig.local.example`)
 
-Reload: `prefix + r`
+## Security
+
+- **Secret scanning:** Gitleaks pre-commit hook prevents accidental secret commits
+- **1Password SSH agent:** SSH keys managed by 1Password, no keys on disk
+- **Ephemeral secrets:** API keys loaded from 1Password into `$TMPDIR` (cleared on reboot)
+
+```bash
+secret-scan           # Scan current state
+secret-scan-history   # Scan entire git history
+secret-scan-verified  # Verify detected secrets are real (trufflehog)
+hooks-run             # Manually run pre-commit hooks
+```
 
 ## Maintenance
 
-### Update All Packages
-
 ```bash
-update
+update                # Full update: macOS + Homebrew + Brewfile + mise
+mise install          # Install/update all runtimes
+mise upgrade          # Upgrade all mise-managed tools
+brew bundle cleanup   # Find orphaned Homebrew packages
+source ~/.config/fish/config.fish   # Reload fish config
+tmux source-file ~/.tmux.conf       # Reload tmux (or prefix + r)
 ```
 
-This runs system updates, Homebrew updates, upgrades, installs packages from Brewfile, and cleanup.
+## VPS / Linux
 
-### Check for Missing Packages
-
-```bash
-brewcheck
-```
-
-Shows the difference between your Brewfile and currently installed packages. Lines with `>` indicate packages installed but not in Brewfile, lines with `<` indicate packages in Brewfile but not installed.
-
-### Update Brewfile
-
-After installing new packages:
+Only a subset applies on Linux servers: git, tmux, fish, atuin. No Homebrew — use `apt` for system packages and `mise` for cross-platform CLI tools.
 
 ```bash
-brew bundle dump --force --file=~/.dotfiles/Brewfile
+sudo apt install -y git tmux fish
+curl https://mise.run | sh
+mise install
 ```
-

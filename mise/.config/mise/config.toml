@@ -1,0 +1,31 @@
+# Global mise configuration
+# Manages language runtimes and Python CLI tools across machines
+# Install all: mise install
+
+[tools]
+# ─── Language Runtimes ────────────────────────────────────
+node = "latest"
+python = ["3.13", "3.12", "3.11", "3.10"]
+go = "latest"
+rust = "latest"
+java = "latest"
+lua = "latest"
+uv = "latest"
+
+# ─── Dev Tools ────────────────────────────────────────────
+# Note: jq, just, pre-commit are managed by Homebrew (see Brewfile)
+gh = "latest"
+ruff = "latest"
+black = "latest"
+
+# ─── Python CLI Tools (pipx backend, uses uv) ────────────
+"pipx:git-filter-repo" = "latest"
+"pipx:marker-pdf" = "latest"
+"pipx:markitdown" = "latest"
+"pipx:poetry" = "latest"
+"pipx:shell-gpt" = "latest"
+"pipx:youtube-transcript-api" = "latest"
+
+[settings]
+# Use latest installed version when no version is specified
+legacy_version_file = true

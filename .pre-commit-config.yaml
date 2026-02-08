@@ -1,0 +1,13 @@
+# Pre-commit hooks for secret detection
+# Install: pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.0
+    hooks:
+      - id: gitleaks
+        name: Detect secrets with Gitleaks
+        entry: gitleaks detect --source . --verbose --redact --no-banner
+        language: system
+        pass_filenames: false

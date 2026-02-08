@@ -1,0 +1,19 @@
+# Non-package files in repo root
+\.git
+\.gitignore
+\.gitleaks\.toml
+\.pre-commit-config\.yaml
+\.stow-local-ignore
+\.DS_Store
+^bootstrap\.sh$
+^Brewfile
+^CLAUDE\.md$
+^README\.md$
+^LICENSE$
+^paths$
+^AGENTS\.md$
+^teste\.md$
+^todo\.txt$
+^todos$
+^backups$
+^docs$
