@@ -1,30 +1,15 @@
 # Detect Homebrew prefix (Apple Silicon: /opt/homebrew, Intel: /usr/local)
 set -gx HOMEBREW_PREFIX (brew --prefix)
 
-# Path setup (order matters - first takes precedence)
-fish_add_path /Applications/PyCharm.app/Contents/MacOS
-fish_add_path $HOMEBREW_PREFIX/opt/openjdk@17/bin
-fish_add_path $HOME/Library/Haskell/bin
-set -gx GOPATH $HOME/go
-fish_add_path $GOPATH/bin
-fish_add_path ~/.vector/bin
-
-fish_add_path ~/.local/bin
-
-fish_add_path $HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin
-fish_add_path $HOMEBREW_PREFIX/sbin
-fish_add_path $HOMEBREW_PREFIX/bin
-fish_add_path $HOMEBREW_PREFIX/opt/libpq/bin
-
+# MANPATH (appending to existing — not supported in mise)
 set -gx MANPATH $HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman $MANPATH
 
-set -gx ENVIRONMENT development
-
-set -gx LANG en_US.UTF-8
-set -gx LC_ALL en_US.UTF-8
-
-set -gx JAVA_HOME $HOMEBREW_PREFIX/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
-set -gx UBI_TOKEN op://development/ubicloud-token/credential
-set -gx SSH_AUTH_SOCK $HOME/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
-
-set -gx PERPLEXITY_API_KEY (op read "op://development/perplexity-api-key/credential")
+# Load ephemeral secrets from TMPDIR (cleared on reboot)
+# First terminal after reboot triggers one Touch ID prompt; all others are silent
+if test -f $TMPDIR/.exa-api-key
+    set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
+else if status is-interactive
+    op read "op://development/exa-api-key/credential" > $TMPDIR/.exa-api-key 2>/dev/null
+    and chmod 600 $TMPDIR/.exa-api-key
+    and set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
+end

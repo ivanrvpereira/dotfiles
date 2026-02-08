@@ -6,3 +6,8 @@ Brewfile.lock.json
 
 # OS
 .DS_Store
+
+# Secret scanning
+gitleaks-report.json
+.gitleaks-report.json
+.gitleaksignore
