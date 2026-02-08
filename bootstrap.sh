@@ -20,8 +20,11 @@ error() { echo -e "${RED}[ERROR]${NC} $*"; exit 1; }
 if ! xcode-select -p &>/dev/null; then
     info "Installing Xcode Command Line Tools..."
     xcode-select --install
-    echo "Press any key after Xcode CLT installation completes..."
-    read -n 1 -s
+    info "Waiting for Xcode CLT installation to complete..."
+    until xcode-select -p &>/dev/null; do
+        sleep 5
+    done
+    info "Xcode Command Line Tools installed"
 fi
 
 # ─── Homebrew ─────────────────────────────────────────────────────
