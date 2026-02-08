@@ -1,16 +1,14 @@
-# Local Git Configuration Template
-# Copy this file to ~/.gitconfig.local and customize for this machine
-# This file is machine-specific and will NOT be committed to the repository
+# Local Git Configuration — machine-specific, NOT committed
+# Copy to ~/.gitconfig.local and customize for this machine
 
+# SSH commit signing key (from 1Password)
+# Each machine has its own key — copy the public key from 1Password
 [user]
-	name = Your Name
-	email = your.email@example.com
+	signingkey = ssh-ed25519 AAAA...
 
-# Optional: Add machine-specific Git settings below
-# Examples:
+# Work email override — loaded via includeIf in .gitconfig
+# when a repo's remote matches a configured org URL pattern.
+# Copy to ~/.gitconfig-work:
 #
-# [core]
-#     sshCommand = ssh -i ~/.ssh/id_work_rsa
-#
-# [url "git@github.com-work:"]
-#     insteadOf = git@github.com:
+# [user]
+#     email = you@company.com

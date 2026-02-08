@@ -87,5 +87,22 @@
 	helper =
 	helper = !gh auth git-credential
 
+[user]
+	name = Ivan Pereira
+	email = 183991+ivanrvpereira@users.noreply.github.com
+	useConfigOnly = true
+
+[includeIf "hasconfig:remote.*.url:https://github.com/promptlylabs/**"]
+	path = ~/.gitconfig-work
+
+[includeIf "hasconfig:remote.*.url:git@github.com:promptlylabs/**"]
+	path = ~/.gitconfig-work
+
 [include]
 	path = ~/.gitconfig.local
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
