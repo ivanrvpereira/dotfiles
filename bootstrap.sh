@@ -95,6 +95,16 @@ else
     info "TPM already installed"
 fi
 
+# ─── Fisher plugins ────────────────────────────────────────────
+if command -v fish &>/dev/null; then
+    if ! fish -c 'type -q fisher' 2>/dev/null; then
+        info "Installing Fisher..."
+        fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher'
+    fi
+    info "Installing Fish plugins..."
+    fish -c 'fisher update' 2>/dev/null || warn "Fisher update failed (run manually: fisher update)"
+fi
+
 # ─── Done ─────────────────────────────────────────────────────────
 echo ""
 info "Bootstrap complete!"

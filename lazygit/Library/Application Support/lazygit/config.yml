@@ -11,17 +11,14 @@ gui:
       - "#44475a"
   showBottomLine: false
   showCommandLog: false
-
 git:
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never
   autoFetch: true
   autoRefresh: true
   branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --"
-
 os:
   editPreset: "nvim"
-
 confirmOnQuit: false
 quitOnTopLevelReturn: true
