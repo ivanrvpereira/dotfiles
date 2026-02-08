@@ -1,0 +1,50 @@
+cask_args appdir: "/Applications"
+
+tap "zackriya-solutions/meetily"
+
+# Entertainment
+cask "spotify", args: { require_sha: false }
+cask "iina"
+brew "yt-dlp"       # YouTube downloader
+
+# Communication
+cask "discord"
+cask "slack"
+cask "zoom"
+cask "meetingbar"
+cask "zackriya-solutions/meetily/meetily"
+
+# Corporate
+cask "intune-company-portal"
+
+# Personal Cloud & Backup
+cask "dropbox"
+cask "arq"
+cask "kopiaui"      # Backup tool
+brew "syncthing"    # P2P file synchronization
+
+# Notes & Productivity
+cask "notion"
+cask "logseq"
+cask "dayflow"      # Journaling app
+brew "steipete/tap/remindctl"  # macOS Reminders CLI
+
+# File Management
+cask "cyberduck"
+cask "mountain-duck"  # Mount remote storage locations
+cask "keka"
+cask "appcleaner"
+
+# macOS Mods
+cask "battery"          # Battery management (laptop only)
+cask "logi-options+"    # Logitech MX Master support
+cask "espanso"          # Live text expander
+cask "contexts"         # Much better alt-tab window switcher
+
+# Mac App Store
+mas "Duplicate File Finder", id: 1032755628
+mas "Endel", id: 1346247457
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Windows App", id: 1295203466
