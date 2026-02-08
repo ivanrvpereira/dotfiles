@@ -1,0 +1,52 @@
+# OS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Desktop.ini
+Thumbs.db
+
+# Editor temp files
+*.swp
+*.swo
+*~
+tags
+TAGS
+
+# IDEs
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+
+# Sensitive files
+*.pem
+*.key
+*.crt
+.env*
+*_rsa
+*_ecdsa
+*_ed25519
+
+# Local secrets
+secrets/
+credentials/
+
+# Local git configuration (machine-specific)
+.gitconfig.local
+
+# AI tools
+.claude/
+.aider*
+.cursor/

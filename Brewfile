@@ -188,8 +188,9 @@ cask "iina"
 # CLI Essentials
 brew "git"          # Version controll
 brew "neovim"       # Text editor
+brew "stow"         # Dotfile symlink manager
 brew "tmux"         # Term multiplexer
-brew "tmuxinator"   # 
+brew "tmuxinator"   #
 
 # Terminals
 brew "fish"
