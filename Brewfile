@@ -50,7 +50,7 @@ brew "tokei"        # Count lines of code (better cloc)
 brew "tree"         # Directory listings as tree structure
 brew "trash-cli"    # Record and restore removed files
 brew "watch"        # Run commands periorically
-brew "xsel"         # X selection manipulation
+brew "uutils-coreutils" # Modern coreutils in Rust
 brew "atuin"        # Shell history sync and search
 brew "zoxide"       # Auto-learning navigation (better cd)
 brew "fd"           # Better find
@@ -121,7 +121,6 @@ brew "git-lfs"        # Git large file storage
 brew "terminal-notifier" # Trigger Mac notifications from terminal
 brew "tig"            # Text-mode interface for git
 brew "watchman"       # Watch for changes and reload dev server
-brew "direnv"         # Project-specific environment variables
 brew "mkcert"         # Local HTTPS development certificates
 brew "dive"           # Docker image layer explorer
 

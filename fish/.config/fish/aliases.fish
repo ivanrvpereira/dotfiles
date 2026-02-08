@@ -38,6 +38,7 @@ abbr gp 'git push'
 abbr gl 'git pull'
 abbr gd 'git diff'
 abbr lg lazygit
+abbr mux tmuxinator
 
 # Docker & Kubernetes
 abbr d docker
