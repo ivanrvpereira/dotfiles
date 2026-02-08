@@ -56,18 +56,6 @@ info "Ensuring config directories exist..."
 mkdir -p ~/.config/fish ~/.config/ghostty ~/.config/tmuxinator ~/.ssh
 chmod 700 ~/.ssh
 
-# ─── Remove old/broken symlinks ──────────────────────────────────
-info "Removing old symlinks..."
-OLD_SYMLINKS=(
-    ~/.gitconfig ~/.gitignore ~/.tmux.conf
-    ~/.curlrc ~/.inputrc ~/.wgetrc ~/.direnvrc
-    ~/.config/direnv/direnvrc
-    ~/.ackrc ~/.agignore ~/.hgignore ~/.hgrc
-)
-for link in "${OLD_SYMLINKS[@]}"; do
-    [[ -L "$link" ]] && rm "$link" && info "  Removed $link"
-done
-
 # ─── Stow packages ───────────────────────────────────────────────
 info "Stowing dotfile packages..."
 cd "$DOTFILES"

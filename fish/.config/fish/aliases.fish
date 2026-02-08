@@ -78,7 +78,7 @@ alias update-ai='brew upgrade gemini-cli claude-code && npm install -g @mariozec
 alias brewcheck='brew bundle dump --force --file=/tmp/Brewfile.current && diff ~/.dotfiles/Brewfile /tmp/Brewfile.current | grep "^>" | sd "^> " ""; and rm /tmp/Brewfile.current'
 
 # AI & tools
-alias claudeyolo='/opt/homebrew/bin/claude --dangerously-skip-permissions'
+alias claudeyolo='claude --dangerously-skip-permissions'
 alias cly=claudeyolo
 alias codexyolo='codex --dangerously-bypass-approvals-and-sandbox'
 alias ubi='op run -- ubi'

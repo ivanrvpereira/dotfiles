@@ -1,3 +1,6 @@
+# NOTE: This is the REPO .gitignore (what git tracks in this dotfiles repo).
+# The GLOBAL .gitignore (stowed to ~/.gitignore) lives at git/.gitignore.
+
 # Homebrew
 Brewfile.lock.json
 
@@ -16,6 +19,9 @@ teste.md
 .DS_Store
 *.swp
 *.swo
+
+# Review notes
+REVIEW.md
 
 # Secret scanning
 gitleaks-report.json
