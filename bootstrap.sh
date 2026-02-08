@@ -2,7 +2,7 @@
 set -euo pipefail
 
 DOTFILES="$HOME/.dotfiles"
-STOW_PACKAGES=(git fish tmux ghostty)
+STOW_PACKAGES=(git tmux fish ghostty aerospace)
 
 # Colors
 RED='\033[0;31m'
@@ -61,13 +61,7 @@ info "Removing old symlinks..."
 OLD_SYMLINKS=(
     ~/.gitconfig ~/.gitignore ~/.tmux.conf
     ~/.curlrc ~/.inputrc ~/.wgetrc ~/.direnvrc
-    ~/.config/fish/config.fish
-    ~/.config/fish/exports.fish
-    ~/.config/fish/aliases.fish
-    ~/.config/fish/activate.fish
-    ~/.config/ghostty/config
     ~/.config/direnv/direnvrc
-    # Legacy broken symlinks
     ~/.ackrc ~/.agignore ~/.hgignore ~/.hgrc
 )
 for link in "${OLD_SYMLINKS[@]}"; do
@@ -77,21 +71,7 @@ done
 # ─── Stow packages ───────────────────────────────────────────────
 info "Stowing dotfile packages..."
 cd "$DOTFILES"
-
-# Packages that target $HOME directly (stow works fine)
-stow --no-folding -R git tmux
-
-# Packages under .config — if ~/.config is a symlink (e.g., iCloud),
-# stow can't traverse it, so create symlinks manually
-if [[ -L "$HOME/.config" ]]; then
-    warn "~/.config is a symlink — creating .config symlinks manually"
-    for f in config.fish exports.fish aliases.fish activate.fish; do
-        ln -sf "$DOTFILES/fish/.config/fish/$f" ~/.config/fish/"$f"
-    done
-    ln -sf "$DOTFILES/ghostty/.config/ghostty/config" ~/.config/ghostty/config
-else
-    stow --no-folding -R fish ghostty
-fi
+stow --no-folding -R "${STOW_PACKAGES[@]}"
 
 # ─── Pre-commit hooks ────────────────────────────────────────────
 if [[ -f "$DOTFILES/.pre-commit-config.yaml" ]]; then
