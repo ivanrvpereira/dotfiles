@@ -1,0 +1,106 @@
+# This is the configuration file for Ghostty.
+#
+# This template file has been automatically created at the following
+# path since Ghostty couldn't find any existing config files on your system:
+#
+#   /Users/ivanpereira/Library/Application Support/com.mitchellh.ghostty/config
+#
+# The template does not set any default options, since Ghostty ships
+# with sensible defaults for all options. Users should only need to set
+# options that they want to change from the default.
+#
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+#
+# Additionally, each config option is also explained in detail
+# on Ghostty's website, at https://ghostty.org/docs/config.
+
+# Config syntax crash course
+# ==========================
+# # The config file consists of simple key-value pairs,
+# # separated by equals signs.
+# font-family = Iosevka
+# window-padding-x = 2
+#
+# # Spacing around the equals sign does not matter.
+# # All of these are identical:
+# key=value
+# key= value
+# key =value
+# key = value
+#
+# # Any line beginning with a # is a comment. It's not possible to put
+# # a comment after a config option, since it would be interpreted as a
+# # part of the value. For example, this will have a value of "#123abc":
+# background = #123abc
+#
+# # Empty values are used to reset config keys to default.
+# key =
+#
+# # Some config options have unique syntaxes for their value,
+# # which is explained in the docs for that config option.
+# # Just for example:
+# resize-overlay-duration = 4s 200ms
+
+# Shift+Enter - send newline (C-j / 0x0a) for Pi/Claude multi-line input
+# tmux vim-tmux-navigator passes C-j through when pi/claude is detected
+keybind = shift+enter=text:\n
+
+# Tab switching with cmd+function keys (cmd+number used by AeroSpace)
+keybind = cmd+f1=goto_tab:1
+keybind = cmd+f2=goto_tab:2
+keybind = cmd+f3=goto_tab:3
+keybind = cmd+f4=goto_tab:4
+keybind = cmd+f5=goto_tab:5
+keybind = cmd+f6=goto_tab:6
+keybind = cmd+f7=goto_tab:7
+keybind = cmd+f8=goto_tab:8
+#keybind = ctrl+physical:one=goto_tab:1
+#keybind = ctrl+physical:two=goto_tab:2
+#keybind = ctrl+physical:three=goto_tab:3
+#keybind = ctrl+physical:four=goto_tab:4
+
+keybind = ctrl+one=text:\x01\x31
+keybind = ctrl+two=text:\x01\x32
+keybind = ctrl+three=text:\x01\x33
+keybind = ctrl+four=text:\x01\x34
+keybind = ctrl+five=text:\x01\x35
+keybind = ctrl+t=text:\x01\x63
+
+# tmux splits via Cmd+D / Cmd+Shift+D (sends Ctrl-a | and Ctrl-a -)
+keybind = cmd+d=text:\x01|
+keybind = cmd+shift+d=text:\x01-
+
+# Split navigation (vim-style) — tmux pane navigation via Ctrl-a h/j/k/l
+keybind = cmd+alt+h=text:\x01h
+keybind = cmd+alt+l=text:\x01l
+keybind = cmd+alt+k=text:\x01k
+keybind = cmd+alt+j=text:\x01j
+
+# Disable fading for non-active panels
+unfocused-split-opacity = 0.95
+unfocused-split-fill = #a33503
+split-divider-color = #FF4F00
+
+
+mouse-hide-while-typing = true
+cursor-style-blink = false
+cursor-style = block
+adjust-cursor-thickness = 200%
+
+# don't ask when closing
+confirm-close-surface = false
+
+window-theme = system
+
+# don't show an overlay when resizing a window
+resize-overlay = never
+
+# always save the state of window when quitting
+window-save-state = always
+
+shell-integration = fish
+window-inherit-working-directory=true
+
+font-family = "TX-02"
+font-size = 13
