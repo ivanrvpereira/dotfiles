@@ -75,7 +75,7 @@ alias update='sudo softwareupdate -i -a && brew update && brew upgrade && brew b
 alias update-ai='brew upgrade gemini-cli claude-code && npm install -g @mariozechner/pi-coding-agent && claude && open x-apple.systempreferences:com.apple.preference.security'
 
 # Homebrew check
-alias brewcheck='brew bundle dump --force --file=/tmp/Brewfile.current; diff ~/.dotfiles/Brewfile /tmp/Brewfile.current | grep "^>" | sd "^> " ""; rm /tmp/Brewfile.current'
+alias brewcheck='brew bundle dump --force --file=/tmp/Brewfile.current && diff ~/.dotfiles/Brewfile /tmp/Brewfile.current | grep "^>" | sd "^> " ""; rm -f /tmp/Brewfile.current'
 
 # AI & tools
 alias claudeyolo='claude --dangerously-skip-permissions'
