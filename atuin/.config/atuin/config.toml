@@ -1,0 +1,55 @@
+## Atuin Configuration
+## SQLite-backed encrypted shell history sync
+
+## Sync settings (currently disabled - local-only mode)
+auto_sync = false                          # Disabled - not using sync yet
+sync_frequency = "10m"                     # Sync every 10 minutes (when enabled)
+# sync_address = "https://api.atuin.sh"    # Cloud sync (commented out)
+## TODO: Set up self-hosted server, then update sync_address to your server URL
+
+## Search settings
+search_mode = "fuzzy"                      # fuzzy, fulltext, prefix, skim
+filter_mode = "global"                     # global, host, session, directory
+
+## UI settings
+style = "compact"                          # compact, full, auto
+inline_height = 20                         # Search UI height
+show_preview = true                        # Show command preview
+enter_accept = true                        # Enter executes, Tab edits
+
+## Privacy - filter sensitive commands
+history_filter = [
+  "^\\s+.*",                               # Commands starting with space
+  ".*password.*",                          # Contains 'password'
+  ".*secret.*",                            # Contains 'secret'
+  ".*token.*",                             # Contains 'token'
+  ".*api.?key.*",                          # Contains 'apikey' or 'api_key'
+  "export.*KEY.*",                         # Environment var keys
+  "aws.*configure.*",                      # AWS config
+  "docker login.*",                        # Docker login
+  "op signin.*",                           # 1Password signin
+]
+
+## Security - automatic secrets detection
+secrets_filter = true                      # Filter AWS keys, GitHub PATs, etc.
+
+## Update check
+update_check = true                        # Check for updates
+
+## Stats
+[stats]
+common_subcommands = [
+  "docker",
+  "git",
+  "kubectl",
+  "npm",
+  "cargo",
+  "brew",
+  "gh",
+]
+
+common_prefix = ["sudo"]
+
+## Sync v2 (enabled by default for new installs)
+[sync]
+records = true
