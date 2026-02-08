@@ -35,7 +35,7 @@ Files are organized into Stow packages. Each package mirrors the target path rel
 | `tmux/` | `.tmux.conf` | `~/.tmux.conf` |
 | `ghostty/` | `config` | `~/.config/ghostty/config` |
 
-**Note**: `~/.config` is symlinked to iCloud. Stow can't traverse this, so `.config` packages use manual symlinks (handled by `bootstrap.sh`).
+All packages are managed by `stow --no-folding -R` via `bootstrap.sh`.
 
 ### Bootstrap
 
