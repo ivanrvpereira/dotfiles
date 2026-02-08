@@ -18,7 +18,6 @@ tap "asheshgoplani/tap"
 tap "tw93/tap"
 tap "yakitrak/yakitrak"
 tap "jazzyalex/agent-sessions"
-tap "zackriya-solutions/meetily"
 
 
 
@@ -55,7 +54,6 @@ brew "zoxide"       # Auto-learning navigation (better cd)
 brew "fd"           # Better find
 brew "telnet"
 brew "eza"          # Better ls
-brew "yt-dlp"       # YouTube downloader
 
 # CLI Monitoring and Performance Apps
 brew "bmon"         # Bandwidth utilization monitor
@@ -91,7 +89,6 @@ brew "robusta-dev/krr/krr"     # Kubernetes resource recommender
 brew "runpod/runpodctl/runpodctl" # RunPod CLI
 brew "ubicloud/cli/ubi"        # Ubicloud CLI
 brew "steipete/tap/summarize"  # AI text summarization
-brew "steipete/tap/remindctl"  # macOS Reminders CLI
 brew "asheshgoplani/tap/agent-deck" # AI agent tool
 brew "tw93/tap/mole"           # Terminal tool
 brew "yakitrak/yakitrak/obsidian-cli" # Obsidian CLI
@@ -146,14 +143,8 @@ cask "font-hack-nerd-font"
 cask "font-monaspace"
 
 # Browsers
-cask "arc" #unless system "test '[ -d /Applications/Arc.app/ ]'"
-cask "google-chrome" #unless system "test '[ -d /Applications/Chrome.app/ ]'"
-
-
-# Communication
-cask "discord"
-cask "slack"
-cask "zoom"
+cask "arc"
+cask "google-chrome"
 
 
 # Editors
@@ -179,9 +170,6 @@ vscode "redhat.vscode-yaml"
 vscode "usernamehw.errorlens"
 vscode "vscodevim.vim"
 
-# Entertainment
-cask "iina"
-
 # CLI Essentials
 brew "git"          # Version controll
 brew "neovim"       # Text editor
@@ -195,50 +183,21 @@ cask "ghostty@tip"      # New native terminal
 brew "starship"
 
 # Utility
-brew "syncthing"     # P2P file synchronization
 cask "agent-sessions"   # AI agent session manager
-cask "battery"          # Battery management
 cask "orbstack"
 cask "devpod"       # Development environments
-cask "intune-company-portal"
-cask "keka"
-cask "kopiaui"      # Backup tool
-#cask "ngrok"        # Reverse proxy for sharing localhost
 brew "yazi"
+cask "openinterminal" # Finder button, opens directory in terminal
+cask "sloth"          # Shows open files/sockets by process
 
-# Media
-cask "spotify", args: { require_sha: false }
-
-
-# Personal Applications
-cask "1password", args: { appdir: "/Applications" }
+# Security & Network
+cask "1password"
 cask "1password-cli"
-cask "appcleaner"
-cask "cyberduck"
-cask "mountain-duck"  # Mount remote storage locations
-cask "tailscale-app"  # Tailscale GUI app (renamed from 'tailscale')
-cask "notion"
-cask "raycast"
-cask "arq"
-cask "sloth"
-cask "meetingbar"
-cask "meetily"        # Meeting scheduling
-cask "dayflow"        # Journaling app
-cask "logseq"
-cask "dropbox"
-mas "Duplicate File Finder", id: 1032755628
-mas "Endel", id: 1346247457
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "Windows App", id: 1295203466
+cask "tailscale-app"  # Tailscale GUI app
 
-# Mac OS Mods and Improvments
-cask "contexts"        # Much better alt-tab window switcher
-cask "logi-options+" # Logitech MX Master support
-cask "espanso"        # Live text expander (cross-platform)
+# Productivity (dev-useful)
+cask "raycast"
 cask "hiddenbar"      # Hide / show annoying menubar icons
 brew "iproute2mac"    # MacOS port of netstat and ifconfig
-cask "openinterminal" # Finder button, opens directory in terminal
 cask "nikitabobko/tap/aerospace"
 brew "felixkratz/formulae/borders"
