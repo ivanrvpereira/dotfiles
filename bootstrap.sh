@@ -49,7 +49,7 @@ cd "$DOTFILES"
 
 # ─── Brew Bundle ──────────────────────────────────────────────────
 info "Installing packages from Brewfile..."
-brew bundle --file="$DOTFILES/Brewfile" --no-lock
+brew bundle --file="$DOTFILES/Brewfile"
 
 # ─── Fish as default shell ────────────────────────────────────────
 FISH_PATH="$(which fish)"
