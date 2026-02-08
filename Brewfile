@@ -6,7 +6,6 @@ tap "atlassian/acli"
 tap "felixkratz/formulae"
 tap "int128/kubelogin"
 tap "jesseduffield/lazygit"
-tap "kdash-rs/kdash"
 tap "koekeishiya/formulae"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
@@ -76,7 +75,6 @@ brew "speedtest-cli"# Command line speed test utility
 brew "httpie"       # HTTP / API testing testing client
 brew "lazydocker"   # Full Docker management app
 brew "lazygit"      # Full Git management app
-brew "kdash"        # Kubernetes management
 brew "k9s"
 brew "hcloud"        # Hetzner Cloud CLI
 brew "awscli"
