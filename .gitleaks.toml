@@ -1,0 +1,12 @@
+# Gitleaks configuration
+# Documentation: https://github.com/gitleaks/gitleaks#configuration
+
+[extend]
+# Use default rules as a baseline
+useDefault = true
+
+# [allowlist]
+# Add allowlist rules here as needed:
+# [[allowlist]]
+# paths = ['''pattern''']
+# stopwords = ["known-safe-value"]
