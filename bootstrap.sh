@@ -2,7 +2,7 @@
 set -euo pipefail
 
 DOTFILES="$HOME/.dotfiles"
-STOW_PACKAGES=(git tmux tmuxinator fish ghostty aerospace 1password)
+STOW_PACKAGES=(git tmux tmuxinator fish ghostty aerospace 1password atuin btop htop zed mise)
 
 # Colors
 RED='\033[0;31m'
