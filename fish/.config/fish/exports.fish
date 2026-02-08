@@ -15,9 +15,10 @@ end
 # Must use expanded path — tilde won't work
 set -gx SSH_AUTH_SOCK "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 
-# ─── Locale ───────────────────────────────────────────────────
+# ─── Locale & editor ──────────────────────────────────────────
 set -gx LANG en_US.UTF-8
 set -gx LC_ALL en_US.UTF-8
+set -gx EDITOR nvim
 
 # ─── Ephemeral secrets (1Password, cleared on reboot) ─────────
 # First terminal after reboot triggers one Touch ID prompt; all others are silent
