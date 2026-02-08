@@ -42,6 +42,8 @@ Dotfiles are organized as **GNU Stow packages** — each directory maps to `$HOM
 ├── htop/             → ~/.config/htop/htoprc
 ├── zed/              → ~/.config/zed/settings.json
 ├── mise/             → ~/.config/mise/config.toml
+├── nvim/             → ~/.config/nvim/ (LazyVim)
+├── lazygit/          → ~/Library/Application Support/lazygit/config.yml
 ├── Brewfile          → Homebrew packages, casks, fonts, Mac App Store apps
 └── bootstrap.sh      → One-command setup for fresh machines
 ```
