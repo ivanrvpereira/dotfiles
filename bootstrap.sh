@@ -3,7 +3,7 @@ set -euo pipefail
 
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/ivanrvpereira/dotfiles.git"
-STOW_PACKAGES=(git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit)
+STOW_PACKAGES=(shell git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit)
 
 # Colors
 RED='\033[0;31m'
