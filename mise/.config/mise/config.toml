@@ -13,10 +13,8 @@ lua = "latest"
 uv = "latest"
 
 # ─── Dev Tools ────────────────────────────────────────────
+# Note: jq, just, pre-commit are managed by Homebrew (see Brewfile)
 gh = "latest"
-jq = "latest"
-just = "latest"
-pre-commit = "latest"
 ruff = "latest"
 black = "latest"
 

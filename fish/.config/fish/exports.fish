@@ -1,6 +1,6 @@
 # ─── Homebrew ─────────────────────────────────────────────────
-# Detect Homebrew prefix (Apple Silicon: /opt/homebrew, Intel: /usr/local)
-set -gx HOMEBREW_PREFIX (brew --prefix)
+# Hardcoded for Apple Silicon (avoids spawning `brew --prefix` on every shell)
+set -gx HOMEBREW_PREFIX /opt/homebrew
 
 # uutils-coreutils (Rust rewrite of GNU coreutils)
 fish_add_path --prepend $HOMEBREW_PREFIX/opt/uutils-coreutils/libexec/uubin
