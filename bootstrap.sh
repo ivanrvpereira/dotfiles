@@ -43,7 +43,8 @@ if [[ ! -d "$DOTFILES" ]]; then
     info "Cloning dotfiles..."
     git clone "$REPO" "$DOTFILES"
 else
-    info "Dotfiles already cloned at $DOTFILES"
+    info "Dotfiles already cloned at $DOTFILES, pulling latest..."
+    git -C "$DOTFILES" pull --rebase
 fi
 cd "$DOTFILES"
 
