@@ -4,3 +4,4 @@
 
 /opt/homebrew/opt/uutils-coreutils/libexec/uubin
 ~/.local/bin
+~/.bun/bin

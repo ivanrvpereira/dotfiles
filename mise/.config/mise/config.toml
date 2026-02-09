@@ -14,7 +14,9 @@ uv = "latest"
 
 # ─── Dev Tools ────────────────────────────────────────────
 # Note: jq, just, pre-commit are managed by Homebrew (see Brewfile)
+bun = "latest"
 gh = "latest"
+pnpm = "latest"
 ruff = "latest"
 black = "latest"
 

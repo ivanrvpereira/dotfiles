@@ -72,6 +72,7 @@ brew "speedtest-cli"# Command line speed test utility
 brew "httpie"       # HTTP / API testing testing client
 brew "lazydocker"   # Full Docker management app
 brew "lazygit"      # Full Git management app
+brew "git-delta"    # syntax highlighting for lazygit
 brew "k9s"
 brew "hcloud"        # Hetzner Cloud CLI
 brew "awscli"
