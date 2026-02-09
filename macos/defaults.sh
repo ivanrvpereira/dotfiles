@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # macOS defaults — Sequoia (15.x) validated
-# Run: ./.macos
+# Run: ./macos/defaults.sh
 # Can be re-run safely at any time.
 set -euo pipefail
 

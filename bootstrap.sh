@@ -156,9 +156,9 @@ echo ""
 read -rp "Apply macOS defaults (keyboard, trackpad, Dock, Finder, etc.)? [Y/n] " apply_macos
 if [[ ! "$apply_macos" =~ ^[Nn]$ ]]; then
     info "Applying macOS defaults..."
-    "$DOTFILES/macos/.macos"
+    "$DOTFILES/macos/defaults.sh"
 else
-    info "Skipping macOS defaults (run ./macos/.macos anytime)"
+    info "Skipping macOS defaults (run ./macos/defaults.sh anytime)"
 fi
 
 # ─── Done ─────────────────────────────────────────────────────────
