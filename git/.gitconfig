@@ -93,10 +93,10 @@
 	useConfigOnly = true
 
 [includeIf "hasconfig:remote.*.url:https://github.com/promptlylabs/**"]
-	path = ~/.gitconfig-work
+	path = ~/.gitconfig.work
 
 [includeIf "hasconfig:remote.*.url:git@github.com:promptlylabs/**"]
-	path = ~/.gitconfig-work
+	path = ~/.gitconfig.work
 
 [include]
 	path = ~/.gitconfig.local
