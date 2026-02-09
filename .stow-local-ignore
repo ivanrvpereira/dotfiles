@@ -11,6 +11,7 @@
 ^README\.md$
 ^LICENSE$
 ^paths$
+^npm-packages$
 ^AGENTS\.md$
 ^teste\.md$
 ^todo\.txt$

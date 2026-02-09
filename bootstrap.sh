@@ -104,6 +104,15 @@ if command -v mise &>/dev/null; then
     mise install --yes 2>/dev/null || warn "No .mise.toml found (add one for managed runtimes)"
 fi
 
+# ─── Global npm packages ─────────────────────────────────────────
+if command -v npm &>/dev/null && [[ -f "$DOTFILES/npm-packages" ]]; then
+    info "Installing global npm packages..."
+    while IFS= read -r pkg; do
+        [[ "$pkg" =~ ^#|^$ ]] && continue
+        npm install -g "$pkg"
+    done < "$DOTFILES/npm-packages"
+fi
+
 # ─── TPM (Tmux Plugin Manager) ───────────────────────────────────
 TPM_DIR="$HOME/.tmux/plugins/tpm"
 if [[ ! -d "$TPM_DIR" ]]; then
