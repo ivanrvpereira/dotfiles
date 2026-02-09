@@ -18,6 +18,13 @@ error() { echo -e "${RED}[ERROR]${NC} $*"; exit 1; }
 # ─── Pre-flight checks ───────────────────────────────────────────
 [[ "$(uname)" == "Darwin" ]] || error "This script is macOS-only"
 
+# ─── Hostname ───────────────────────────────────────────────────
+current_hostname=$(scutil --get ComputerName 2>/dev/null || hostname -s)
+echo ""
+read -rp "Hostname [$current_hostname]: " new_hostname
+HOSTNAME_TO_SET="${new_hostname:-$current_hostname}"
+export HOSTNAME_TO_SET
+
 # ─── Xcode Command Line Tools ────────────────────────────────────
 if ! xcode-select -p &>/dev/null; then
     info "Installing Xcode Command Line Tools..."
@@ -144,12 +151,23 @@ else
     info "~/.gitconfig.work already exists"
 fi
 
+# ─── macOS defaults ──────────────────────────────────────────────
+echo ""
+read -rp "Apply macOS defaults (keyboard, trackpad, Dock, Finder, etc.)? [Y/n] " apply_macos
+if [[ ! "$apply_macos" =~ ^[Nn]$ ]]; then
+    info "Applying macOS defaults..."
+    "$DOTFILES/macos/.macos"
+else
+    info "Skipping macOS defaults (run ./macos/.macos anytime)"
+fi
+
 # ─── Done ─────────────────────────────────────────────────────────
 echo ""
 info "Bootstrap complete!"
 echo ""
 echo "Next steps:"
-echo "  1. Open a new terminal (or restart your shell)"
-echo "  2. Run 'tmux' then press prefix + I to install tmux plugins"
-echo "  3. Run 'auth' to load ephemeral secrets (1Password)"
+echo "  1. Log out and back in (for keyboard/trackpad settings)"
+echo "  2. Open a new terminal (or restart your shell)"
+echo "  3. Run 'tmux' then press prefix + I to install tmux plugins"
+echo "  4. Run 'auth' to load ephemeral secrets (1Password)"
 echo ""
