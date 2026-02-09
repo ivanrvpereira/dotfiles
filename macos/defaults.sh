@@ -124,6 +124,9 @@ defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
+# 24-hour clock
+defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+
 # Disable tiled window margins (Sequoia)
 defaults write -g EnableTiledWindowMargins -bool false
 
