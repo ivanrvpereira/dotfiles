@@ -119,7 +119,7 @@ brew "dive"           # Docker image layer explorer
 
 # Secret Detection
 brew "gitleaks"       # Secret scanning tool (primary)
-brew "trufflesecurity/trufflehog/trufflehog" # Secret verification (secondary)
+brew "trufflehog"    # Secret verification (secondary)
 brew "pre-commit"     # Git hook framework
 
 
