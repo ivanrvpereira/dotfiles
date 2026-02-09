@@ -9,7 +9,6 @@ tap "jesseduffield/lazygit"
 tap "koekeishiya/formulae"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
-tap "redpanda-data/tap"
 tap "robusta-dev/krr"
 tap "runpod/runpodctl"
 tap "ubicloud/cli"
@@ -76,7 +75,6 @@ brew "lazygit"      # Full Git management app
 brew "k9s"
 brew "hcloud"        # Hetzner Cloud CLI
 brew "awscli"
-brew "redpanda-data/tap/redpanda"
 brew "harlequin"
 brew "pgcli"
 brew "gh"           # GitHub CLI - Interact with GitHub PRs, issues, repos
