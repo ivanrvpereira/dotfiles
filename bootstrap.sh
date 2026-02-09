@@ -116,6 +116,34 @@ if command -v fish &>/dev/null; then
     fish -c 'fisher update' 2>/dev/null || warn "Fisher update failed (run manually: fisher update)"
 fi
 
+# ─── Git identity ─────────────────────────────────────────────────
+if [[ ! -f "$HOME/.gitconfig.local" ]]; then
+    info "Creating ~/.gitconfig.local (SSH signing key)..."
+    echo "  Add your 1Password SSH signing key (from 1Password > SSH Keys > Public Key)"
+    read -rp "  SSH signing key (ssh-ed25519 ...): " signing_key
+    cat > "$HOME/.gitconfig.local" <<EOF
+[user]
+	signingkey = $signing_key
+EOF
+    info "Created ~/.gitconfig.local"
+else
+    info "~/.gitconfig.local already exists"
+fi
+
+if [[ ! -f "$HOME/.gitconfig.work" ]]; then
+    read -rp "Set up work git identity? (y/N): " setup_work
+    if [[ "$setup_work" =~ ^[Yy]$ ]]; then
+        read -rp "  Work email: " work_email
+        cat > "$HOME/.gitconfig.work" <<EOF
+[user]
+	email = $work_email
+EOF
+        info "Created ~/.gitconfig.work"
+    fi
+else
+    info "~/.gitconfig.work already exists"
+fi
+
 # ─── Done ─────────────────────────────────────────────────────────
 echo ""
 info "Bootstrap complete!"
@@ -123,6 +151,5 @@ echo ""
 echo "Next steps:"
 echo "  1. Open a new terminal (or restart your shell)"
 echo "  2. Run 'tmux' then press prefix + I to install tmux plugins"
-echo "  3. Copy git/gitconfig.local.example to ~/.gitconfig.local and fill in your details"
-echo "  4. Run 'auth' to load ephemeral secrets (1Password)"
+echo "  3. Run 'auth' to load ephemeral secrets (1Password)"
 echo ""
