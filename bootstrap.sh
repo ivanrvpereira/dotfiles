@@ -55,7 +55,7 @@ brew bundle --file="$DOTFILES/Brewfile"
 # ─── Personal tools (optional) ──────────────────────────────────
 echo ""
 read -rp "Install personal tools (Spotify, Slack, Zoom, etc.)? [y/N] " install_personal
-if [[ "${install_personal,,}" == "y" ]]; then
+if [[ "$install_personal" =~ ^[Yy]$ ]]; then
     info "Installing personal packages from Brewfile.personal..."
     brew bundle --file="$DOTFILES/Brewfile.personal"
 else
