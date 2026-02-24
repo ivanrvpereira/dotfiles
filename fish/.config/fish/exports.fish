@@ -11,21 +11,29 @@ if test -f ~/.dotfiles/paths
     end
 end
 
-# ─── 1Password SSH Agent ─────────────────────────────────────
-# Must use expanded path — tilde won't work
-set -gx SSH_AUTH_SOCK "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+# ─── SSH Agent ───────────────────────────────────────────────
+if not set -q DOTFILES_HEADLESS
+    # 1Password SSH agent (GUI machines — requires Touch ID approval)
+    set -gx SSH_AUTH_SOCK "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+end
+# Headless: uses system ssh-agent (default SSH_AUTH_SOCK)
 
 # ─── Locale & editor ──────────────────────────────────────────
 set -gx LANG en_US.UTF-8
 set -gx LC_ALL en_US.UTF-8
 set -gx EDITOR nvim
 
-# ─── Ephemeral secrets (1Password, cleared on reboot) ─────────
-# First terminal after reboot triggers one Touch ID prompt; all others are silent
-if test -f $TMPDIR/.exa-api-key
-    set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
-else if status is-interactive
-    op read "op://development/exa-api-key/credential" > $TMPDIR/.exa-api-key 2>/dev/null
-    and chmod 600 $TMPDIR/.exa-api-key
-    and set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
+# ─── Secrets ─────────────────────────────────────────────────
+if set -q DOTFILES_HEADLESS
+    # Headless: load from ~/.secrets (populated once during bootstrap)
+    test -f ~/.secrets; and source ~/.secrets
+else
+    # GUI: load ephemeral secrets via 1Password (first shell triggers Touch ID)
+    if test -f $TMPDIR/.exa-api-key
+        set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
+    else if status is-interactive
+        op read "op://development/exa-api-key/credential" > $TMPDIR/.exa-api-key 2>/dev/null
+        and chmod 600 $TMPDIR/.exa-api-key
+        and set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
+    end
 end

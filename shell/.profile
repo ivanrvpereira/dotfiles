@@ -17,7 +17,10 @@ fi
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export EDITOR=nvim
-export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+# SSH agent: 1Password on GUI machines, system default on headless
+if [ ! -f "$HOME/.config/headless" ]; then
+    export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+fi
 
 # ─── mise (runtime manager) ───────────────────────────────────
 if command -v mise >/dev/null 2>&1; then
