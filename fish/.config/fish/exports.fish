@@ -22,6 +22,7 @@ end
 set -gx LANG en_US.UTF-8
 set -gx LC_ALL en_US.UTF-8
 set -gx EDITOR nvim
+set -gx VISUAL nvim
 
 # ─── Secrets ─────────────────────────────────────────────────
 if set -q DOTFILES_HEADLESS
@@ -29,11 +30,13 @@ if set -q DOTFILES_HEADLESS
     test -f ~/.secrets; and source ~/.secrets
 else
     # GUI: load ephemeral secrets via 1Password (first shell triggers Touch ID)
-    if test -f $TMPDIR/.exa-api-key
+    if test -s $TMPDIR/.exa-api-key
         set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
     else if status is-interactive
-        op read "op://development/exa-api-key/credential" > $TMPDIR/.exa-api-key 2>/dev/null
+        op read "op://development/exa-api-key/credential" 2>/dev/null | read -l _key
+        and test -n "$_key"
+        and printf '%s' "$_key" > $TMPDIR/.exa-api-key
         and chmod 600 $TMPDIR/.exa-api-key
-        and set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
+        and set -gx EXA_API_KEY "$_key"
     end
 end

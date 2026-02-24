@@ -72,7 +72,6 @@ keybind = ctrl+two=text:\x01\x32
 keybind = ctrl+three=text:\x01\x33
 keybind = ctrl+four=text:\x01\x34
 keybind = ctrl+five=text:\x01\x35
-keybind = ctrl+t=text:\x01\x63
 
 # tmux splits via Cmd+D / Cmd+Shift+D (sends Ctrl-a | and Ctrl-a -)
 keybind = cmd+d=text:\x01|
