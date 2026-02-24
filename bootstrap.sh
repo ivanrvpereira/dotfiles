@@ -25,6 +25,16 @@ read -rp "Hostname [$current_hostname]: " new_hostname
 HOSTNAME_TO_SET="${new_hostname:-$current_hostname}"
 export HOSTNAME_TO_SET
 
+# ─── Machine type ───────────────────────────────────────────────
+echo ""
+read -rp "Is this a headless machine (SSH-only, no GUI)? [y/N] " headless_choice
+if [[ "$headless_choice" =~ ^[Yy]$ ]]; then
+    HEADLESS=true
+    info "Configuring as headless (no 1Password GUI dependency)"
+else
+    HEADLESS=false
+fi
+
 # ─── Xcode Command Line Tools ────────────────────────────────────
 if ! xcode-select -p &>/dev/null; then
     info "Installing Xcode Command Line Tools..."
@@ -85,8 +95,17 @@ fi
 
 # ─── Config directories ──────────────────────────────────────────
 info "Ensuring config directories exist..."
-mkdir -p ~/.config/fish ~/.config/ghostty ~/.config/tmuxinator ~/.ssh
+mkdir -p ~/.config/fish/conf.d ~/.config/ghostty ~/.config/tmuxinator ~/.ssh
 chmod 700 ~/.ssh
+
+# ─── Headless machine flag ──────────────────────────────────────
+if $HEADLESS; then
+    info "Setting headless machine flags..."
+    echo 'set -gx DOTFILES_HEADLESS 1' > ~/.config/fish/conf.d/machine.fish
+    touch ~/.config/headless  # for .profile / non-fish shells
+else
+    rm -f ~/.config/fish/conf.d/machine.fish ~/.config/headless
+fi
 
 # ─── Stow packages ───────────────────────────────────────────────
 info "Stowing dotfile packages..."
@@ -132,15 +151,53 @@ if command -v fish &>/dev/null; then
     fish -c 'fisher update' 2>/dev/null || warn "Fisher update failed (run manually: fisher update)"
 fi
 
+# ─── SSH key (headless only) ─────────────────────────────────────
+if $HEADLESS; then
+    echo ""
+    read -rp "Generate a new SSH key or use an existing one? [g/E] " ssh_choice
+    if [[ "$ssh_choice" =~ ^[Gg]$ ]]; then
+        read -rp "  Key name [id_ed25519]: " key_name
+        key_name="${key_name:-id_ed25519}"
+        SSH_KEY_PATH="$HOME/.ssh/$key_name"
+        if [[ ! -f "$SSH_KEY_PATH" ]]; then
+            info "Generating SSH key (no passphrase — FileVault protects at rest)..."
+            ssh-keygen -t ed25519 -N "" -f "$SSH_KEY_PATH" -C "$HOSTNAME_TO_SET"
+        else
+            info "Key $SSH_KEY_PATH already exists, reusing"
+        fi
+    else
+        read -rp "  Path to existing SSH key [~/.ssh/id_ed25519]: " key_path
+        key_path="${key_path:-$HOME/.ssh/id_ed25519}"
+        SSH_KEY_PATH="${key_path/#\~/$HOME}"
+        [[ -f "$SSH_KEY_PATH" ]] || error "Key not found: $SSH_KEY_PATH"
+    fi
+    info "Public key:"
+    cat "${SSH_KEY_PATH}.pub"
+    echo ""
+    echo "  Add this key to GitHub as both Authentication and Signing key:"
+    echo "  https://github.com/settings/keys"
+    echo ""
+    read -rp "  Press Enter when done..."
+fi
+
 # ─── Git identity ─────────────────────────────────────────────────
 if [[ ! -f "$HOME/.gitconfig.local" ]]; then
-    info "Creating ~/.gitconfig.local (SSH signing key)..."
-    echo "  Add your 1Password SSH signing key (from 1Password > SSH Keys > Public Key)"
-    read -rp "  SSH signing key (ssh-ed25519 ...): " signing_key
-    cat > "$HOME/.gitconfig.local" <<EOF
+    info "Creating ~/.gitconfig.local..."
+    if $HEADLESS; then
+        cat > "$HOME/.gitconfig.local" <<EOF
+[user]
+	signingkey = $SSH_KEY_PATH
+EOF
+    else
+        echo "  Add your 1Password SSH signing key (from 1Password > SSH Keys > Public Key)"
+        read -rp "  SSH signing key (ssh-ed25519 ...): " signing_key
+        cat > "$HOME/.gitconfig.local" <<EOF
 [user]
 	signingkey = $signing_key
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 EOF
+    fi
     info "Created ~/.gitconfig.local"
 else
     info "~/.gitconfig.local already exists"
@@ -158,6 +215,33 @@ EOF
     fi
 else
     info "~/.gitconfig.work already exists"
+fi
+
+# ─── Headless secrets (one-time export from 1Password) ───────────
+if $HEADLESS && [[ ! -f "$HOME/.secrets" ]]; then
+    echo ""
+    info "Exporting secrets from 1Password to ~/.secrets..."
+    echo "  You need to sign in to 1Password CLI once."
+    echo "  Run: eval \$(op signin)"
+    read -rp "  Press Enter when signed in..."
+
+    exa_key=$(op read "op://development/exa-api-key/credential" 2>/dev/null) || true
+    if [[ -n "$exa_key" ]]; then
+        cat > "$HOME/.secrets" <<EOF
+# Machine secrets — exported from 1Password during bootstrap
+# chmod 600, not in dotfiles repo, FileVault protects at rest
+set -gx EXA_API_KEY $exa_key
+EOF
+        chmod 600 "$HOME/.secrets"
+        info "Created ~/.secrets with exported secrets"
+    else
+        warn "Could not read secrets from 1Password — create ~/.secrets manually"
+        cat > "$HOME/.secrets" <<'EOF'
+# Machine secrets — add manually
+# set -gx EXA_API_KEY your-key-here
+EOF
+        chmod 600 "$HOME/.secrets"
+    fi
 fi
 
 # ─── macOS defaults ──────────────────────────────────────────────
@@ -178,5 +262,10 @@ echo "Next steps:"
 echo "  1. Log out and back in (for keyboard/trackpad settings)"
 echo "  2. Open a new terminal (or restart your shell)"
 echo "  3. Run 'tmux' then press prefix + I to install tmux plugins"
-echo "  4. Run 'auth' to load ephemeral secrets (1Password)"
+if $HEADLESS; then
+    echo "  4. Verify: ssh -T git@github.com"
+    echo "  5. Secrets are in ~/.secrets (edit to add more)"
+else
+    echo "  4. Run 'auth' to load ephemeral secrets (1Password)"
+fi
 echo ""

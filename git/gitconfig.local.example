@@ -1,10 +1,16 @@
 # Local Git Configuration — machine-specific, NOT committed
 # Copy to ~/.gitconfig.local and customize for this machine
+# Created automatically by bootstrap.sh
 
-# SSH commit signing key (from 1Password)
-# Each machine has its own key — copy the public key from 1Password
-[user]
-	signingkey = ssh-ed25519 AAAA...
+# ─── GUI machine (1Password) ─────────────────────────────────
+# [user]
+# 	signingkey = ssh-ed25519 AAAA...  (public key from 1Password)
+# [gpg "ssh"]
+# 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+
+# ─── Headless machine (SSH key on disk) ──────────────────────
+# [user]
+# 	signingkey = ~/.ssh/id_ed25519
 
 # Work email override — loaded via includeIf in .gitconfig
 # when a repo's remote matches a configured org URL pattern.

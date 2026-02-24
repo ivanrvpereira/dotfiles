@@ -81,14 +81,23 @@ alias brewcheck='brew bundle dump --force --file=/tmp/Brewfile.current && diff ~
 alias claudeyolo='claude --dangerously-skip-permissions'
 alias cly=claudeyolo
 alias codexyolo='codex --dangerously-bypass-approvals-and-sandbox'
-alias ubi='op run -- ubi'
+if set -q DOTFILES_HEADLESS
+    alias ubi='ubi'
+else
+    alias ubi='op run -- ubi'
+end
 
 # Authenticate ephemeral secrets (once per reboot, stored in TMPDIR)
 function auth
-    op read "op://development/exa-api-key/credential" > $TMPDIR/.exa-api-key
-    chmod 600 $TMPDIR/.exa-api-key
-    set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
-    echo "Authenticated for this session"
+    if set -q DOTFILES_HEADLESS
+        echo "Headless machine — secrets loaded from ~/.secrets"
+        test -f ~/.secrets; and source ~/.secrets
+    else
+        op read "op://development/exa-api-key/credential" > $TMPDIR/.exa-api-key
+        chmod 600 $TMPDIR/.exa-api-key
+        set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
+        echo "Authenticated for this session"
+    end
 end
 
 #############################################################

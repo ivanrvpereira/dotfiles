@@ -27,6 +27,7 @@ black = "latest"
 "pipx:poetry" = "latest"
 "pipx:shell-gpt" = "latest"
 "pipx:youtube-transcript-api" = "latest"
+"github:can1357/oh-my-pi" = "latest"
 
 [settings]
 # Use latest installed version when no version is specified
