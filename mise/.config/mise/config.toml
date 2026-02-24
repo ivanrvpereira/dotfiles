@@ -25,9 +25,16 @@ black = "latest"
 "pipx:marker-pdf" = "latest"
 "pipx:markitdown" = "latest"
 "pipx:poetry" = "latest"
+"pipx:crawl4ai" = "latest"
 "pipx:shell-gpt" = "latest"
 "pipx:youtube-transcript-api" = "latest"
 "github:can1357/oh-my-pi" = "latest"
+
+# ─── Language Servers ────────────────────────────────────
+"npm:basedpyright" = "latest"
+"npm:typescript-language-server" = "latest"
+"npm:typescript" = "latest"
+"go:golang.org/x/tools/gopls" = "latest"
 
 [settings]
 # Use latest installed version when no version is specified

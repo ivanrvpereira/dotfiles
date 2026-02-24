@@ -3,5 +3,6 @@
 # Order matters: first entry = highest priority
 
 /opt/homebrew/opt/uutils-coreutils/libexec/uubin
+~/.dotfiles/bin
 ~/.local/bin
 ~/.bun/bin

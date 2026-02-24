@@ -9,8 +9,6 @@ alias cdi='zi'
 alias du='dua'
 
 # Safe file operations
-alias rm='trash'
-alias del='/bin/rm'
 alias cp='cp -i'
 alias mv='mv -i'
 
@@ -71,7 +69,7 @@ alias cleanup='fd -H -I ".DS_Store" -x /bin/rm {}'
 alias search='rg -i'
 
 # System update
-alias update='sudo softwareupdate -i -a && brew update && brew upgrade && brew bundle --file=~/.dotfiles/Brewfile && brew cleanup && mise upgrade'
+alias update='sudo softwareupdate -i -a && brew update && brew upgrade && brew bundle --file=~/.dotfiles/Brewfile && brew cleanup && mise upgrade && voiceink-update'
 alias update-ai='brew upgrade gemini-cli claude-code && npm install -g @mariozechner/pi-coding-agent && claude && open x-apple.systempreferences:com.apple.preference.security'
 
 # Homebrew check
@@ -93,9 +91,12 @@ function auth
         echo "Headless machine — secrets loaded from ~/.secrets"
         test -f ~/.secrets; and source ~/.secrets
     else
-        op read "op://development/exa-api-key/credential" > $TMPDIR/.exa-api-key
+        op read "op://development/exa-api-key/credential" 2>/dev/null | read -l _key
+        or begin; echo "op read failed"; return 1; end
+        test -n "$_key"; or begin; echo "Empty key returned"; return 1; end
+        printf '%s' "$_key" > $TMPDIR/.exa-api-key
         chmod 600 $TMPDIR/.exa-api-key
-        set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
+        set -gx EXA_API_KEY "$_key"
         echo "Authenticated for this session"
     end
 end
