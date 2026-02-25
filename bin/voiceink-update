@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+
+cd "$(dirname "$0")"
+
+echo "==> Pulling latest changes..."
+git pull
+
+echo "==> Building VoiceInk (local)..."
+make local
+
+echo "==> Installing to /Applications..."
+# Close VoiceInk if running
+osascript -e 'quit app "VoiceInk"' 2>/dev/null || true
+sleep 1
+
+rm -rf /Applications/VoiceInk.app
+cp -R ~/Downloads/VoiceInk.app /Applications/VoiceInk.app
+xattr -cr /Applications/VoiceInk.app
+
+echo "==> Done! Run with: open /Applications/VoiceInk.app"

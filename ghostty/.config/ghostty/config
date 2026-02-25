@@ -42,16 +42,15 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-# Shift+Enter workaround for Pi/Claude multi-line input
-# Current: sends \n (0x0a = C-j), vim-tmux-navigator passes C-j when pi/claude detected
-# Problem: Claude Code expects CSI u sequence (\e[13;2u), not raw \n
-#   - raw \n is indistinguishable from Enter → submits instead of newline
-# To test: comment out the keybind below and reload Ghostty
-#   - Ghostty will send native \e[13;2u for Shift+Enter
-#   - tmux extended-keys + extkeys (already configured) passes it through
-#   - Claude Code should recognize Shift+Enter properly
-#   - Pi may break if it relies on raw \n — test both before committing
-keybind = shift+enter=text:\n
+# Shift+Enter → ESC+Enter for multiline input in Claude Code, Pi, oh-my-pi
+# Works through tmux without Kitty protocol negotiation
+keybind = shift+enter=text:\x1b\r
+
+# oh-my-posh
+keybind = alt+backspace=text:\x1b\x7f
+
+# Prevent Ctrl+T from triggering macOS "New Tab" menu action
+keybind = ctrl+t=unbind
 
 # Tab switching with cmd+function keys (cmd+number used by AeroSpace)
 keybind = cmd+f1=goto_tab:1
@@ -76,6 +75,9 @@ keybind = ctrl+five=text:\x01\x35
 # tmux splits via Cmd+D / Cmd+Shift+D (sends Ctrl-a | and Ctrl-a -)
 keybind = cmd+d=text:\x01|
 keybind = cmd+shift+d=text:\x01-
+
+# tmux session chooser via Cmd+K (sends Ctrl-a s)
+keybind = cmd+k=text:\x01s
 
 # Split navigation (vim-style) — tmux pane navigation via Ctrl-a h/j/k/l
 keybind = cmd+alt+h=text:\x01h

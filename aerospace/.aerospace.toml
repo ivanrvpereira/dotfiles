@@ -156,22 +156,23 @@ outer.right = 5
     alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
     # Move workspace to specific monitor (by name pattern)
-    alt-shift-1 = 'move-workspace-to-monitor built-in'
+    # 1=HP E243d, 2=LG Ultrawide, 3=Built-in Mac, 4=yuna/arzopa (AirPlay)
+    alt-shift-1 = 'move-workspace-to-monitor HP'
     alt-shift-2 = 'move-workspace-to-monitor ultrawide'
-    alt-shift-3 = 'move-workspace-to-monitor arzopa'
-    alt-shift-4 = 'move-workspace-to-monitor sidecar'
+    alt-shift-3 = 'move-workspace-to-monitor built-in'
+    alt-shift-4 = 'move-workspace-to-monitor yuna'
 
     # Move individual window to specific monitor
-    ctrl-alt-1 = 'move-node-to-monitor built-in'
+    ctrl-alt-1 = 'move-node-to-monitor HP'
     ctrl-alt-2 = 'move-node-to-monitor ultrawide'
-    ctrl-alt-3 = 'move-node-to-monitor arzopa'
-    ctrl-alt-4 = 'move-node-to-monitor sidecar'
+    ctrl-alt-3 = 'move-node-to-monitor built-in'
+    ctrl-alt-4 = 'move-node-to-monitor yuna'
 
     # Focus specific monitor directly (ctrl-1/2/3/4)
-    ctrl-1 = 'focus-monitor built-in'
+    ctrl-1 = 'focus-monitor HP'
     ctrl-2 = 'focus-monitor ultrawide'
-    ctrl-3 = 'focus-monitor arzopa'
-    ctrl-4 = 'focus-monitor sidecar'
+    ctrl-3 = 'focus-monitor built-in'
+    ctrl-4 = 'focus-monitor yuna'
 
     #
     cmd-h = [] # Disable "hide application"
