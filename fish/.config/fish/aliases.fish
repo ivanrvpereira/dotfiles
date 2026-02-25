@@ -70,7 +70,7 @@ alias search='rg -i'
 
 # System update
 alias update='sudo softwareupdate -i -a && brew update && brew upgrade && brew bundle --file=~/.dotfiles/Brewfile && brew cleanup && mise upgrade && voiceink-update'
-alias update-ai='brew upgrade gemini-cli claude-code && npm install -g @mariozechner/pi-coding-agent && claude && open x-apple.systempreferences:com.apple.preference.security'
+alias update-agents='brew upgrade gemini-cli claude-code && npm install -g @mariozechner/pi-coding-agent && pi update && npx skills update -g && ~/.agents/bin/sync'
 
 # Homebrew check
 alias brewcheck='brew bundle dump --force --file=/tmp/Brewfile.current && diff ~/.dotfiles/Brewfile /tmp/Brewfile.current | grep "^>" | sd "^> " ""; rm -f /tmp/Brewfile.current'
