@@ -79,6 +79,7 @@ brew "awscli"
 brew "harlequin"
 brew "pgcli"
 brew "gh"           # GitHub CLI - Interact with GitHub PRs, issues, repos
+brew "ast-grep"
 brew "mosh"
 brew "jira-cli"     # Jira CLI
 brew "antoniorodr/memo/memo"   # Memo taking tool

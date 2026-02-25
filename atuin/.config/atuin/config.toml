@@ -10,6 +10,7 @@ sync_frequency = "10m"                     # Sync every 10 minutes (when enabled
 ## Search settings
 search_mode = "fuzzy"                      # fuzzy, fulltext, prefix, skim
 filter_mode = "global"                     # global, host, session, directory
+filter_mode_shell_up_key_binding = "session" # Up arrow shows current session only
 
 ## UI settings
 style = "compact"                          # compact, full, auto

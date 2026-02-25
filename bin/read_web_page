@@ -25,6 +25,6 @@ fi
 
 crwl "$URL" \
   -o md-fit \
-  -B ~/.dotfiles/config/crwl/browser.yml \
-  -C ~/.dotfiles/config/crwl/crawler.yml \
-  -f ~/.dotfiles/config/crwl/filter_pruning.yml
+  -B ~/.dotfiles/crwl/browser.yml \
+  -C ~/.dotfiles/crwl/crawler.yml \
+  -f ~/.dotfiles/crwl/filter_pruning.yml

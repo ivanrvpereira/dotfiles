@@ -47,6 +47,5 @@ credentials/
 .gitconfig.local
 
 # AI tools
-.claude/
 .aider*
 .cursor/
