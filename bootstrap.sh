@@ -3,7 +3,7 @@ set -euo pipefail
 
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/ivanrvpereira/dotfiles.git"
-STOW_PACKAGES=(shell git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit)
+STOW_PACKAGES=(shell git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit launchd)
 
 # Colors
 RED='\033[0;31m'
@@ -110,6 +110,16 @@ fi
 # ─── Stow packages ───────────────────────────────────────────────
 info "Stowing dotfile packages..."
 stow --no-folding -R "${STOW_PACKAGES[@]}"
+
+# ─── Launch Agents ────────────────────────────────────────────────
+info "Loading launch agents..."
+for plist in "$HOME"/Library/LaunchAgents/com.ivanpereira.*.plist; do
+    [[ -f "$plist" ]] || continue
+    label="$(basename "$plist" .plist)"
+    launchctl bootout "gui/$(id -u)/$label" 2>/dev/null || true
+    launchctl bootstrap "gui/$(id -u)" "$plist"
+    info "  Loaded $label"
+done
 
 # ─── Pre-commit hooks ────────────────────────────────────────────
 if [[ -f "$DOTFILES/.pre-commit-config.yaml" ]]; then

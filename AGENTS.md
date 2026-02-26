@@ -51,7 +51,7 @@ All configs are organized as GNU Stow packages. Each directory mirrors `$HOME`:
 
 ```
 git/  fish/  tmux/  tmuxinator/  ghostty/  aerospace/  1password/
-atuin/  btop/  htop/  zed/  mise/  nvim/  lazygit/
+atuin/  btop/  htop/  zed/  mise/  nvim/  lazygit/  launchd/
 ```
 
 Deployed via: `stow --no-folding -R <package>`
@@ -94,12 +94,23 @@ Fisher manages plugins (gitnow, fzf.fish, zoxide.fish, grc, replay). Plugin list
 
 LazyVim distro. Config in `nvim/` stow package. Plugins managed by lazy.nvim in `~/.local/share/nvim/lazy/`.
 
+### Scheduled Tasks (launchd)
+
+Automated updates via macOS launchd agents in `launchd/` stow package:
+
+- **`update-agents`** — daily 7 AM: claude-code, gemini-cli, pi, skills
+- **`update-system`** — Wednesday noon: brew, mise, voiceink, macOS software updates
+
+Scripts live in `bin/`. `launch-in-terminal` opens Terminal.app via osascript (Ghostty can't open windows from launchd context).
+
 ## Key Commands
 
 ```bash
 ./bootstrap.sh                          # Full setup (idempotent)
 brew bundle --file=~/.dotfiles/Brewfile # Install Homebrew packages (or alias: bb)
-update                                  # Full system update (macOS + brew + mise)
+update                                  # Run update-system + update-agents
+update-agents                           # AI tools only
+update-system                           # System: brew + mise + voiceink + macOS
 mise install                            # Install all runtimes
 fisher update                           # Update fish plugins
 source ~/.config/fish/config.fish       # Reload fish config
