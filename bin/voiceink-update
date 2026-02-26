@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-cd "$(dirname "$0")"
+cd "$HOME/apps/VoiceInk"
 
 echo "==> Pulling latest changes..."
 git pull
@@ -15,7 +15,6 @@ osascript -e 'quit app "VoiceInk"' 2>/dev/null || true
 sleep 1
 
 rm -rf /Applications/VoiceInk.app
-cp -R ~/Downloads/VoiceInk.app /Applications/VoiceInk.app
-xattr -cr /Applications/VoiceInk.app
+mv ~/Downloads/VoiceInk.app /Applications/VoiceInk.app
 
 echo "==> Done! Run with: open /Applications/VoiceInk.app"

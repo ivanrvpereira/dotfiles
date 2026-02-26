@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.ivanpereira.update-agents</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/ivanpereira/.dotfiles/bin/launch-in-terminal</string>
+        <string>/Users/ivanpereira/.dotfiles/bin/update-agents</string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>7</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/ivanpereira/Library/Logs/update-agents.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/ivanpereira/Library/Logs/update-agents.log</string>
+</dict>
+</plist>

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Opens a Terminal.app window and runs the given command
+osascript -e "tell application \"Terminal\" to do script \"$*\""

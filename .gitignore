@@ -7,6 +7,9 @@ Brewfile.lock.json
 # Claude Code
 .claude/
 
+# Pi
+.pi/
+
 # Local files (not tracked)
 todos/
 backups/

@@ -44,6 +44,8 @@ Dotfiles are organized as **GNU Stow packages** — each directory maps to `$HOM
 ├── mise/             → ~/.config/mise/config.toml
 ├── nvim/             → ~/.config/nvim/ (LazyVim)
 ├── lazygit/          → ~/Library/Application Support/lazygit/config.yml
+├── launchd/          → ~/Library/LaunchAgents/*.plist (scheduled tasks)
+├── bin/              → Scripts (in PATH via ~/.dotfiles/bin)
 ├── Brewfile          → Homebrew packages, casks, fonts, Mac App Store apps
 └── bootstrap.sh      → One-command setup for fresh machines
 ```
@@ -135,10 +137,30 @@ secret-scan-verified  # Verify detected secrets are real (trufflehog)
 hooks-run             # Manually run pre-commit hooks
 ```
 
+## Scheduled Tasks (launchd)
+
+Automated updates run via macOS launchd agents, opening a Terminal.app window so you can see progress:
+
+| Job | Schedule | What it does |
+|-----|----------|-------------|
+| `update-agents` | Daily 7 AM | AI tools: claude-code, gemini-cli, pi, skills |
+| `update-system` | Wednesday noon | brew, mise, voiceink, macOS software updates |
+
+Plists are managed as a stow package in `launchd/` and loaded by `bootstrap.sh`.
+
+```bash
+# Manual equivalents
+update-agents         # Run AI tools update now
+update-system         # Run full system update now
+update                # Run both
+```
+
 ## Maintenance
 
 ```bash
-update                # Full update: macOS + Homebrew + Brewfile + mise
+update                # Full update: update-system + update-agents
+update-agents         # Update AI tools (claude-code, gemini-cli, pi, skills)
+update-system         # System update (brew, mise, voiceink, macOS)
 mise install          # Install/update all runtimes
 mise upgrade          # Upgrade all mise-managed tools
 brew bundle cleanup   # Find orphaned Homebrew packages

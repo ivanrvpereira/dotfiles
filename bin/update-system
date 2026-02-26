@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+log()  { echo "[update-system] $(date '+%Y-%m-%d %H:%M:%S') $*"; }
+warn() { echo "[update-system] $(date '+%Y-%m-%d %H:%M:%S') WARN: $*"; }
+
+log "Starting weekly system update..."
+
+# ─── Brew ───────────────────────────────────────────────────────
+log "Updating Homebrew..."
+brew update 2>&1 || warn "brew update failed"
+
+log "Upgrading packages..."
+brew upgrade 2>&1 || warn "brew upgrade failed"
+
+log "Installing from Brewfile..."
+brew bundle --file="$HOME/.dotfiles/Brewfile" 2>&1 || warn "brew bundle failed"
+
+log "Cleaning up..."
+brew cleanup 2>&1 || warn "brew cleanup failed"
+
+# ─── Mise ───────────────────────────────────────────────────────
+log "Upgrading mise tools..."
+mise upgrade --yes 2>&1 || warn "mise upgrade failed"
+
+# ─── VoiceInk ──────────────────────────────────────────────────
+log "Updating VoiceInk..."
+voiceink-update > /dev/null 2>&1 || warn "voiceink-update failed"
+
+# ─── macOS software updates ────────────────────────────────────
+log "Installing macOS software updates..."
+sudo softwareupdate -i -a 2>&1 || warn "softwareupdate failed"
+
+log "Done."
