@@ -140,6 +140,8 @@ if [[ ! -d "$TPM_DIR" ]]; then
 else
     info "TPM already installed"
 fi
+info "Installing tmux plugins..."
+"$TPM_DIR/bin/install_plugins" || warn "TPM plugin install failed (run 'prefix + I' inside tmux)"
 
 # ─── Fisher plugins ────────────────────────────────────────────
 if command -v fish &>/dev/null; then
@@ -261,11 +263,10 @@ echo ""
 echo "Next steps:"
 echo "  1. Log out and back in (for keyboard/trackpad settings)"
 echo "  2. Open a new terminal (or restart your shell)"
-echo "  3. Run 'tmux' then press prefix + I to install tmux plugins"
 if $HEADLESS; then
-    echo "  4. Verify: ssh -T git@github.com"
-    echo "  5. Secrets are in ~/.secrets (edit to add more)"
+    echo "  3. Verify: ssh -T git@github.com"
+    echo "  4. Secrets are in ~/.secrets (edit to add more)"
 else
-    echo "  4. Run 'auth' to load ephemeral secrets (1Password)"
+    echo "  3. Run 'auth' to load ephemeral secrets (1Password)"
 fi
 echo ""
