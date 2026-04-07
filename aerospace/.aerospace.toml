@@ -38,7 +38,7 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-on-focus-changed = 'move-mouse window-lazy-center'
+# on-focus-changed = 'move-mouse window-lazy-center' # Disabled: fights mouse drag across monitors (#634)
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
@@ -129,15 +129,15 @@ outer.right = 5
 
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    cmd-1 = 'workspace TERM'
-    cmd-2 = 'workspace CODE'
-    cmd-3 = 'workspace BROWSE'
-    cmd-4 = 'workspace MAIN'
-    cmd-5 = 'workspace CHAT'
-    cmd-6 = 'workspace PLAN'
-    cmd-7 = 'workspace MEETING'
-    cmd-8 = 'workspace NOTES'
-    cmd-9 = 'workspace BG'
+    cmd-f1 = 'workspace TERM'
+    cmd-f2 = 'workspace CODE'
+    cmd-f3 = 'workspace BROWSE'
+    cmd-f4 = 'workspace MAIN'
+    cmd-f5 = 'workspace CHAT'
+    cmd-f6 = 'workspace PLAN'
+    cmd-f7 = 'workspace MEETING'
+    cmd-f8 = 'workspace NOTES'
+    cmd-f9 = 'workspace BG'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     cmd-alt-1 = ['move-node-to-workspace TERM', 'workspace TERM']
@@ -168,11 +168,7 @@ outer.right = 5
     ctrl-alt-3 = 'move-node-to-monitor built-in'
     ctrl-alt-4 = 'move-node-to-monitor yuna'
 
-    # Focus specific monitor directly (ctrl-1/2/3/4)
-    ctrl-1 = 'focus-monitor HP'
-    ctrl-2 = 'focus-monitor ultrawide'
-    ctrl-3 = 'focus-monitor built-in'
-    ctrl-4 = 'focus-monitor yuna'
+
 
     #
     cmd-h = [] # Disable "hide application"
@@ -217,10 +213,6 @@ esc = 'mode main'
 
 
 # Floating apps
-[[on-window-detected]]
-if.app-id = 'com.apple.finder'
-run = 'layout floating'
-
 [[on-window-detected]]
 if.app-id = 'com.apple.Preview'
 run = 'layout floating'
