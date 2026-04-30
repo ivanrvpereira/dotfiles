@@ -8,7 +8,7 @@ sync_frequency = "10m"                     # Sync every 10 minutes (when enabled
 ## TODO: Set up self-hosted server, then update sync_address to your server URL
 
 ## Search settings
-search_mode = "fuzzy"                      # fuzzy, fulltext, prefix, skim
+search_mode = "daemon-fuzzy"
 filter_mode = "global"                     # global, host, session, directory
 filter_mode_shell_up_key_binding = "session" # Up arrow shows current session only
 
@@ -54,3 +54,10 @@ common_prefix = ["sudo"]
 ## Sync v2 (enabled by default for new installs)
 [sync]
 records = true
+
+[ai]
+enabled = true
+
+[daemon]
+enabled = true
+autostart = true

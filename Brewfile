@@ -121,7 +121,6 @@ brew "dive"           # Docker image layer explorer
 
 # Secret Detection
 brew "gitleaks"       # Secret scanning tool (primary)
-brew "trufflehog"    # Secret verification (secondary)
 brew "pre-commit"     # Git hook framework
 
 
@@ -180,6 +179,7 @@ brew "tmuxinator"   #
 # Terminals
 brew "fish"
 cask "ghostty@tip"      # New native terminal
+cask "cmux"
 brew "starship"
 
 # Utility
@@ -197,7 +197,7 @@ cask "tailscale-app"  # Tailscale GUI app
 
 # Productivity (dev-useful)
 cask "raycast"
-cask "hiddenbar"      # Hide / show annoying menubar icons
+cask "maccy"          # Clipboard manager
 brew "iproute2mac"    # MacOS port of netstat and ifconfig
 cask "nikitabobko/tap/aerospace"
 brew "felixkratz/formulae/borders"

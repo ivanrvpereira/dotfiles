@@ -12,6 +12,9 @@ brew upgrade gemini-cli claude-code 2>&1 || warn "brew upgrade failed"
 log "Updating pi coding agent..."
 npm install -g @mariozechner/pi-coding-agent 2>&1 || warn "npm install pi failed"
 
+log "Updating agent-browser..."
+npm install -g agent-browser@latest 2>&1 || warn "npm install agent-browser failed"
+
 log "Running pi update..."
 pi update 2>&1 || warn "pi update failed"
 
