@@ -19,7 +19,6 @@ gh = "latest"
 pnpm = "latest"
 ruff = "latest"
 black = "latest"
-"github:can1357/oh-my-pi" = "latest"
 
 # ─── Python CLI Tools (pipx backend, uses uv) ────────────
 "pipx:git-filter-repo" = "latest"

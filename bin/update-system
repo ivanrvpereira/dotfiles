@@ -21,6 +21,8 @@ brew cleanup 2>&1 || warn "brew cleanup failed"
 
 # ─── Mise ───────────────────────────────────────────────────────
 log "Upgrading mise tools..."
+export GITHUB_TOKEN
+GITHUB_TOKEN="$(gh auth token 2>/dev/null)" || warn "failed to get GITHUB_TOKEN from gh"
 mise upgrade --yes 2>&1 || warn "mise upgrade failed"
 
 # ─── VoiceInk ──────────────────────────────────────────────────
