@@ -42,6 +42,9 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
+# Theme
+theme = Ghostty Default Style Dark
+
 # oh-my-posh
 keybind = alt+backspace=text:\x1b\x7f
 
