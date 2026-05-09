@@ -150,6 +150,7 @@ cask "google-chrome"
 cask "pycharm"
 cask "visual-studio-code"
 cask "zed"
+cask "markedit"         # Markdown editor
 cask "codex"            # OpenAI Codex CLI
 cask "dbeaver-community"
 cask "claude-code"
@@ -188,6 +189,7 @@ cask "orbstack"
 cask "devpod"       # Development environments
 brew "yazi"
 cask "openinterminal" # Finder button, opens directory in terminal
+cask "qlmarkdown"     # Quick Look previews for Markdown files
 cask "sloth"          # Shows open files/sockets by process
 
 # Security & Network
