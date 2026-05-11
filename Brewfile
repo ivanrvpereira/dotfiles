@@ -11,6 +11,7 @@ tap "nikitabobko/tap"
 tap "oven-sh/bun"
 tap "robusta-dev/krr"
 tap "runpod/runpodctl"
+tap "sheeki03/tap"
 tap "ubicloud/cli"
 tap "steipete/tap"
 tap "asheshgoplani/tap"
@@ -89,6 +90,7 @@ brew "robusta-dev/krr/krr"     # Kubernetes resource recommender
 brew "runpod/runpodctl/runpodctl" # RunPod CLI
 brew "ubicloud/cli/ubi"        # Ubicloud CLI
 brew "steipete/tap/summarize"  # AI text summarization
+brew "sheeki03/tap/tirith"      # Terminal security guard
 brew "asheshgoplani/tap/agent-deck" # AI agent tool
 brew "tw93/tap/mole"           # Terminal tool
 brew "yakitrak/yakitrak/obsidian-cli" # Obsidian CLI
