@@ -7,4 +7,9 @@ if status is-interactive
     if type -q atuin
         atuin init fish | source
     end
+
+    # Tirith - terminal security guard
+    if type -q tirith
+        tirith init --shell fish | source
+    end
 end
