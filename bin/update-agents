@@ -6,11 +6,11 @@ warn() { echo "[update-agents] $(date '+%Y-%m-%d %H:%M:%S') WARN: $*"; }
 
 log "Starting update..."
 
-log "Upgrading brew packages (gemini-cli, claude-code)..."
-brew upgrade gemini-cli claude-code 2>&1 || warn "brew upgrade failed"
+log "Upgrading brew packages (gemini-cli, claude-code@latest)..."
+brew upgrade gemini-cli claude-code@latest 2>&1 || warn "brew upgrade failed"
 
 log "Updating pi coding agent..."
-npm install -g @mariozechner/pi-coding-agent 2>&1 || warn "npm install pi failed"
+npm install -g --force @earendil-works/pi-coding-agent 2>&1 || warn "npm install pi failed"
 
 log "Updating agent-browser..."
 npm install -g agent-browser@latest 2>&1 || warn "npm install agent-browser failed"
