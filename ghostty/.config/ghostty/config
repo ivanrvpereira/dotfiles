@@ -51,7 +51,7 @@ keybind = alt+backspace=text:\x1b\x7f
 # Prevent Ctrl+T from triggering macOS "New Tab" menu action
 keybind = ctrl+t=unbind
 
-# Tab switching with cmd+function keys (cmd+number used by AeroSpace)
+# Tab switching with cmd+function keys
 keybind = cmd+f1=goto_tab:1
 keybind = cmd+f2=goto_tab:2
 keybind = cmd+f3=goto_tab:3
@@ -60,6 +60,14 @@ keybind = cmd+f5=goto_tab:5
 keybind = cmd+f6=goto_tab:6
 keybind = cmd+f7=goto_tab:7
 keybind = cmd+f8=goto_tab:8
+
+# OpenSessions: Cmd+1..6 switch visible tmux sessions
+keybind = cmd+digit_1=text:\x01\x1b1
+keybind = cmd+digit_2=text:\x01\x1b2
+keybind = cmd+digit_3=text:\x01\x1b3
+keybind = cmd+digit_4=text:\x01\x1b4
+keybind = cmd+digit_5=text:\x01\x1b5
+keybind = cmd+digit_6=text:\x01\x1b6
 #keybind = ctrl+physical:one=goto_tab:1
 #keybind = ctrl+physical:two=goto_tab:2
 #keybind = ctrl+physical:three=goto_tab:3
