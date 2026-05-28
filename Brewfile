@@ -178,6 +178,7 @@ brew "neovim"       # Text editor
 brew "stow"         # Dotfile symlink manager
 brew "tmux"         # Term multiplexer
 brew "tmuxinator"   #
+brew "tmux-sessionizer" # Fuzzy session/repo switcher (tms)
 
 # Terminals
 brew "fish"
