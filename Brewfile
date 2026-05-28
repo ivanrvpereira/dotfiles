@@ -35,7 +35,7 @@ brew "entr"         # Run command whenever file changes
 brew "exiftool"     # Read, write and modify exif data
 brew "fzf"          # Fuzzy file finder and filtering
 brew "hyperfine"    # Benchmarking for arbitrary commands
-brew "fclones"      # Duplicate file finder (faster than jdupes)
+brew "czkawka"      # Duplicate/empty file & similar image finder
 brew "just"         # Powerful command runner (better make)
 brew "jq"           # JSON parser, output and query files
 brew "lzop"         # Fast compression
