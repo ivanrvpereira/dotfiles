@@ -1,0 +1,24 @@
+display_full_path = false
+excluded_dirs = [
+    ".git",
+    "node_modules",
+    ".cache",
+    ".Trash",
+    "Library",
+    "Downloads",
+    "Desktop",
+    "Movies",
+    "Music",
+    "Pictures",
+    "Public",
+    "Applications",
+    ".npm",
+    ".pnpm-store",
+    ".bun",
+    ".cargo",
+    ".rustup",
+]
+
+[[search_dirs]]
+path = "/Users/ivanpereira"
+depth = 4

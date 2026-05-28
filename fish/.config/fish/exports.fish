@@ -24,6 +24,11 @@ set -gx LC_ALL en_US.UTF-8
 set -gx EDITOR nvim
 set -gx VISUAL nvim
 
+# ─── tmux-sessionizer (tms) ───────────────────────────────────
+# Use the dotfiles-tracked config on every platform (macOS default
+# lives under ~/Library/Application Support; this keeps it portable).
+set -gx TMS_CONFIG_FILE "$HOME/.config/tms/config.toml"
+
 # ─── Secrets ─────────────────────────────────────────────────
 if set -q DOTFILES_HEADLESS
     # Headless: load from ~/.secrets (populated once during bootstrap)
