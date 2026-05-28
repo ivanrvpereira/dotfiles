@@ -23,14 +23,14 @@ set -u
 
 current="${1:-}"
 
-# ── Active session: bold + bright — the whole group glows ──
-cur_sess_style='#[fg=cyan,bold]'
+# Per-session name color, cycled by 1-based position. The session name carries
+# the color; windows stay neutral so they don't clash.
+sess_palette=(39 213 214 84 203 141)
+
 cur_win_active='#[fg=green,bold]'
 cur_win_inactive='#[fg=colour252]'
 cur_bracket='#[fg=colour245]'
 
-# ── Other sessions: readable but visually recessed ──
-other_sess_style='#[fg=colour252]'
 other_win_active='#[fg=green,bold]'
 other_win_inactive='#[fg=colour245]'
 other_bracket='#[fg=colour240]'
@@ -64,13 +64,16 @@ while IFS= read -r sname; do
     is_current=0
     [ "$sname" = "$current" ] && is_current=1
 
-    # Session label (clickable: switches to this session).
+    sess_color="${sess_palette[$(( (idx - 1) % ${#sess_palette[@]} ))]}"
+
+    # Session label (clickable: switches to this session). Only the active
+    # session is colored; others stay neutral grey.
     if [ -n "${attention[$sname]:-}" ]; then
         label="${alert_style}●${idx}:${sname}${reset}"
     elif [ "$is_current" -eq 1 ]; then
-        label="${cur_sess_style}${idx}:${sname}${reset}"
+        label="#[fg=colour${sess_color},bold]${idx}:${sname}${reset}"
     else
-        label="${other_sess_style}${idx}:${sname}${reset}"
+        label="#[fg=colour250]${idx}:${sname}${reset}"
     fi
     out="${out}#[range=user|${idx}]${label}#[norange]"
 
