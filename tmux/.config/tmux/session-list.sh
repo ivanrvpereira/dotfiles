@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # Renders the tmux session list (with each session's windows nested) for the
 # status bar.
-# - current session is highlighted; each session's active window is highlighted.
+# - current session is highlighted red; each session's active window is highlighted.
 # - sessions needing attention are marked red with a leading dot.
 #   "attention" = a native bell alert on any window (monitor-bell), or any
 #   window carrying the @claude_waiting option (set this from a Claude Code
 #   Notification hook if you want agent-waiting detection).
 # - a window that rang the bell is itself flagged red.
 #
-# Layout: 0[1:nvim|2:sh]  polly[1:.dotfiles|2:logs]
+# Layout: 1:0[1:nvim|2:sh]  2:polly[1:.dotfiles|2:logs]
 #
 # Each session label is wrapped in a clickable range "user|<idx>" and each
 # window in "user|<idx>:<window-index>", where <idx> is the 1-based position in
@@ -23,9 +23,8 @@ set -u
 
 current="${1:-}"
 
-# Per-session name color, cycled by 1-based position. The session name carries
-# the color; windows stay neutral so they don't clash.
-sess_palette=(39 213 214 84 203 141)
+workspace_style='#[fg=colour39]'
+active_workspace_style='#[fg=colour203,bold]'
 
 cur_win_active='#[fg=green,bold]'
 cur_win_inactive='#[fg=colour252]'
@@ -41,41 +40,55 @@ sep='  '
 wsep_cur='#[fg=colour240]|'
 wsep_other='#[fg=colour238]|'
 
-declare -A attention
+# Internal separators for tmux output and cached window rows. tmux names are not
+# expected to contain ASCII record/unit separators. Unit separator is used for
+# fields because Bash collapses empty tab fields when reading with IFS=$'\t'.
+rs=$'\036'
+fs=$'\037'
 
-# Session-level alerts (bell/activity/silence depending on monitor-* settings).
-while IFS=$'\t' read -r sname alerts; do
+declare -a sessions
+declare -A seen attention window_rows
+
+idx=0
+# One tmux query provides session + window state. The shell sort keeps session
+# positions stable by creation time and windows ordered by index.
+while IFS="$fs" read -r _created sname alerts widx wname wactive wbell waiting; do
+    [ -n "$sname" ] || continue
+
+    if [ -z "${seen[$sname]:-}" ]; then
+        idx=$((idx + 1))
+        seen["$sname"]=$idx
+        sessions[$idx]="$sname"
+    fi
+
     [ -n "$alerts" ] && attention["$sname"]=1
-done < <(tmux list-sessions -F '#{session_name}'$'\t''#{session_alerts}' 2>/dev/null)
-
-# Any window flagged as waiting on user input.
-while IFS=$'\t' read -r sname waiting; do
     [ "$waiting" = "1" ] && attention["$sname"]=1
-done < <(tmux list-windows -a -F '#{session_name}'$'\t''#{@claude_waiting}' 2>/dev/null)
+
+    window_rows["$sname"]+="${widx}${fs}${wname}${fs}${wactive}${fs}${wbell}${rs}"
+done < <(
+    tmux list-windows -a \
+        -F "#{session_created}${fs}#{session_name}${fs}#{session_alerts}${fs}#{window_index}${fs}#{window_name}${fs}#{window_active}${fs}#{window_bell_flag}${fs}#{@claude_waiting}" \
+        2>/dev/null \
+        | LC_ALL=C sort -t "$fs" -k1,1n -k4,4n
+)
 
 out=""
-idx=0
-# Ordered by creation time (oldest first) so positions are stable.
-while IFS= read -r sname; do
-    [ -z "$sname" ] && continue
-    idx=$((idx + 1))
-    [ "$idx" -gt 1 ] && out="${out}${sep}"
+for ((i = 1; i <= idx; i++)); do
+    sname="${sessions[$i]}"
+    [ "$i" -gt 1 ] && out="${out}${sep}"
 
     is_current=0
     [ "$sname" = "$current" ] && is_current=1
 
-    sess_color="${sess_palette[$(( (idx - 1) % ${#sess_palette[@]} ))]}"
-
-    # Session label (clickable: switches to this session). Only the active
-    # session is colored; others stay neutral grey.
+    # Session label (clickable: switches to this session).
     if [ -n "${attention[$sname]:-}" ]; then
-        label="${alert_style}●${idx}:${sname}${reset}"
+        label="${alert_style}●${i}:${sname}${reset}"
     elif [ "$is_current" -eq 1 ]; then
-        label="#[fg=colour${sess_color},bold]${idx}:${sname}${reset}"
+        label="${active_workspace_style}${i}:${sname}${reset}"
     else
-        label="#[fg=colour250]${idx}:${sname}${reset}"
+        label="${workspace_style}${i}:${sname}${reset}"
     fi
-    out="${out}#[range=user|${idx}]${label}#[norange]"
+    out="${out}#[range=user|${i}]${label}#[norange]"
 
     # Pick styles based on whether this is the current session.
     if [ "$is_current" -eq 1 ]; then
@@ -93,8 +106,8 @@ while IFS= read -r sname; do
     # Nested window list (each window clickable: switches session + window).
     wlist=""
     first=1
-    while IFS=$'\t' read -r widx wname wactive wbell; do
-        [ -z "$widx" ] && continue
+    while IFS="$fs" read -r widx wname wactive wbell; do
+        [ -n "$widx" ] || continue
         if [ "$wbell" = "1" ]; then
             wstyle="$alert_style"
         elif [ "$wactive" = "1" ]; then
@@ -104,10 +117,10 @@ while IFS= read -r sname; do
         fi
         [ "$first" -eq 1 ] || wlist="${wlist}${_wsep}"
         first=0
-        wlist="${wlist}#[range=user|${idx}:${widx}]${wstyle}${widx}:${wname}${reset}#[norange]"
-    done < <(tmux list-windows -t "$sname" -F '#{window_index}'$'\t''#{window_name}'$'\t''#{window_active}'$'\t''#{window_bell_flag}' 2>/dev/null)
+        wlist="${wlist}#[range=user|${i}:${widx}]${wstyle}${widx}:${wname}${reset}#[norange]"
+    done < <(printf '%s' "${window_rows[$sname]:-}" | tr "$rs" '\n')
 
     out="${out}${_bracket}[${reset}${wlist}${_bracket}]${reset}"
-done < <(tmux list-sessions -F '#{session_created}'$'\t''#{session_name}' 2>/dev/null | sort -n | cut -f2-)
+done
 
 printf '%s' "$out"
