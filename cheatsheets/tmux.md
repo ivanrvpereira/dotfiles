@@ -64,8 +64,7 @@ Prefix: `Ctrl-a`
 
 ## Plugins
 
-- **tmux-yank** — system clipboard integration
+- **tpm** — plugin manager
 - **vim-tmux-navigator** — seamless vim/tmux pane nav
-- **tmux-resurrect** — save/restore sessions (`prefix C-s` / `prefix C-r`)
+- **tmux-resurrect** — manual save/restore sessions (`prefix C-s` / `prefix C-r`)
 - **tmux-continuum** — auto-save every 15 min, auto-restore on start
-- **dracula** — theme
