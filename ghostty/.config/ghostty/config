@@ -89,12 +89,6 @@ keybind = cmd+w=text:\x01x
 # tmux session chooser via Cmd+K (sends Ctrl-a s)
 keybind = cmd+k=text:\x01s
 
-# Split navigation (vim-style) — tmux pane navigation via Ctrl-a h/j/k/l
-keybind = cmd+alt+h=text:\x01h
-keybind = cmd+alt+l=text:\x01l
-keybind = cmd+alt+k=text:\x01k
-keybind = cmd+alt+j=text:\x01j
-
 # Disable fading for non-active panels
 unfocused-split-opacity = 1
 split-divider-color = #FF4F00
