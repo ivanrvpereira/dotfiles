@@ -16,6 +16,7 @@
 set -u
 
 arg="${1:-}"
+fs=$'\037'
 sess_pos="${arg%%:*}"
 win_idx=""
 case "$arg" in
@@ -27,8 +28,18 @@ case "$sess_pos" in
     ''|*[!0-9]*) exit 0 ;;
 esac
 
-target=$(tmux list-sessions -F '#{session_created}'$'\t''#{session_name}' 2>/dev/null \
-    | sort -n | sed -n "${sess_pos}p" | cut -f2-)
+idx=0
+target=""
+while IFS="$fs" read -r _created sname; do
+    idx=$((idx + 1))
+    if [ "$idx" -eq "$sess_pos" ]; then
+        target="$sname"
+        break
+    fi
+done < <(
+    tmux list-sessions -F "#{session_created}${fs}#{session_name}" 2>/dev/null \
+        | LC_ALL=C sort -t "$fs" -k1,1n
+)
 
 [ -n "$target" ] || exit 0
 
