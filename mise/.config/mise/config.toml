@@ -17,6 +17,7 @@ uv = "latest"
 bun = "latest"
 gh = "latest"
 pnpm = "latest"
+"npm:@llamaindex/liteparse" = "latest"
 ruff = "latest"
 black = "latest"
 
