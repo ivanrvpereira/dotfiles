@@ -78,7 +78,7 @@ outer.right = 5
 # Note: move-workspace-to-monitor (alt-shift-tab, alt-shift-1..4) fails for these workspaces.
 # See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [workspace-to-monitor-force-assignment]
-MAIN = ['HP', 'main']  # HP monitor when docked, else whatever is main
+MAIN = ['HP', 'ultrawide', 'main']  # HP when docked, else LG, else main monitor
 CHAT = ['built-in']    # always the MacBook screen
 
 [mode.main.binding]
