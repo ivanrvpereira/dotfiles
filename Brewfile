@@ -18,6 +18,7 @@ tap "asheshgoplani/tap"
 tap "tw93/tap"
 tap "yakitrak/yakitrak"
 tap "jazzyalex/agent-sessions"
+tap "kdash-rs/kdash"
 
 
 
@@ -52,6 +53,7 @@ brew "uutils-coreutils" # Modern coreutils in Rust
 brew "atuin"        # Shell history sync and search
 brew "zoxide"       # Auto-learning navigation (better cd)
 brew "fd"           # Better find
+brew "direnv"       # Load per-directory environment variables
 brew "telnet"
 brew "eza"          # Better ls
 
@@ -75,11 +77,15 @@ brew "lazydocker"   # Full Docker management app
 brew "lazygit"      # Full Git management app
 brew "git-delta"    # syntax highlighting for lazygit
 brew "k9s"
+brew "helm"
+brew "kind"
+brew "kdash-rs/kdash/kdash"
 brew "hcloud"        # Hetzner Cloud CLI
 brew "awscli"
 brew "harlequin"
 brew "pgcli"
 brew "gh"           # GitHub CLI - Interact with GitHub PRs, issues, repos
+brew "glab"         # GitLab CLI
 brew "ast-grep"
 brew "mosh"
 brew "jira-cli"     # Jira CLI
@@ -118,6 +124,7 @@ brew "git-lfs"        # Git large file storage
 brew "terminal-notifier" # Trigger Mac notifications from terminal
 brew "tig"            # Text-mode interface for git
 brew "watchman"       # Watch for changes and reload dev server
+brew "poppler"        # PDF utilities
 brew "mkcert"         # Local HTTPS development certificates
 brew "dive"           # Docker image layer explorer
 
@@ -155,7 +162,8 @@ cask "zed"
 cask "markedit"         # Markdown editor
 cask "codex"            # OpenAI Codex CLI
 cask "dbeaver-community"
-cask "claude-code"
+cask "postman"
+cask "claude-code@latest"
 
 # VScode extensions
 vscode "github.codespaces"
@@ -199,6 +207,8 @@ cask "sloth"          # Shows open files/sockets by process
 cask "1password"
 cask "1password-cli"
 cask "tailscale-app"  # Tailscale GUI app
+cask "ngrok"
+cask "proxyman"
 
 # Productivity (dev-useful)
 cask "raycast"
