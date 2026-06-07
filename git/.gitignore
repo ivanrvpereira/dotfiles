@@ -49,3 +49,5 @@ credentials/
 # AI tools
 .aider*
 .cursor/
+
+**/.claude/settings.local.json
