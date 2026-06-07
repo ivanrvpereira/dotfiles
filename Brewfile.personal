@@ -5,6 +5,7 @@ tap "zackriya-solutions/meetily"
 # Entertainment
 cask "spotify", args: { require_sha: false }
 cask "iina"
+cask "vlc"
 brew "yt-dlp"       # YouTube downloader
 
 # Communication
@@ -16,6 +17,7 @@ cask "zackriya-solutions/meetily/meetily"
 
 # Corporate
 cask "intune-company-portal"
+cask "microsoft-remote-desktop"
 
 # Personal Cloud & Backup
 cask "dropbox"
