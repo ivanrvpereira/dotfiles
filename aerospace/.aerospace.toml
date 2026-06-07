@@ -1,3 +1,6 @@
+# Config schema version. Enables 'persistent-workspaces' and other v2 options.
+config-version = 2
+
 # You can use it to add commands that run after login to macOS user session.
 # 'start-at-login' needs to be 'true' for 'after-login-command' to work
 after-login-command = []
@@ -14,6 +17,10 @@ after-startup-command = [
 
 # Start AeroSpace at login
 start-at-login = true
+
+# Automatically reload the config when the config file is saved
+# Not supported yet in 0.20.3-Beta — uncomment once AeroSpace is updated
+# auto-reload-config = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -45,6 +52,10 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 # Also see: https://nikitabobko.github.io/AeroSpace/goodness#disable-hide-app
 automatically-unhide-macos-hidden-apps = true
 
+# Keep all named workspaces alive even when empty and invisible,
+# so they never drop out of cycling/listing. Requires config-version = 2.
+persistent-workspaces = ['TERM', 'CODE', 'BROWSE', 'MAIN', 'CHAT', 'PLAN', 'MEETING', 'NOTES', 'BG']
+
 
 
 
@@ -61,6 +72,14 @@ outer.left = 5
 outer.top = 5
 outer.bottom = 5
 outer.right = 5
+
+# Default monitor homes. Patterns are case-insensitive regex substrings;
+# arrays are fallbacks — first matching pattern wins (handles docked vs laptop-only).
+# Note: move-workspace-to-monitor (alt-shift-tab, alt-shift-1..4) fails for these workspaces.
+# See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+[workspace-to-monitor-force-assignment]
+MAIN = ['HP', 'main']  # HP monitor when docked, else whatever is main
+CHAT = ['built-in']    # always the MacBook screen
 
 [mode.main.binding]
 
@@ -139,6 +158,19 @@ outer.right = 5
     cmd-f8 = 'workspace NOTES'
     cmd-f9 = 'workspace BG'
 
+    # Summon: bring the workspace to the monitor you're looking at (Xmonad-style),
+    # instead of jumping focus to the workspace's monitor.
+    # See: https://nikitabobko.github.io/AeroSpace/commands#summon-workspace
+    cmd-shift-f1 = 'summon-workspace TERM'
+    cmd-shift-f2 = 'summon-workspace CODE'
+    cmd-shift-f3 = 'summon-workspace BROWSE'
+    cmd-shift-f4 = 'summon-workspace MAIN'
+    cmd-shift-f5 = 'summon-workspace CHAT'
+    cmd-shift-f6 = 'summon-workspace PLAN'
+    cmd-shift-f7 = 'summon-workspace MEETING'
+    cmd-shift-f8 = 'summon-workspace NOTES'
+    cmd-shift-f9 = 'summon-workspace BG'
+
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     cmd-alt-1 = ['move-node-to-workspace TERM', 'workspace TERM']
     cmd-alt-2 = ['move-node-to-workspace CODE', 'workspace CODE']
@@ -157,6 +189,7 @@ outer.right = 5
 
     # Move workspace to specific monitor (by name pattern)
     # 1=HP E243d, 2=LG Ultrawide, 3=Built-in Mac, 4=yuna/arzopa (AirPlay)
+    # NOTE: fails for force-assigned workspaces (MAIN, CHAT) — use summon-workspace instead
     alt-shift-1 = 'move-workspace-to-monitor HP'
     alt-shift-2 = 'move-workspace-to-monitor ultrawide'
     alt-shift-3 = 'move-workspace-to-monitor built-in'
