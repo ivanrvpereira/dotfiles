@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# macOS defaults — Sequoia (15.x) validated
+# macOS defaults — Tahoe (26.x) validated
 # Run: ./macos/defaults.sh
 # Can be re-run safely at any time.
 set -euo pipefail
@@ -45,12 +45,31 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 15
 # Full keyboard access in all controls (Sequoia uses 2, not 3)
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
 
+# Use F1, F2, etc. as standard function keys (hold Globe/fn for special features)
+defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
+
 # Disable all auto-correction nonsense
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+
+# Caps Lock -> Control (native per-keyboard Modifier Keys mapping).
+# Detect the built-in Apple keyboard's vendor/product so it works across Mac
+# models, then map 0x700000039 (Caps Lock) -> 0x7000000E0 (Left Control).
+# This is the same pref the GUI Modifier Keys panel writes; takes effect after
+# logout/login.
+kbline=$(hidutil list 2>/dev/null | awk '/AppleHIDKeyboardEventDriverV2/ {print $1, $2; exit}')
+if [[ -n "$kbline" ]]; then
+    read -r vh ph <<<"$kbline"
+    kbd="$((vh))-$((ph))-0"
+    info "Mapping Caps Lock -> Control (keyboard $kbd)..."
+    defaults -currentHost write -g "com.apple.keyboard.modifiermapping.$kbd" -array \
+        '{"HIDKeyboardModifierMappingSrc"=30064771129;"HIDKeyboardModifierMappingDst"=30064771296;}'
+else
+    warn "Could not detect built-in keyboard for Caps Lock->Control remap"
+fi
 
 ###############################################################################
 # Trackpad                                                                    #
@@ -109,6 +128,14 @@ mkdir -p "${HOME}/Desktop/screenshots"
 defaults write com.apple.screencapture location -string "${HOME}/Desktop/screenshots"
 defaults write com.apple.screencapture type -string "png"
 
+# Swap region-screenshot shortcuts: Cmd+Shift+4 copies to clipboard, while
+# Cmd+Ctrl+Shift+4 saves to the file/folder above. params = (charCode, keycode, modifiers):
+#   key '4' = charCode 52, keycode 21; Cmd+Shift = 1179648, Cmd+Ctrl+Shift = 1441792.
+# Hotkey 30 = save selected area to file; 31 = copy selected area to clipboard.
+# (IDs 28/29 are the full-screen Cmd+Shift+3 shortcuts — leave them alone.)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 30 '{enabled=1;value={parameters=(52,21,1441792);type=standard;};}'
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 31 '{enabled=1;value={parameters=(52,21,1179648);type=standard;};}'
+
 ###############################################################################
 # Global UI/UX                                                                #
 ###############################################################################
@@ -130,6 +157,11 @@ defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
 # Disable tiled window margins (Sequoia)
 defaults write -g EnableTiledWindowMargins -bool false
 
+# Menu bar: tighten spacing between status items (Tahoe defaults are very roomy).
+# Affects third-party/extra menu bar icons. Requires logout/login to take effect.
+defaults -currentHost write -globalDomain NSStatusItemSpacing -int 6
+defaults -currentHost write -globalDomain NSStatusItemSelectionPadding -int 6
+
 ###############################################################################
 # Restart affected applications                                               #
 ###############################################################################
@@ -142,4 +174,4 @@ done
 
 echo ""
 info "macOS defaults applied!"
-warn "Some settings (keyboard repeat, trackpad) require logout/reboot to take effect."
+warn "Some settings (keyboard repeat, trackpad, menu bar spacing) require logout/reboot to take effect."
