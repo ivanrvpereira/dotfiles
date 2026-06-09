@@ -202,6 +202,7 @@ brew "yazi"
 cask "openinterminal" # Finder button, opens directory in terminal
 cask "qlmarkdown"     # Quick Look previews for Markdown files
 cask "sloth"          # Shows open files/sockets by process
+cask "openlogi"       # Lightweight Logitech Options+ alternative
 
 # Security & Network
 cask "1password"
