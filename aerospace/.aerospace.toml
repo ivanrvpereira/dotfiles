@@ -187,19 +187,18 @@ CHAT = ['built-in']    # always the MacBook screen
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
     alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-    # Move workspace to specific monitor (by name pattern)
-    # 1=HP E243d, 2=LG Ultrawide, 3=Built-in Mac, 4=yuna/arzopa (AirPlay)
+    # Move workspace to monitor by display arrangement: left-to-right, 1-based.
     # NOTE: fails for force-assigned workspaces (MAIN, CHAT) — use summon-workspace instead
-    alt-shift-1 = 'move-workspace-to-monitor HP'
-    alt-shift-2 = 'move-workspace-to-monitor ultrawide'
-    alt-shift-3 = 'move-workspace-to-monitor built-in'
-    alt-shift-4 = 'move-workspace-to-monitor yuna'
+    alt-shift-1 = 'move-workspace-to-monitor 1'
+    alt-shift-2 = 'move-workspace-to-monitor 2'
+    alt-shift-3 = 'move-workspace-to-monitor 3'
+    alt-shift-4 = 'move-workspace-to-monitor 4'
 
-    # Move individual window to specific monitor
-    ctrl-alt-1 = 'move-node-to-monitor HP'
-    ctrl-alt-2 = 'move-node-to-monitor ultrawide'
-    ctrl-alt-3 = 'move-node-to-monitor built-in'
-    ctrl-alt-4 = 'move-node-to-monitor yuna'
+    # Move individual window to monitor by display arrangement: left-to-right, 1-based.
+    ctrl-alt-1 = 'move-node-to-monitor 1'
+    ctrl-alt-2 = 'move-node-to-monitor 2'
+    ctrl-alt-3 = 'move-node-to-monitor 3'
+    ctrl-alt-4 = 'move-node-to-monitor 4'
 
 
 
