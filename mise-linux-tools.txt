@@ -1,0 +1,28 @@
+# Linux-only mise tools
+#
+# These are tools that macOS installs through Brewfile, but Linux servers should
+# get from mise because Ubuntu/Debian apt packages are stale, semantically
+# different, or absent.
+#
+# Format: <mise-tool@version> <command>
+# Install/link wrappers with:
+#   ~/.dotfiles/bin/install-linux-mise-tools
+
+gh@latest gh
+glab@latest glab
+awscli@latest aws
+gitleaks@latest gitleaks
+yq@latest yq
+kubectl@latest kubectl
+helm@latest helm
+kind@latest kind
+k9s@latest k9s
+lazydocker@latest lazydocker
+dive@latest dive
+duckdb@latest duckdb
+yazi@latest yazi
+navi@latest navi
+doggo@latest doggo
+hcloud@latest hcloud
+ast-grep@latest ast-grep
+ubi@latest ubi
