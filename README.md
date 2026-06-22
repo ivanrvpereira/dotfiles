@@ -47,6 +47,8 @@ Dotfiles are organized as **GNU Stow packages** — each directory maps to `$HOM
 ├── launchd/          → ~/Library/LaunchAgents/*.plist (scheduled tasks)
 ├── bin/              → Scripts (in PATH via ~/.dotfiles/bin)
 ├── Brewfile          → Homebrew packages, casks, fonts, Mac App Store apps
+├── Aptfile           → Ubuntu/Debian development server packages
+├── mise-linux-tools.txt → Linux-only mise tools also installed by Brewfile on macOS
 └── bootstrap.sh      → One-command setup for fresh machines
 ```
 
@@ -67,7 +69,9 @@ stow -D git
 
 | Layer | Tool | Manages | Config |
 |-------|------|---------|--------|
-| **System packages** | Homebrew | CLI tools, casks, fonts, App Store apps | `Brewfile` |
+| **macOS system packages** | Homebrew | CLI tools, casks, fonts, App Store apps | `Brewfile` |
+| **Ubuntu/Debian server packages** | apt | headless CLI/dev/server tools | `Aptfile` |
+| **Linux-only fast CLIs** | mise wrappers | gh, awscli, gitleaks, yq, kubectl, etc. | `mise-linux-tools.txt` + `bin/install-linux-mise-tools` |
 | **Runtimes & dev tools** | mise | node, python, go, rust, java, lua, uv, pipx tools | `mise/.config/mise/config.toml` |
 
 ## Shell (Fish)
@@ -170,10 +174,14 @@ tmux source-file ~/.tmux.conf       # Reload tmux (or prefix + r)
 
 ## VPS / Linux
 
-Only a subset applies on Linux servers: git, tmux, fish, atuin. No Homebrew — use `apt` for system packages and `mise` for cross-platform CLI tools.
+Linux servers do not use Homebrew. Use the Ubuntu/Debian `Aptfile` for headless system packages and `mise` for cross-platform runtimes/tools.
 
 ```bash
-sudo apt install -y git tmux fish
+sudo apt-get update
+~/.dotfiles/bin/install-aptfile
 curl https://mise.run | sh
 mise install
+~/.dotfiles/bin/install-linux-mise-tools
 ```
+
+The `Aptfile` intentionally excludes macOS GUI apps/fonts, Homebrew tap-only tools, transitional packages, and fast-moving CLIs that are better managed by `mise` or vendor repositories. Linux-only mise tools are listed in `mise-linux-tools.txt` and exposed through wrappers in `~/.local/bin` so the shared `mise/config.toml` stays macOS-safe. Docker is commented out by default; prefer Docker's official apt repository for development servers.
