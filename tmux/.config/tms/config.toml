@@ -20,5 +20,5 @@ excluded_dirs = [
 ]
 
 [[search_dirs]]
-path = "/Users/ivanpereira"
+path = "~"
 depth = 4

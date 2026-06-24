@@ -26,3 +26,4 @@ doggo@latest doggo
 hcloud@latest hcloud
 ast-grep@latest ast-grep
 ubi@latest ubi
+cargo:tmux-sessionizer@latest tms
