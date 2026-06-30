@@ -61,15 +61,12 @@ set_macos_hostname() {
 [[ "$(uname)" == "Darwin" ]] || error "This script is macOS-only"
 
 # ─── Hostname ───────────────────────────────────────────────────
-# Gather and apply together so it doesn't silently depend on the
-# macOS-defaults step (declined → hostname never set). Only touches
-# sudo when the name actually changes. Still in scope for the headless
-# SSH-key comment below.
+# Gather and apply here so hostname setup is independent from macOS defaults.
+# Only touches sudo when the name actually changes.
 current_hostname=$(scutil --get ComputerName 2>/dev/null || hostname -s)
 echo ""
 read -rp "Hostname [$current_hostname]: " new_hostname
 HOSTNAME_TO_SET="${new_hostname:-$current_hostname}"
-export HOSTNAME_TO_SET
 if [[ "$HOSTNAME_TO_SET" != "$current_hostname" ]]; then
     set_macos_hostname "$HOSTNAME_TO_SET"
 else
@@ -95,7 +92,7 @@ if ! $HEADLESS; then
     read -rp "Apply macOS defaults (keyboard, trackpad, Dock, Finder, etc.)? [Y/n] " apply_macos
     if ! is_no "$apply_macos"; then
         info "Applying macOS defaults..."
-        "$DOTFILES/macos/defaults.sh"
+        "$DOTFILES/macos/defaults.sh" || warn "macOS defaults failed; continuing bootstrap"
     else
         info "Skipping macOS defaults (run ./macos/defaults.sh anytime)"
     fi

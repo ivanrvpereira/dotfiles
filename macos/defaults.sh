@@ -16,18 +16,6 @@ osascript -e 'tell application "System Settings" to quit' 2>/dev/null || true
 sleep 1
 
 ###############################################################################
-# Hostname                                                                    #
-###############################################################################
-
-if [[ -n "${HOSTNAME_TO_SET:-}" ]]; then
-    info "Setting hostname to '$HOSTNAME_TO_SET'..."
-    sudo scutil --set ComputerName "$HOSTNAME_TO_SET"
-    sudo scutil --set HostName "$HOSTNAME_TO_SET"
-    sudo scutil --set LocalHostName "$HOSTNAME_TO_SET"
-    sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$HOSTNAME_TO_SET"
-fi
-
-###############################################################################
 # Keyboard & Input                                                            #
 ###############################################################################
 
