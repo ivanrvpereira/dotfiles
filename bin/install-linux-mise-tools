@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if [[ "$(uname -s)" != "Linux" ]]; then
-  echo "install-linux-mise-tools is Linux-only. macOS installs these tools with Brewfile." >&2
+  echo "install-linux-mise-tools is Linux-only. macOS installs these tools with Brewfile.cli." >&2
   exit 1
 fi
 

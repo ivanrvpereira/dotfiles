@@ -16,7 +16,7 @@ cd ~/.dotfiles
 ./bootstrap.sh  # idempotent — safe to re-run
 ```
 
-Bootstrap handles: Homebrew, Brewfile, Fish as default shell, stow symlinks, pre-commit hooks, mise runtimes, TPM, fisher plugins.
+Bootstrap handles: Homebrew, Brewfile.cli, Brewfile.desktop, optional Brewfile.personal, Fish as default shell, stow symlinks, pre-commit hooks, mise runtimes, TPM, fisher plugins.
 
 ### VPS (Linux — subset only)
 
@@ -91,7 +91,9 @@ Fisher manages plugins (gitnow, fzf.fish, zoxide.fish, grc, replay). Plugin list
 
 | Layer | Tool | What it manages | Config |
 |-------|------|----------------|--------|
-| **Global CLI tools** | Homebrew (`brew bundle`) | bat, fd, rg, eza, fzf, lazygit, casks, fonts, Mac App Store | `Brewfile` |
+| **Global CLI tools** | Homebrew (`brew bundle`) | bat, fd, rg, eza, fzf, lazygit, shell/dev tools | `Brewfile.cli` |
+| **Desktop tools** | Homebrew (`brew bundle`) | GUI apps, fonts, VS Code extensions, macOS desktop integrations | `Brewfile.desktop` |
+| **Personal tools** | Homebrew (`brew bundle`) | optional personal apps and Mac App Store apps | `Brewfile.personal` |
 | **Language runtimes & dev tools** | mise | node, python, go, rust, java, lua, uv, gh, jq, just, ruff, black | `mise/.config/mise/config.toml` |
 | **Python CLI tools** | mise (`pipx:` backend) | poetry, shell-gpt, markitdown, etc. | `mise/.config/mise/config.toml` |
 
@@ -114,7 +116,9 @@ Scripts live in `bin/`. `launch-in-terminal` opens Terminal.app via osascript (G
 
 ```bash
 ./bootstrap.sh                          # Full setup (idempotent)
-brew bundle --file=~/.dotfiles/Brewfile # Install Homebrew packages (or alias: bb)
+brew bundle --file=~/.dotfiles/Brewfile.cli      # Install CLI Homebrew packages
+brew bundle --file=~/.dotfiles/Brewfile.desktop  # Install desktop Homebrew packages
+brew bundle --file=~/.dotfiles/Brewfile.personal # Install optional personal packages
 update                                  # Run update-system + update-agents
 update-agents                           # AI tools only
 update-system                           # System: brew + mise + macOS
