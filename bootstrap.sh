@@ -94,7 +94,7 @@ if ! $HEADLESS; then
     read -rp "Apply macOS defaults (keyboard, trackpad, Dock, Finder, etc.)? [Y/n] " apply_macos
     if ! is_no "$apply_macos"; then
         info "Applying macOS defaults..."
-        "$DOTFILES/macos/defaults.sh" || warn "macOS defaults failed; continuing bootstrap"
+        "$DOTFILES/macos/defaults.sh" || error "macOS defaults failed"
     else
         info "Skipping macOS defaults (run ./macos/defaults.sh anytime)"
     fi
