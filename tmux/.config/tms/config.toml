@@ -18,6 +18,7 @@ excluded_dirs = [
     ".cargo",
     ".rustup",
 ]
+bookmarks = ["/Users/ivanpereira/work/src/polly/polly"]
 
 [[search_dirs]]
 path = "/Users/ivanpereira"

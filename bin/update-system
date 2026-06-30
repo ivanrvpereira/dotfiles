@@ -25,10 +25,6 @@ export GITHUB_TOKEN
 GITHUB_TOKEN="$(gh auth token 2>/dev/null)" || warn "failed to get GITHUB_TOKEN from gh"
 mise upgrade --yes 2>&1 || warn "mise upgrade failed"
 
-# ─── VoiceInk ──────────────────────────────────────────────────
-log "Updating VoiceInk..."
-voiceink-update > /dev/null 2>&1 || warn "voiceink-update failed"
-
 # ─── macOS software updates ────────────────────────────────────
 log "Installing macOS software updates..."
 sudo softwareupdate -i -a 2>&1 || warn "softwareupdate failed"

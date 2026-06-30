@@ -81,11 +81,11 @@
 
 [credential "https://github.com"]
 	helper = 
-	helper = !/Users/ivanpereira/.local/share/mise/installs/gh/2.92.0/gh_2.92.0_macOS_arm64/bin/gh auth git-credential
+	helper = !/Users/ivanpereira/.local/share/mise/shims/gh auth git-credential
 
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/Users/ivanpereira/.local/share/mise/installs/gh/2.92.0/gh_2.92.0_macOS_arm64/bin/gh auth git-credential
+	helper = !/Users/ivanpereira/.local/share/mise/shims/gh auth git-credential
 
 [user]
 	name = Ivan Pereira

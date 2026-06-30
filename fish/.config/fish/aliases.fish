@@ -1,27 +1,59 @@
 #############################################################
-# MODERN CLI REPLACEMENTS
+# MODERN CLI REPLACEMENTS (bind only when the tool exists)
 #############################################################
+# Each alias is guarded so a machine missing the modern tool
+# (e.g. a minimal VPS) keeps a working coreutils command instead
+# of a broken alias. Debian/Ubuntu rename some binaries, so we
+# probe both names (bat/batcat, fd/fdfind).
 
-alias cat='bat'
-alias find='fd'
-alias cd='z'
-alias cdi='zi'
-alias du='dua'
+# cat -> bat
+if command -q bat
+    alias cat='bat'
+else if command -q batcat
+    alias cat='batcat'
+end
+
+# find -> fd
+if command -q fd
+    alias find='fd'
+else if command -q fdfind
+    alias find='fdfind'
+end
+
+# cd -> zoxide (z/zi come from the zoxide.fish plugin)
+if command -q zoxide
+    alias cd='z'
+    alias cdi='zi'
+end
+
+# du -> dua (interactive disk usage)
+if command -q dua
+    alias du='dua'
+end
 
 # Safe file operations
 alias cp='cp -i'
 alias mv='mv -i'
 
-# ls/eza variations
-alias ls='eza'
-alias l='eza -lbF --git'
-alias ll='eza -lbGF --git'
-alias la='eza -lbhHigUmuSa --time-style=long-iso --git'
-alias lt='eza --tree --level=2'
+# ls -> eza, with a coreutils fallback so `ls` always works
+if command -q eza
+    alias ls='eza'
+    alias l='eza -lbF --git'
+    alias ll='eza -lbGF --git'
+    alias la='eza -lbhHigUmuSa --time-style=long-iso --git'
+    alias lt='eza --tree --level=2'
+else
+    alias l='ls -lF'
+    alias ll='ls -lhF'
+    alias la='ls -lAhF'
+    alias lt='ls -R'
+end
 
-# Editors
-alias vim='nvim'
-alias vi='nvim'
+# Editor: prefer nvim, fall back to the system vim/vi
+if command -q nvim
+    alias vim='nvim'
+    alias vi='nvim'
+end
 
 #############################################################
 # ABBREVIATIONS (expand inline before execution)

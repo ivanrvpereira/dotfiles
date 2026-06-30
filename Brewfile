@@ -4,9 +4,8 @@ tap "ankitpokhrel/jira-cli"
 tap "antoniorodr/memo"
 tap "atlassian/acli"
 tap "felixkratz/formulae"
+tap "gromgit/fuse"
 tap "int128/kubelogin"
-tap "jesseduffield/lazygit"
-tap "koekeishiya/formulae"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
 tap "robusta-dev/krr"
@@ -19,6 +18,7 @@ tap "tw93/tap"
 tap "yakitrak/yakitrak"
 tap "jazzyalex/agent-sessions"
 tap "kdash-rs/kdash"
+tap "modem-dev/tap"
 
 
 
@@ -44,6 +44,7 @@ brew "most"         # Multi-window scroll pager (better less)
 brew "procs"        # Advanced process viewer (better ps)
 brew "ripgrep"      # Searching within files (better grep)
 brew "rsync"        # Fast incremental file transfer
+brew "gromgit/fuse/sshfs-mac" # Mount remote directories over SSH
 brew "sd"           # RegEx find and replace (better sed)
 brew "tokei"        # Count lines of code (better cloc)
 brew "tree"         # Directory listings as tree structure
@@ -56,6 +57,7 @@ brew "fd"           # Better find
 brew "direnv"       # Load per-directory environment variables
 brew "telnet"
 brew "eza"          # Better ls
+brew "grc"          # Generic colouriser (required by the orefalo/grc fisher plugin)
 
 # CLI Monitoring and Performance Apps
 brew "bmon"         # Bandwidth utilization monitor
@@ -98,8 +100,10 @@ brew "ubicloud/cli/ubi"        # Ubicloud CLI
 brew "steipete/tap/summarize"  # AI text summarization
 brew "sheeki03/tap/tirith"      # Terminal security guard
 brew "asheshgoplani/tap/agent-deck" # AI agent tool
+brew "rtk"          # CLI proxy to minimize LLM token consumption
 brew "tw93/tap/mole"           # Terminal tool
 brew "yakitrak/yakitrak/obsidian-cli" # Obsidian CLI
+brew "modem-dev/tap/hunk"      # Review-first terminal diff viewer
 
 # CLI External Services
 brew "navi"         # Browse, search, read cheat sheets
@@ -167,8 +171,6 @@ cask "claude-code@latest"
 
 # VScode extensions
 vscode "github.codespaces"
-vscode "github.copilot"
-vscode "github.copilot-chat"
 vscode "github.vscode-github-actions"
 vscode "kevinrose.vsc-python-indent"
 vscode "ms-azuretools.vscode-containers"
@@ -196,6 +198,7 @@ brew "starship"
 
 # Utility
 cask "agent-sessions"   # AI agent session manager
+cask "macfuse"          # Filesystem extensions required by SSHFS
 cask "orbstack"
 cask "devpod"       # Development environments
 brew "yazi"
@@ -203,6 +206,7 @@ cask "openinterminal" # Finder button, opens directory in terminal
 cask "qlmarkdown"     # Quick Look previews for Markdown files
 cask "sloth"          # Shows open files/sockets by process
 cask "openlogi"       # Lightweight Logitech Options+ alternative
+cask "handy"          # Speech to text app
 
 # Security & Network
 cask "1password"
