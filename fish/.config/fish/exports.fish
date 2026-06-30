@@ -45,3 +45,13 @@ else
         and set -gx EXA_API_KEY "$_key"
     end
 end
+
+# ─── Sideshow ────────────────────────────────────────────────
+# Keep the token out of dotfiles; load the private .env if present.
+set -l sideshow_env "$HOME/.config/sideshow/cloudflare.env"
+if test -f "$sideshow_env"
+    for line in (string match -rv '^\s*(#|$)' < "$sideshow_env")
+        set -l parts (string split -m1 '=' -- "$line")
+        contains -- $parts[1] SIDESHOW_URL SIDESHOW_TOKEN; and set -gx $parts[1] $parts[2]
+    end
+end

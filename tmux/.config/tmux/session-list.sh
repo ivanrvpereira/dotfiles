@@ -9,6 +9,8 @@
 # - a window that rang the bell is itself flagged red.
 #
 # Layout: 1:0[1:nvim|2:sh]  2:polly[1:.dotfiles|2:logs]
+# If a session name is a path (for example a tms bookmark), display only its
+# basename while still targeting the real session name for clicks/switches.
 #
 # Each session label is wrapped in a clickable range "user|<idx>" and each
 # window in "user|<idx>:<window-index>", where <idx> is the 1-based position in
@@ -39,6 +41,15 @@ reset='#[default]'
 sep='  '
 wsep_cur='#[fg=colour240]|'
 wsep_other='#[fg=colour238]|'
+
+display_session_name() {
+    local name="${1%/}"
+    if [[ "$name" == */* ]]; then
+        printf '%s' "${name##*/}"
+    else
+        printf '%s' "$name"
+    fi
+}
 
 # Internal separators for tmux output and cached window rows. tmux names are not
 # expected to contain ASCII record/unit separators. Unit separator is used for
@@ -81,12 +92,13 @@ for ((i = 1; i <= idx; i++)); do
     [ "$sname" = "$current" ] && is_current=1
 
     # Session label (clickable: switches to this session).
+    display_sname="$(display_session_name "$sname")"
     if [ -n "${attention[$sname]:-}" ]; then
-        label="${alert_style}●${i}:${sname}${reset}"
+        label="${alert_style}●${i}:${display_sname}${reset}"
     elif [ "$is_current" -eq 1 ]; then
-        label="${active_workspace_style}${i}:${sname}${reset}"
+        label="${active_workspace_style}${i}:${display_sname}${reset}"
     else
-        label="${workspace_style}${i}:${sname}${reset}"
+        label="${workspace_style}${i}:${display_sname}${reset}"
     fi
     out="${out}#[range=user|${i}]${label}#[norange]"
 

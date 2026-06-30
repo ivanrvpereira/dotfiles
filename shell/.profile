@@ -22,6 +22,13 @@ if [ ! -f "$HOME/.config/headless" ]; then
     export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 fi
 
+# ─── Sideshow ─────────────────────────────────────────────────
+# Keep the token out of dotfiles; load the private .env if present.
+if [ -f "$HOME/.config/sideshow/cloudflare.env" ]; then
+    . "$HOME/.config/sideshow/cloudflare.env"
+    export SIDESHOW_URL SIDESHOW_TOKEN
+fi
+
 # ─── mise (runtime manager) ───────────────────────────────────
 if command -v mise >/dev/null 2>&1; then
     if [ -n "$ZSH_VERSION" ]; then

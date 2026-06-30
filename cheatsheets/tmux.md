@@ -7,11 +7,26 @@ Prefix: `Ctrl-a`
 | Key | Action |
 |-----|--------|
 | `tmux new -s name` | New session |
+| `tmux new -s app -c ~/projects/app` | New session in a folder |
+| `tmux new -d -s app -c ~/projects/app` | Create detached session in a folder |
+| `tmux switch-client -t app` | Switch to session from inside tmux |
 | `tmux ls` | List sessions |
 | `tmux a -t name` | Attach to session |
 | `prefix d` | Detach |
 | `prefix $` | Rename session |
 | `prefix s` | Session picker |
+
+## tms sessionizer
+
+| Key / Command | Action |
+|---------------|--------|
+| `prefix C-o` | Open `tms` directory/session picker |
+| `prefix C-f` | Switch active tmux sessions with `tms` |
+| `tms bookmark ~/work/apps/demo` | Add a non-git folder to `tms` picker |
+| `tms bookmark ~/scratch/prototype` | Example bookmark for another non-git folder |
+| `tms bookmark -d ~/work/apps/demo` | Remove a bookmarked folder |
+
+`tms` scans git repositories by default. For folders without `.git`, bookmark them first.
 
 ## Windows
 

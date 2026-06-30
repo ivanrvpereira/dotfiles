@@ -20,13 +20,20 @@ Bootstrap handles: Homebrew, Brewfile, Fish as default shell, stow symlinks, pre
 
 ### VPS (Linux — subset only)
 
-Only a subset applies: git, tmux, fish, atuin. No Homebrew, no macOS app configs.
+A subset applies: shell tooling, git, tmux, fish, atuin, nvim. No Homebrew, no macOS GUI app configs.
 
 ```bash
-sudo apt-get install -y git tmux fish
-curl https://mise.run | sh
-mise install
+git clone https://github.com/<user>/dotfiles.git ~/.dotfiles
+curl https://mise.run | sh          # mise (runtimes); apt provides the rest
+~/.dotfiles/setup/linux.sh          # idempotent — safe to re-run
 ```
+
+`setup/linux.sh` is the Linux counterpart to `bootstrap.sh`. It installs the
+modern CLI tools via apt (`eza`, `bat`, `fd`, `rg`, `fzf`, `zoxide`, `delta`,
+`atuin`, `neovim`, `grc`), the apt gaps via mise (`lazygit`, `dua`), then sets up
+fisher plugins, TPM, stows the Linux package subset, and makes fish the default
+shell. Tools that ship under Debian names (`batcat`/`fdfind`) are handled by the
+guarded aliases in `fish/.config/fish/aliases.fish` — no symlinks required.
 
 ## Non-Obvious Path Conventions
 
@@ -99,7 +106,7 @@ LazyVim distro. Config in `nvim/` stow package. Plugins managed by lazy.nvim in 
 Automated updates via macOS launchd agents in `launchd/` stow package:
 
 - **`update-agents`** — daily 7 AM: claude-code, gemini-cli, pi, skills
-- **`update-system`** — Wednesday noon: brew, mise, voiceink, macOS software updates
+- **`update-system`** — Wednesday noon: brew, mise, macOS software updates
 
 Scripts live in `bin/`. `launch-in-terminal` opens Terminal.app via osascript (Ghostty can't open windows from launchd context).
 
@@ -110,7 +117,7 @@ Scripts live in `bin/`. `launch-in-terminal` opens Terminal.app via osascript (G
 brew bundle --file=~/.dotfiles/Brewfile # Install Homebrew packages (or alias: bb)
 update                                  # Run update-system + update-agents
 update-agents                           # AI tools only
-update-system                           # System: brew + mise + voiceink + macOS
+update-system                           # System: brew + mise + macOS
 mise install                            # Install all runtimes
 fisher update                           # Update fish plugins
 source ~/.config/fish/config.fish       # Reload fish config

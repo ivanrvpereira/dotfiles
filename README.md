@@ -144,7 +144,7 @@ Automated updates run via macOS launchd agents, opening a Terminal.app window so
 | Job | Schedule | What it does |
 |-----|----------|-------------|
 | `update-agents` | Daily 7 AM | AI tools: claude-code, gemini-cli, pi, skills |
-| `update-system` | Wednesday noon | brew, mise, voiceink, macOS software updates |
+| `update-system` | Wednesday noon | brew, mise, macOS software updates |
 
 Plists are managed as a stow package in `launchd/` and loaded by `bootstrap.sh`.
 
@@ -160,7 +160,7 @@ update                # Run both
 ```bash
 update                # Full update: update-system + update-agents
 update-agents         # Update AI tools (claude-code, gemini-cli, pi, skills)
-update-system         # System update (brew, mise, voiceink, macOS)
+update-system         # System update (brew, mise, macOS)
 mise install          # Install/update all runtimes
 mise upgrade          # Upgrade all mise-managed tools
 brew bundle cleanup   # Find orphaned Homebrew packages

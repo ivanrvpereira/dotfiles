@@ -9,7 +9,7 @@ python = ["3.13", "3.12", "3.11", "3.10"]
 go = "latest"
 rust = "latest"
 java = "latest"
-lua = "latest"
+lua = "5.4"  # not "latest": Lua 5.5.0 (Dec 2025) + mise build layout breaks luarocks ("interpreter not found")
 uv = "latest"
 
 # ─── Dev Tools ────────────────────────────────────────────

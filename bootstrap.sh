@@ -19,11 +19,21 @@ error() { echo -e "${RED}[ERROR]${NC} $*"; exit 1; }
 [[ "$(uname)" == "Darwin" ]] || error "This script is macOS-only"
 
 # ─── Hostname ───────────────────────────────────────────────────
+# Gather and apply together so it doesn't silently depend on the
+# macOS-defaults step (declined → hostname never set). Only touches
+# sudo when the name actually changes. Still in scope for the headless
+# SSH-key comment below.
 current_hostname=$(scutil --get ComputerName 2>/dev/null || hostname -s)
 echo ""
 read -rp "Hostname [$current_hostname]: " new_hostname
 HOSTNAME_TO_SET="${new_hostname:-$current_hostname}"
-export HOSTNAME_TO_SET
+if [[ "$HOSTNAME_TO_SET" != "$current_hostname" ]]; then
+    info "Setting hostname to '$HOSTNAME_TO_SET'..."
+    sudo scutil --set ComputerName "$HOSTNAME_TO_SET"
+    sudo scutil --set HostName "$HOSTNAME_TO_SET"
+    sudo scutil --set LocalHostName "$HOSTNAME_TO_SET"
+    sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$HOSTNAME_TO_SET"
+fi
 
 # ─── Machine type ───────────────────────────────────────────────
 echo ""
@@ -33,6 +43,21 @@ if [[ "$headless_choice" =~ ^[Yy]$ ]]; then
     info "Configuring as headless (no 1Password GUI dependency)"
 else
     HEADLESS=false
+fi
+
+# ─── macOS defaults ──────────────────────────────────────────────
+# Self-contained (defaults/scutil/osascript/killall only — no brew/stow
+# deps), so applied up front with the other prompts/sudo rather than at
+# the very end. Skipped on headless (no GUI).
+if ! $HEADLESS; then
+    echo ""
+    read -rp "Apply macOS defaults (keyboard, trackpad, Dock, Finder, etc.)? [Y/n] " apply_macos
+    if [[ ! "$apply_macos" =~ ^[Nn]$ ]]; then
+        info "Applying macOS defaults..."
+        "$DOTFILES/macos/defaults.sh"
+    else
+        info "Skipping macOS defaults (run ./macos/defaults.sh anytime)"
+    fi
 fi
 
 # ─── Xcode Command Line Tools ────────────────────────────────────
@@ -67,14 +92,14 @@ cd "$DOTFILES"
 
 # ─── Brew Bundle ──────────────────────────────────────────────────
 info "Installing packages from Brewfile..."
-brew bundle --file="$DOTFILES/Brewfile"
+brew bundle --file="$DOTFILES/Brewfile" || warn "Some Brewfile entries failed — continuing (re-run 'bb' later to retry)"
 
 # ─── Personal tools (optional) ──────────────────────────────────
 echo ""
 read -rp "Install personal tools (Spotify, Slack, Zoom, etc.)? [y/N] " install_personal
 if [[ "$install_personal" =~ ^[Yy]$ ]]; then
     info "Installing personal packages from Brewfile.personal..."
-    brew bundle --file="$DOTFILES/Brewfile.personal"
+    brew bundle --file="$DOTFILES/Brewfile.personal" || warn "Some personal Brewfile entries failed — continuing"
 else
     info "Skipping personal tools"
 fi
@@ -254,16 +279,6 @@ EOF
 EOF
         chmod 600 "$HOME/.secrets"
     fi
-fi
-
-# ─── macOS defaults ──────────────────────────────────────────────
-echo ""
-read -rp "Apply macOS defaults (keyboard, trackpad, Dock, Finder, etc.)? [Y/n] " apply_macos
-if [[ ! "$apply_macos" =~ ^[Nn]$ ]]; then
-    info "Applying macOS defaults..."
-    "$DOTFILES/macos/defaults.sh"
-else
-    info "Skipping macOS defaults (run ./macos/defaults.sh anytime)"
 fi
 
 # ─── Done ─────────────────────────────────────────────────────────
