@@ -80,12 +80,12 @@
 	clean = git-lfs clean -- %f
 
 [credential "https://github.com"]
-	helper = 
-	helper = !/Users/ivanpereira/.local/share/mise/shims/gh auth git-credential
+	helper =
+	helper = !gh auth git-credential
 
 [credential "https://gist.github.com"]
-	helper = 
-	helper = !/Users/ivanpereira/.local/share/mise/shims/gh auth git-credential
+	helper =
+	helper = !gh auth git-credential
 
 [user]
 	name = Ivan Pereira
