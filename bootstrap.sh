@@ -15,6 +15,46 @@ info()  { echo -e "${GREEN}[INFO]${NC} $*"; }
 warn()  { echo -e "${YELLOW}[WARN]${NC} $*"; }
 error() { echo -e "${RED}[ERROR]${NC} $*"; exit 1; }
 
+SKIP_BREW=${SKIP_BREW:-false}
+SKIP_PERSONAL=${SKIP_PERSONAL:-false}
+
+for arg in "$@"; do
+    case "$arg" in
+        --skip-brew) SKIP_BREW=true ;;
+        --skip-personal) SKIP_PERSONAL=true ;;
+        *) error "Unknown option: $arg" ;;
+    esac
+done
+
+brew_bundle_install() {
+    local file="$1"
+    local label="$2"
+
+    if brew bundle check --file="$file" &>/dev/null; then
+        info "$label already satisfied"
+        return 0
+    fi
+
+    info "Installing packages from $label..."
+    if ! brew bundle --file="$file" --no-upgrade; then
+        warn "$label install failed. Fix the Homebrew error, then retry just this step:"
+        warn "  brew bundle --file=\"$file\" --no-upgrade"
+        warn "After it succeeds, continue bootstrap without repeating Homebrew:"
+        warn "  SKIP_BREW=true ./bootstrap.sh"
+        return 1
+    fi
+}
+
+set_macos_hostname() {
+    local hostname="$1"
+
+    info "Setting hostname to '$hostname'..."
+    sudo scutil --set ComputerName "$hostname"
+    sudo scutil --set HostName "$hostname"
+    sudo scutil --set LocalHostName "$hostname"
+    sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$hostname"
+}
+
 # ─── Pre-flight checks ───────────────────────────────────────────
 [[ "$(uname)" == "Darwin" ]] || error "This script is macOS-only"
 
@@ -24,6 +64,11 @@ echo ""
 read -rp "Hostname [$current_hostname]: " new_hostname
 HOSTNAME_TO_SET="${new_hostname:-$current_hostname}"
 export HOSTNAME_TO_SET
+if [[ -n "$new_hostname" && "$HOSTNAME_TO_SET" != "$current_hostname" ]]; then
+    set_macos_hostname "$HOSTNAME_TO_SET"
+else
+    info "Hostname unchanged ($HOSTNAME_TO_SET)"
+fi
 
 # ─── Machine type ───────────────────────────────────────────────
 echo ""
@@ -66,15 +111,21 @@ fi
 cd "$DOTFILES"
 
 # ─── Brew Bundle ──────────────────────────────────────────────────
-info "Installing packages from Brewfile..."
-brew bundle --file="$DOTFILES/Brewfile"
+if $SKIP_BREW; then
+    warn "Skipping Brewfile install (SKIP_BREW=true / --skip-brew)"
+else
+    brew_bundle_install "$DOTFILES/Brewfile" "Brewfile"
+fi
 
 # ─── Personal tools (optional) ──────────────────────────────────
 echo ""
-read -rp "Install personal tools (Spotify, Slack, Zoom, etc.)? [y/N] " install_personal
-if [[ "$install_personal" =~ ^[Yy]$ ]]; then
-    info "Installing personal packages from Brewfile.personal..."
-    brew bundle --file="$DOTFILES/Brewfile.personal"
+if $SKIP_PERSONAL; then
+    warn "Skipping personal tools (SKIP_PERSONAL=true / --skip-personal)"
+else
+    read -rp "Install personal tools (Spotify, Slack, Zoom, etc.)? [y/N] " install_personal
+fi
+if ! $SKIP_PERSONAL && [[ "$install_personal" =~ ^[Yy]$ ]]; then
+    brew_bundle_install "$DOTFILES/Brewfile.personal" "Brewfile.personal"
 else
     info "Skipping personal tools"
 fi
@@ -144,12 +195,17 @@ fi
 
 # ─── TPM (Tmux Plugin Manager) ───────────────────────────────────
 TPM_DIR="$HOME/.tmux/plugins/tpm"
-if [[ ! -d "$TPM_DIR" ]]; then
+if [[ ! -x "$TPM_DIR/tpm" || ! -x "$TPM_DIR/bin/install_plugins" ]]; then
+    if [[ -d "$TPM_DIR" ]]; then
+        warn "TPM install at $TPM_DIR is incomplete; reinstalling..."
+        rm -rf "$TPM_DIR"
+    fi
     info "Installing TPM..."
     git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
 else
     info "TPM already installed"
 fi
+tmux start-server \; source-file "$HOME/.tmux.conf" 2>/dev/null || warn "Could not pre-load tmux config before plugin install"
 info "Installing tmux plugins..."
 "$TPM_DIR/bin/install_plugins" || warn "TPM plugin install failed (run 'prefix + I' inside tmux)"
 
