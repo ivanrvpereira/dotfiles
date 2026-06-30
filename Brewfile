@@ -16,7 +16,6 @@ tap "ubicloud/cli"
 tap "steipete/tap"
 tap "asheshgoplani/tap"
 tap "tw93/tap"
-tap "yakitrak/yakitrak"
 tap "jazzyalex/agent-sessions"
 tap "kdash-rs/kdash"
 
@@ -99,7 +98,6 @@ brew "steipete/tap/summarize"  # AI text summarization
 brew "sheeki03/tap/tirith"      # Terminal security guard
 brew "asheshgoplani/tap/agent-deck" # AI agent tool
 brew "tw93/tap/mole"           # Terminal tool
-brew "yakitrak/yakitrak/obsidian-cli" # Obsidian CLI
 
 # CLI External Services
 brew "navi"         # Browse, search, read cheat sheets
