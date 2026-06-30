@@ -99,7 +99,6 @@ brew "sheeki03/tap/tirith", trusted: true      # Terminal security guard
 brew "asheshgoplani/tap/agent-deck", trusted: true # AI agent tool
 brew "rtk"          # CLI proxy to minimize LLM token consumption
 brew "tw93/tap/mole", trusted: true           # Terminal tool
-brew "yakitrak/yakitrak/obsidian-cli", trusted: true # Obsidian CLI
 brew "modem-dev/tap/hunk", trusted: true      # Review-first terminal diff viewer
 
 #############################################################
