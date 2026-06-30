@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ "$(uname -s)" != "Linux" ]]; then
+  echo "install-linux-mise-tools is Linux-only. macOS installs these tools with Brewfile." >&2
+  exit 1
+fi
+
+if ! command -v mise >/dev/null 2>&1; then
+  echo "mise is required. Install it first: curl https://mise.run | sh" >&2
+  exit 1
+fi
+
+DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+TOOLFILE="${1:-$DOTFILES/mise-linux-tools.txt}"
+
+if [[ ! -f "$TOOLFILE" ]]; then
+  echo "Linux mise tool file not found: $TOOLFILE" >&2
+  exit 1
+fi
+
+entries=()
+tools=()
+while read -r tool command _rest; do
+  [[ -z "${tool:-}" || "${tool:0:1}" == "#" ]] && continue
+  if [[ -z "${command:-}" ]]; then
+    echo "Invalid line in $TOOLFILE: $tool" >&2
+    exit 1
+  fi
+  entries+=("$tool $command")
+  tools+=("$tool")
+done < <(sed -E 's/[[:space:]]*#.*$//' "$TOOLFILE" | awk 'NF')
+
+if [[ ${#tools[@]} -eq 0 ]]; then
+  echo "No tools found in $TOOLFILE" >&2
+  exit 1
+fi
+
+echo "Installing ${#tools[@]} Linux-only mise tools from $TOOLFILE"
+mise install -y "${tools[@]}"
+
+# Do not write these tools to ~/.config/mise/config.toml; that file is shared
+# with macOS. Instead, expose stable wrappers in ~/.local/bin on Linux only.
+mkdir -p "$HOME/.local/bin"
+
+for entry in "${entries[@]}"; do
+  read -r tool command <<<"$entry"
+  cat > "$HOME/.local/bin/$command" <<EOF
+#!/usr/bin/env bash
+exec mise exec "$tool" -- "$command" "\$@"
+EOF
+  chmod +x "$HOME/.local/bin/$command"
+done
+
+echo "Linked wrappers in ~/.local/bin:"
+printf '  %s\n' "${entries[@]##* }"
+echo "Open a new shell if ~/.local/bin is not already on PATH."

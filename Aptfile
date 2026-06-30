@@ -1,0 +1,173 @@
+# Aptfile — Ubuntu/Debian development server packages
+#
+# Install with:
+#   sudo apt-get update
+#   sed -E 's/[[:space:]]*#.*$//' Aptfile | awk 'NF' | xargs sudo apt-get install -y
+#
+# Or use the helper:
+#   ~/.dotfiles/bin/install-aptfile
+#
+# Scope:
+# - Conservative server/headless equivalent of Brewfile CLI tools.
+# - Excludes macOS casks, fonts, GUI apps, Homebrew taps, and App Store tools.
+# - Excludes transitional/deprecated packages and CLIs that are materially
+#   fresher or safer from mise/vendor repositories.
+# - Language runtimes and portable dev tools remain managed by mise.
+# - Package availability varies by Ubuntu/Debian release; this targets current
+#   Ubuntu LTS/newer.
+
+#############################################################
+# Base server utilities                                     #
+#############################################################
+build-essential     # includes gcc, g++, make, libc dev headers, dpkg-dev
+ca-certificates
+curl
+wget
+gnupg
+lsb-release
+software-properties-common
+locales
+tzdata
+acl
+unzip
+zip
+xz-utils
+zstd
+openssh-client
+openssh-server
+
+#############################################################
+# Dotfiles essentials                                       #
+#############################################################
+git
+git-extras
+git-lfs
+git-delta
+tig
+lazygit
+stow
+fish
+starship
+tmux
+tmuxinator
+neovim
+
+#############################################################
+# Modern CLI replacements and shell workflow                #
+#############################################################
+aria2
+bat              # Debian/Ubuntu may expose the binary as batcat; helper creates ~/.local/bin/bat
+fd-find          # Debian/Ubuntu may expose the binary as fdfind; helper creates ~/.local/bin/fd
+eza
+fzf
+ripgrep
+sd
+jq
+just
+direnv
+zoxide
+atuin
+universal-ctags
+entr
+hyperfine
+lzop
+most
+procs
+rsync
+tokei
+tree
+trash-cli
+duf
+ncdu
+procps           # watch, ps, free, sysctl, etc.; usually already installed, listed for minimal images
+libimage-exiftool-perl
+
+#############################################################
+# Networking and diagnostics                                #
+#############################################################
+iproute2
+iputils-ping
+netcat-openbsd
+bind9-dnsutils   # dig, nslookup
+traceroute
+mtr-tiny
+nmap
+lsof
+strace
+sysstat
+iotop
+iftop
+mosh
+
+#############################################################
+# Monitoring and performance                                #
+#############################################################
+bmon
+btop
+htop
+fio
+glances
+goaccess
+gping
+
+#############################################################
+# Development tooling                                       #
+#############################################################
+pkgconf           # pkg-config compatibility provider; pkg-config package is transitional
+cmake
+ninja-build
+clang
+llvm
+gdb
+lldb
+shellcheck
+shfmt
+httpie
+pgcli
+pre-commit
+poppler-utils
+mkcert
+
+#############################################################
+# Better managed by mise, vendor repos, or official releases #
+#############################################################
+# Keep these out of the default apt install because Ubuntu archive versions may
+# be old, semantically different from Homebrew, or conflict with vendor repos.
+#
+# gh                    -> Linux: bin/install-linux-mise-tools; macOS: Brewfile
+# glab                  -> Linux: bin/install-linux-mise-tools; macOS: Brewfile
+# awscli                -> Linux: bin/install-linux-mise-tools; macOS: Brewfile
+# yq                    -> Linux: bin/install-linux-mise-tools; macOS: Brewfile; Ubuntu yq is kislyuk's jq wrapper
+# gitleaks              -> Linux: bin/install-linux-mise-tools; macOS: Brewfile
+# watchman              -> Ubuntu package is old; use upstream/vendor package if needed
+# speedtest-cli         -> use Ookla's official speedtest CLI if accuracy matters
+#
+# Docker: prefer Docker's official apt repo on development servers:
+#   docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+# Ubuntu archive alternatives if you explicitly want distro-managed Docker:
+# docker.io
+# docker-compose-v2
+# docker-buildx
+#
+# Kubernetes/local cluster tools should track cluster versions closely:
+# kubectl               -> Kubernetes pkgs.k8s.io repo or official binary; must be within ±1 minor of cluster
+# helm                  -> official Helm repo/script or mise/aqua
+# kind                  -> official release binary/go install; community apt packages may lag
+# k9s                   -> GitHub release/mise/aqua
+# lazydocker, dive      -> GitHub release/mise/aqua
+#
+# Other Homebrew-only/vendor tools:
+# bun, uv, node, python, go, rust, java, lua -> mise
+# yazi, navi, doggo, dua-cli, duckdb         -> mise/cargo/GitHub releases depending on host
+# jira-cli, acli, krr, runpodctl, ubi        -> vendor installers or GitHub releases
+# 1Password, Tailscale, ngrok                -> vendor apt repositories if needed
+
+#############################################################
+# Intentionally omitted / obsolete                          #
+#############################################################
+# apt-transport-https -> dummy transitional package; HTTPS is built into apt since 1.5
+# telnet              -> avoid for port checks; use nc/nmap/curl/openssl instead
+# net-tools           -> legacy ifconfig/netstat/route; use iproute2/ss instead
+# ncat                -> overlaps with netcat-openbsd for default installs; install manually if needed
+# coreutils           -> essential on Ubuntu/Debian, no need to list
+# gcc/g++/make        -> pulled in by build-essential

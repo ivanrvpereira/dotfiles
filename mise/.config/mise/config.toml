@@ -13,9 +13,9 @@ lua = "5.4"  # not "latest": Lua 5.5.0 (Dec 2025) + mise build layout breaks lua
 uv = "latest"
 
 # ─── Dev Tools ────────────────────────────────────────────
-# Note: jq, just, pre-commit are managed by Homebrew (see Brewfile)
+# Note: OS packages manage jq/just/pre-commit; macOS uses Brewfile,
+# Linux uses Aptfile plus bin/install-linux-mise-tools for fast-moving CLIs.
 bun = "latest"
-gh = "latest"
 pnpm = "latest"
 "npm:@llamaindex/liteparse" = "latest"
 ruff = "latest"

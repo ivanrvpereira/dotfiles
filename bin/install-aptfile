@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+APTFILE="${1:-$DOTFILES/Aptfile}"
+
+if [[ ! -f "$APTFILE" ]]; then
+  echo "Aptfile not found: $APTFILE" >&2
+  exit 1
+fi
+
+mapfile -t packages < <(
+  sed -E 's/[[:space:]]*#.*$//' "$APTFILE" \
+    | awk 'NF { print $1 }'
+)
+
+if [[ ${#packages[@]} -eq 0 ]]; then
+  echo "No packages found in $APTFILE" >&2
+  exit 1
+fi
+
+echo "Installing ${#packages[@]} apt packages from $APTFILE"
+sudo apt-get update
+sudo apt-get install -y "${packages[@]}"
+
+# Debian/Ubuntu package names sometimes differ from the command names used by
+# the dotfiles aliases. Put compatibility shims in ~/.local/bin, which is in
+# the shared dotfiles PATH.
+mkdir -p "$HOME/.local/bin"
+
+if command -v batcat >/dev/null 2>&1; then
+  ln -sf "$(command -v batcat)" "$HOME/.local/bin/bat"
+fi
+
+if command -v fdfind >/dev/null 2>&1; then
+  ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
+fi
+
+echo "Aptfile install complete. Open a new shell so PATH changes are picked up."
