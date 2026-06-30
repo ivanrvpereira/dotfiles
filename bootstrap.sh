@@ -14,6 +14,8 @@ NC='\033[0m'
 info()  { echo -e "${GREEN}[INFO]${NC} $*"; }
 warn()  { echo -e "${YELLOW}[WARN]${NC} $*"; }
 error() { echo -e "${RED}[ERROR]${NC} $*"; exit 1; }
+is_yes() { [[ "${1:-}" =~ ^[Yy]([Ee][Ss])?$ ]]; }
+is_no()  { [[ "${1:-}" =~ ^[Nn]([Oo])?$ ]]; }
 
 SKIP_BREW=${SKIP_BREW:-false}
 SKIP_PERSONAL=${SKIP_PERSONAL:-false}
@@ -77,7 +79,7 @@ fi
 # ─── Machine type ───────────────────────────────────────────────
 echo ""
 read -rp "Is this a headless machine (SSH-only, no GUI)? [y/N] " headless_choice
-if [[ "$headless_choice" =~ ^[Yy]$ ]]; then
+if is_yes "$headless_choice"; then
     HEADLESS=true
     info "Configuring as headless (no 1Password GUI dependency)"
 else
@@ -91,7 +93,7 @@ fi
 if ! $HEADLESS; then
     echo ""
     read -rp "Apply macOS defaults (keyboard, trackpad, Dock, Finder, etc.)? [Y/n] " apply_macos
-    if [[ ! "$apply_macos" =~ ^[Nn]$ ]]; then
+    if ! is_no "$apply_macos"; then
         info "Applying macOS defaults..."
         "$DOTFILES/macos/defaults.sh"
     else
@@ -125,7 +127,12 @@ if [[ ! -d "$DOTFILES" ]]; then
     git clone "$REPO" "$DOTFILES"
 else
     info "Dotfiles already cloned at $DOTFILES, pulling latest..."
-    git -C "$DOTFILES" pull --rebase
+    if ! git -C "$DOTFILES" diff --quiet || ! git -C "$DOTFILES" diff --cached --quiet; then
+        warn "Local tracked changes detected; pulling with --autostash"
+        git -C "$DOTFILES" pull --rebase --autostash
+    else
+        git -C "$DOTFILES" pull --rebase
+    fi
 fi
 cd "$DOTFILES"
 
@@ -143,7 +150,7 @@ if $SKIP_PERSONAL; then
 else
     read -rp "Install personal tools (Spotify, Slack, Zoom, etc.)? [y/N] " install_personal
 fi
-if ! $SKIP_PERSONAL && [[ "$install_personal" =~ ^[Yy]$ ]]; then
+if ! $SKIP_PERSONAL && is_yes "$install_personal"; then
     brew_bundle_install "$DOTFILES/Brewfile.personal" "Brewfile.personal"
 else
     info "Skipping personal tools"
@@ -242,7 +249,7 @@ fi
 if $HEADLESS; then
     echo ""
     read -rp "Generate a new SSH key or use an existing one? [g/E] " ssh_choice
-    if [[ "$ssh_choice" =~ ^[Gg]$ ]]; then
+    if [[ "$ssh_choice" =~ ^[Gg]([Ee][Nn][Ee][Rr][Aa][Tt][Ee])?$ ]]; then
         read -rp "  Key name [id_ed25519]: " key_name
         key_name="${key_name:-id_ed25519}"
         SSH_KEY_PATH="$HOME/.ssh/$key_name"
@@ -292,7 +299,7 @@ fi
 
 if [[ ! -f "$HOME/.gitconfig.work" ]]; then
     read -rp "Set up work git identity? (y/N): " setup_work
-    if [[ "$setup_work" =~ ^[Yy]$ ]]; then
+    if is_yes "$setup_work"; then
         read -rp "  Work email: " work_email
         cat > "$HOME/.gitconfig.work" <<EOF
 [user]

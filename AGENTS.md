@@ -57,7 +57,7 @@ guarded aliases in `fish/.config/fish/aliases.fish` — no symlinks required.
 All configs are organized as GNU Stow packages. Each directory mirrors `$HOME`:
 
 ```
-git/  fish/  tmux/  tmuxinator/  ghostty/  aerospace/  1password/
+git/  shell/  fish/  tmux/  tmuxinator/  ghostty/  aerospace/
 atuin/  btop/  htop/  zed/  mise/  nvim/  lazygit/  launchd/
 ```
 
@@ -78,7 +78,7 @@ Fisher manages plugins (gitnow, fzf.fish, zoxide.fish, grc, replay). Plugin list
 - **Vi mode** enabled
 - **Pane nav:** `prefix + h/j/k/l` and `C-h/j/k/l` (vim-tmux-navigator)
 - **Window switching:** `F1-F5`
-- **Plugins:** TPM, vim-tmux-navigator, tmux-yank, tmux-resurrect, tmux-continuum, Dracula theme
+- **Plugins:** TPM, vim-tmux-navigator, tmux-resurrect, tmux-continuum
 
 ### Git
 
