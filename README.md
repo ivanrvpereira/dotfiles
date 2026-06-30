@@ -117,8 +117,8 @@ secret-scan     # Gitleaks scan on current repo
 - **Pane navigation:** `prefix + h/j/k/l` and `Ctrl-h/j/k/l` (vim-tmux-navigator)
 - **Window switching:** `F1`–`F5`
 - **Reload config:** `prefix + r`
-- **Theme:** Dracula
-- **Plugins:** TPM, vim-tmux-navigator, tmux-yank, tmux-resurrect, tmux-continuum
+- **Theme:** custom status bar
+- **Plugins:** TPM, vim-tmux-navigator, tmux-resurrect, tmux-continuum
 
 ## Git
 

@@ -9,7 +9,6 @@ tap "jesseduffield/lazygit"
 tap "koekeishiya/formulae"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
-tap "robusta-dev/krr"
 tap "runpod/runpodctl"
 tap "sheeki03/tap"
 tap "ubicloud/cli"
@@ -94,7 +93,6 @@ brew "ankitpokhrel/jira-cli/jira-cli", trusted: true # Jira CLI
 brew "antoniorodr/memo/memo", trusted: true   # Memo taking tool
 brew "atlassian/acli/acli", trusted: true     # Atlassian CLI
 brew "int128/kubelogin/kubelogin", trusted: true # Kubernetes OpenID Connect authentication
-brew "robusta-dev/krr/krr", trusted: true     # Kubernetes resource recommender
 brew "runpod/runpodctl/runpodctl", trusted: true # RunPod CLI
 brew "ubicloud/cli/ubi", trusted: true        # Ubicloud CLI
 brew "steipete/tap/summarize", trusted: true  # AI text summarization

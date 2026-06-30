@@ -16,6 +16,7 @@ backups/
 docs/
 todo.txt
 teste.md
+*.local.md
 
 
 # OS
