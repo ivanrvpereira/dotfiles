@@ -38,9 +38,9 @@ brew_bundle_install() {
     fi
 
     info "Installing packages from $label..."
-    if ! brew bundle --file="$file" --no-upgrade; then
+    if ! brew bundle --file="$file" --no-upgrade --jobs=1; then
         warn "$label install failed. Fix the Homebrew error, then retry just this step:"
-        warn "  brew bundle --file=\"$file\" --no-upgrade"
+        warn "  brew bundle --file=\"$file\" --no-upgrade --jobs=1"
         warn "After it succeeds, continue bootstrap without repeating Homebrew:"
         warn "  SKIP_BREW=true ./bootstrap.sh"
         return 1
