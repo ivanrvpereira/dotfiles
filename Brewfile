@@ -4,7 +4,6 @@ tap "ankitpokhrel/jira-cli"
 tap "antoniorodr/memo"
 tap "atlassian/acli"
 tap "felixkratz/formulae"
-tap "gromgit/fuse"
 tap "int128/kubelogin"
 tap "jesseduffield/lazygit"
 tap "koekeishiya/formulae"
@@ -46,7 +45,6 @@ brew "most"         # Multi-window scroll pager (better less)
 brew "procs"        # Advanced process viewer (better ps)
 brew "ripgrep"      # Searching within files (better grep)
 brew "rsync"        # Fast incremental file transfer
-brew "gromgit/fuse/sshfs-mac" # Mount remote directories over SSH
 brew "sd"           # RegEx find and replace (better sed)
 brew "tokei"        # Count lines of code (better cloc)
 brew "tree"         # Directory listings as tree structure
@@ -83,7 +81,7 @@ brew "git-delta"    # syntax highlighting for lazygit
 brew "k9s"
 brew "helm"
 brew "kind"
-brew "kdash-rs/kdash/kdash"
+brew "kdash-rs/kdash/kdash", trusted: true
 brew "hcloud"        # Hetzner Cloud CLI
 brew "awscli"
 brew "harlequin"
@@ -92,23 +90,20 @@ brew "gh"           # GitHub CLI - Interact with GitHub PRs, issues, repos
 brew "glab"         # GitLab CLI
 brew "ast-grep"
 brew "mosh"
-brew "jira-cli"     # Jira CLI
-brew "antoniorodr/memo/memo"   # Memo taking tool
-brew "atlassian/acli/acli"     # Atlassian CLI
-brew "int128/kubelogin/kubelogin" # Kubernetes OpenID Connect authentication
-brew "robusta-dev/krr/krr"     # Kubernetes resource recommender
-brew "runpod/runpodctl/runpodctl" # RunPod CLI
-brew "ubicloud/cli/ubi"        # Ubicloud CLI
-brew "steipete/tap/summarize"  # AI text summarization
-brew "sheeki03/tap/tirith"      # Terminal security guard
-brew "asheshgoplani/tap/agent-deck" # AI agent tool
+brew "ankitpokhrel/jira-cli/jira-cli", trusted: true # Jira CLI
+brew "antoniorodr/memo/memo", trusted: true   # Memo taking tool
+brew "atlassian/acli/acli", trusted: true     # Atlassian CLI
+brew "int128/kubelogin/kubelogin", trusted: true # Kubernetes OpenID Connect authentication
+brew "robusta-dev/krr/krr", trusted: true     # Kubernetes resource recommender
+brew "runpod/runpodctl/runpodctl", trusted: true # RunPod CLI
+brew "ubicloud/cli/ubi", trusted: true        # Ubicloud CLI
+brew "steipete/tap/summarize", trusted: true  # AI text summarization
+brew "sheeki03/tap/tirith", trusted: true      # Terminal security guard
+brew "asheshgoplani/tap/agent-deck", trusted: true # AI agent tool
 brew "rtk"          # CLI proxy to minimize LLM token consumption
-brew "tw93/tap/mole"           # Terminal tool
-brew "yakitrak/yakitrak/obsidian-cli" # Obsidian CLI
-brew "modem-dev/tap/hunk"      # Review-first terminal diff viewer
-
-# CLI External Services
-brew "navi"         # Browse, search, read cheat sheets
+brew "tw93/tap/mole", trusted: true           # Terminal tool
+brew "yakitrak/yakitrak/obsidian-cli", trusted: true # Obsidian CLI
+brew "modem-dev/tap/hunk", trusted: true      # Review-first terminal diff viewer
 
 #############################################################
 # Software Development                                      #
@@ -117,7 +112,7 @@ brew "navi"         # Browse, search, read cheat sheets
 # Development Langs, Compilers, Package Managers and SDKs
 brew "gcc"            # GNU C++ compilers
 # Languages managed by mise (see ~/.mise.toml): go, node, python, rust, java, lua
-brew "oven-sh/bun/bun" # Fast all-in-one JavaScript runtime
+brew "oven-sh/bun/bun", trusted: true # Fast all-in-one JavaScript runtime
 
 # Development Utils
 brew "mise"           # Runtime manager (asdf rust clone)
@@ -128,7 +123,6 @@ brew "gemini-cli", link: false # Google Gemini CLI
 brew "git-extras"     # Extra git commands for common tasks
 brew "git-lfs"        # Git large file storage
 brew "terminal-notifier" # Trigger Mac notifications from terminal
-brew "tig"            # Text-mode interface for git
 brew "watchman"       # Watch for changes and reload dev server
 brew "poppler"        # PDF utilities
 brew "mkcert"         # Local HTTPS development certificates
@@ -199,8 +193,7 @@ cask "cmux"
 brew "starship"
 
 # Utility
-cask "agent-sessions"   # AI agent session manager
-cask "macfuse"          # Filesystem extensions required by SSHFS
+cask "jazzyalex/agent-sessions/agent-sessions", trusted: true # AI agent session manager
 cask "orbstack"
 cask "devpod"       # Development environments
 brew "yazi"
@@ -219,7 +212,6 @@ cask "proxyman"
 
 # Productivity (dev-useful)
 cask "raycast"
-cask "maccy"          # Clipboard manager
 brew "iproute2mac"    # MacOS port of netstat and ifconfig
-cask "nikitabobko/tap/aerospace"
-brew "felixkratz/formulae/borders"
+cask "nikitabobko/tap/aerospace", trusted: true
+brew "felixkratz/formulae/borders", trusted: true
