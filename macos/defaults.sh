@@ -48,7 +48,7 @@ defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 # models, then map 0x700000039 (Caps Lock) -> 0x7000000E0 (Left Control).
 # This is the same pref the GUI Modifier Keys panel writes; takes effect after
 # logout/login.
-kbline=$(hidutil list 2>/dev/null | awk '/AppleHIDKeyboardEventDriverV2/ {print $1, $2; exit}')
+kbline=$(hidutil list 2>/dev/null | awk '/AppleHIDKeyboardEventDriverV2/ {print $1, $2; exit}' || true)
 if [[ -n "$kbline" ]]; then
     read -r vh ph <<<"$kbline"
     kbd="$((vh))-$((ph))-0"
