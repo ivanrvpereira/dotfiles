@@ -1,6 +1,6 @@
 # Linux-only mise tools
 #
-# These are tools that macOS installs through Brewfile, but Linux servers should
+# These are tools that macOS installs through Brewfile.cli, but Linux servers should
 # get from mise because Ubuntu/Debian apt packages are stale, semantically
 # different, or absent.
 #

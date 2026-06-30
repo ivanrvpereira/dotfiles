@@ -134,11 +134,11 @@ mkcert
 # Keep these out of the default apt install because Ubuntu archive versions may
 # be old, semantically different from Homebrew, or conflict with vendor repos.
 #
-# gh                    -> Linux: bin/install-linux-mise-tools; macOS: Brewfile
-# glab                  -> Linux: bin/install-linux-mise-tools; macOS: Brewfile
-# awscli                -> Linux: bin/install-linux-mise-tools; macOS: Brewfile
-# yq                    -> Linux: bin/install-linux-mise-tools; macOS: Brewfile; Ubuntu yq is kislyuk's jq wrapper
-# gitleaks              -> Linux: bin/install-linux-mise-tools; macOS: Brewfile
+# gh                    -> Linux: bin/install-linux-mise-tools; macOS: Brewfile.cli
+# glab                  -> Linux: bin/install-linux-mise-tools; macOS: Brewfile.cli
+# awscli                -> Linux: bin/install-linux-mise-tools; macOS: Brewfile.cli
+# yq                    -> Linux: bin/install-linux-mise-tools; macOS: Brewfile.cli; Ubuntu yq is kislyuk's jq wrapper
+# gitleaks              -> Linux: bin/install-linux-mise-tools; macOS: Brewfile.cli
 # watchman              -> Ubuntu package is old; use upstream/vendor package if needed
 # speedtest-cli         -> use Ookla's official speedtest CLI if accuracy matters
 #

@@ -30,8 +30,9 @@ instead of failing cryptically.
 ```
 setup/
   lib.sh                 # shared helpers, sourced by every module
-  homebrew-core.sh       # [sudo]      install Homebrew + brew bundle (Brewfile)
-  homebrew-personal.sh   # [sudo]      brew bundle (Brewfile.personal)
+  homebrew-cli.sh        # [sudo]      install Homebrew + brew bundle (Brewfile.cli)
+  homebrew-desktop.sh    # [sudo]      brew bundle (Brewfile.desktop; skipped headless)
+  homebrew-personal.sh   # [sudo]      brew bundle (Brewfile.personal; optional)
   macos.sh               # [sudo]      hostname (scutil) + macOS defaults
   shell.sh               # [sudo]      fish -> /etc/shells + chsh  (+ fisher, see decision #1)
   stow.sh                # [no sudo]   config dirs + stow all packages       <- agent
@@ -55,8 +56,9 @@ non-interactive** (no TTY / `NONINTERACTIVE=1`), so an agent can still run it.
 
 | Module | Pulls from `bootstrap.sh` section | sudo | prompt | Agent-safe |
 |--------|-----------------------------------|:----:|:----:|:----:|
-| `homebrew-core.sh` | Homebrew install + `brew bundle --file=Brewfile` | yes | — | no |
-| `homebrew-personal.sh` | `brew bundle --file=Brewfile.personal` | yes | — | no |
+| `homebrew-cli.sh` | Homebrew install + `brew bundle --file=Brewfile.cli` | yes | — | no |
+| `homebrew-desktop.sh` | `brew bundle --file=Brewfile.desktop` (skipped headless) | yes | — | no |
+| `homebrew-personal.sh` | `brew bundle --file=Brewfile.personal` (optional) | yes | yes | no |
 | `macos.sh` | Hostname (`scutil --set …`) + run `macos/defaults.sh` | yes | yes | no |
 | `shell.sh` | Add fish to `/etc/shells`, `chsh`, fisher plugins | yes | — | no |
 | `stow.sh` | `mkdir` config dirs + headless flag + `stow --no-folding -R …` | no | — | **yes** |

@@ -13,8 +13,11 @@ brew update 2>&1 || warn "brew update failed"
 log "Upgrading packages..."
 brew upgrade 2>&1 || warn "brew upgrade failed"
 
-log "Installing from Brewfile..."
-brew bundle --file="$HOME/.dotfiles/Brewfile" 2>&1 || warn "brew bundle failed"
+log "Installing from Brewfile.cli..."
+brew bundle --file="$HOME/.dotfiles/Brewfile.cli" --jobs=1 2>&1 || warn "brew bundle Brewfile.cli failed"
+
+log "Installing from Brewfile.desktop..."
+brew bundle --file="$HOME/.dotfiles/Brewfile.desktop" --jobs=1 2>&1 || warn "brew bundle Brewfile.desktop failed"
 
 log "Cleaning up..."
 brew cleanup 2>&1 || warn "brew cleanup failed"

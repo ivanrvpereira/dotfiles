@@ -46,9 +46,12 @@ Dotfiles are organized as **GNU Stow packages** — each directory maps to `$HOM
 ├── lazygit/          → ~/Library/Application Support/lazygit/config.yml
 ├── launchd/          → ~/Library/LaunchAgents/*.plist (scheduled tasks)
 ├── bin/              → Scripts (in PATH via ~/.dotfiles/bin)
-├── Brewfile          → Homebrew packages, casks, fonts, Mac App Store apps
+├── Brewfile          → Compatibility wrapper for CLI + desktop Homebrew bundles
+├── Brewfile.cli      → Core CLI and developer Homebrew tools
+├── Brewfile.desktop  → GUI apps, fonts, VS Code extensions, desktop integrations
+├── Brewfile.personal → Optional personal apps and Mac App Store apps
 ├── Aptfile           → Ubuntu/Debian development server packages
-├── mise-linux-tools.txt → Linux-only mise tools also installed by Brewfile on macOS
+├── mise-linux-tools.txt → Linux-only mise tools also installed by Brewfile.cli on macOS
 └── bootstrap.sh      → One-command setup for fresh machines
 ```
 
@@ -69,7 +72,9 @@ stow -D git
 
 | Layer | Tool | Manages | Config |
 |-------|------|---------|--------|
-| **macOS system packages** | Homebrew | CLI tools, casks, fonts, App Store apps | `Brewfile` |
+| **macOS CLI packages** | Homebrew | CLI tools, shells, terminal/dev utilities | `Brewfile.cli` |
+| **macOS desktop packages** | Homebrew | GUI apps, fonts, VS Code extensions, desktop integrations | `Brewfile.desktop` |
+| **Personal packages** | Homebrew | Optional personal apps and Mac App Store apps | `Brewfile.personal` |
 | **Ubuntu/Debian server packages** | apt | headless CLI/dev/server tools | `Aptfile` |
 | **Linux-only fast CLIs** | mise wrappers | gh, awscli, gitleaks, yq, kubectl, etc. | `mise-linux-tools.txt` + `bin/install-linux-mise-tools` |
 | **Runtimes & dev tools** | mise | node, python, go, rust, java, lua, uv, pipx tools | `mise/.config/mise/config.toml` |
@@ -100,9 +105,9 @@ Fish config sources three files in order:
 ### Key Aliases
 
 ```fish
-update          # Full system update: macOS + Homebrew + Brewfile + mise
-bb              # brew bundle from Brewfile
-brewcheck       # Diff Brewfile vs installed packages
+update          # Full system update: macOS + Homebrew bundles + mise
+bb              # brew bundle from compatibility Brewfile
+brewcheck       # Diff Brewfile entries vs installed packages
 cleanup         # Remove .DS_Store files recursively
 lg              # lazygit
 mux             # tmuxinator

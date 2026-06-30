@@ -1,0 +1,86 @@
+# GUI applications, fonts, VS Code extensions, and macOS desktop integrations.
+
+cask_args appdir: "/Applications"
+
+#############################################################
+# Fonts                                                     #
+#############################################################
+
+cask "font-fira-code"
+cask "font-hack"
+cask "font-inconsolata"
+cask "font-meslo-lg-nerd-font"
+cask "font-anonymice-powerline"
+cask "font-inconsolata-g-for-powerline"
+cask "font-powerline-symbols"
+cask "font-jetbrains-mono"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-hack-nerd-font"
+cask "font-monaspace"
+
+#############################################################
+# Browsers                                                  #
+#############################################################
+
+cask "arc"
+cask "google-chrome"
+
+#############################################################
+# Editors and Developer GUI Apps                            #
+#############################################################
+
+cask "pycharm"
+cask "visual-studio-code"
+cask "zed"
+cask "markedit"         # Markdown editor
+cask "dbeaver-community"
+cask "postman"
+
+# VS Code extensions
+vscode "github.codespaces"
+vscode "github.vscode-github-actions"
+vscode "kevinrose.vsc-python-indent"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-azuretools.vscode-docker"
+vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
+vscode "ms-vscode-remote.remote-containers"
+vscode "njpwerner.autodocstring"
+vscode "redhat.vscode-yaml"
+vscode "usernamehw.errorlens"
+vscode "vscodevim.vim"
+
+#############################################################
+# Terminals                                                 #
+#############################################################
+
+cask "ghostty@tip"      # New native terminal
+cask "cmux"
+
+#############################################################
+# Utility                                                   #
+#############################################################
+
+cask "jazzyalex/agent-sessions/agent-sessions", trusted: true # AI agent session manager
+cask "orbstack"
+cask "devpod"       # Development environments
+cask "openinterminal" # Finder button, opens directory in terminal
+cask "qlmarkdown"     # Quick Look previews for Markdown files
+cask "sloth"          # Shows open files/sockets by process
+cask "openlogi"       # Lightweight Logitech Options+ alternative
+cask "handy"          # Speech to text app
+
+#############################################################
+# Security and Network                                      #
+#############################################################
+
+cask "1password"
+cask "tailscale-app"  # Tailscale GUI app
+cask "proxyman"
+
+#############################################################
+# Productivity and macOS Desktop                            #
+#############################################################
+
+cask "raycast"
+cask "nikitabobko/tap/aerospace", trusted: true
+brew "felixkratz/formulae/borders", trusted: true

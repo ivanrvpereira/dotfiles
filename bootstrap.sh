@@ -18,11 +18,13 @@ is_yes() { [[ "${1:-}" =~ ^[Yy]([Ee][Ss])?$ ]]; }
 is_no()  { [[ "${1:-}" =~ ^[Nn]([Oo])?$ ]]; }
 
 SKIP_BREW=${SKIP_BREW:-false}
+SKIP_DESKTOP=${SKIP_DESKTOP:-false}
 SKIP_PERSONAL=${SKIP_PERSONAL:-false}
 
 for arg in "$@"; do
     case "$arg" in
         --skip-brew) SKIP_BREW=true ;;
+        --skip-desktop) SKIP_DESKTOP=true ;;
         --skip-personal) SKIP_PERSONAL=true ;;
         *) error "Unknown option: $arg" ;;
     esac
@@ -135,9 +137,17 @@ cd "$DOTFILES"
 
 # ─── Brew Bundle ──────────────────────────────────────────────────
 if $SKIP_BREW; then
-    warn "Skipping Brewfile install (SKIP_BREW=true / --skip-brew)"
+    warn "Skipping Homebrew bundle installs (SKIP_BREW=true / --skip-brew)"
 else
-    brew_bundle_install "$DOTFILES/Brewfile" "Brewfile"
+    brew_bundle_install "$DOTFILES/Brewfile.cli" "Brewfile.cli"
+
+    if $HEADLESS; then
+        warn "Skipping desktop apps on headless machine"
+    elif $SKIP_DESKTOP; then
+        warn "Skipping desktop apps (SKIP_DESKTOP=true / --skip-desktop)"
+    else
+        brew_bundle_install "$DOTFILES/Brewfile.desktop" "Brewfile.desktop"
+    fi
 fi
 
 # ─── Personal tools (optional) ──────────────────────────────────
