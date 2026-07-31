@@ -3,7 +3,7 @@ set -euo pipefail
 
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/ivanrvpereira/dotfiles.git"
-STOW_PACKAGES=(shell git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit launchd)
+STOW_PACKAGES=(shell git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit herdr launchd)
 
 # Colors
 RED='\033[0;31m'
@@ -150,6 +150,12 @@ else
     fi
 fi
 
+# ─── MarkEdit extensions ──────────────────────────────────────────
+if ! $HEADLESS && ! $SKIP_DESKTOP; then
+    info "Installing MarkEdit Preview plugin..."
+    "$DOTFILES/bin/install-markedit-preview" || warn "MarkEdit Preview plugin install failed (run bin/install-markedit-preview manually)"
+fi
+
 # ─── Personal tools (optional) ──────────────────────────────────
 echo ""
 if $SKIP_PERSONAL; then
@@ -252,53 +258,45 @@ if command -v fish &>/dev/null; then
     fish -c 'fisher update' 2>/dev/null || warn "Fisher update failed (run manually: fisher update)"
 fi
 
-# ─── SSH key (headless only) ─────────────────────────────────────
+# ─── SSH key for commit signing ─────────────────────────────────
+echo ""
 if $HEADLESS; then
-    echo ""
-    read -rp "Generate a new SSH key or use an existing one? [g/E] " ssh_choice
-    if [[ "$ssh_choice" =~ ^[Gg]([Ee][Nn][Ee][Rr][Aa][Tt][Ee])?$ ]]; then
-        read -rp "  Key name [id_ed25519]: " key_name
-        key_name="${key_name:-id_ed25519}"
-        SSH_KEY_PATH="$HOME/.ssh/$key_name"
-        if [[ ! -f "$SSH_KEY_PATH" ]]; then
-            info "Generating SSH key (no passphrase — FileVault protects at rest)..."
-            ssh-keygen -t ed25519 -N "" -f "$SSH_KEY_PATH" -C "$HOSTNAME_TO_SET"
-        else
-            info "Key $SSH_KEY_PATH already exists, reusing"
-        fi
-    else
-        read -rp "  Path to existing SSH key [~/.ssh/id_ed25519]: " key_path
-        key_path="${key_path:-$HOME/.ssh/id_ed25519}"
-        SSH_KEY_PATH="${key_path/#\~/$HOME}"
-        [[ -f "$SSH_KEY_PATH" ]] || error "Key not found: $SSH_KEY_PATH"
-    fi
-    info "Public key:"
-    cat "${SSH_KEY_PATH}.pub"
-    echo ""
-    echo "  Add this key to GitHub as both Authentication and Signing key:"
-    echo "  https://github.com/settings/keys"
-    echo ""
-    read -rp "  Press Enter when done..."
+    default_key_name="id_ed25519"
+else
+    default_key_name="git_signing_ed25519"
 fi
+read -rp "Generate a new local SSH signing key or use an existing one? [g/E] " ssh_choice
+if [[ "$ssh_choice" =~ ^[Gg]([Ee][Nn][Ee][Rr][Aa][Tt][Ee])?$ ]]; then
+    read -rp "  Key name [$default_key_name]: " key_name
+    key_name="${key_name:-$default_key_name}"
+    SSH_KEY_PATH="$HOME/.ssh/$key_name"
+    if [[ ! -f "$SSH_KEY_PATH" ]]; then
+        info "Generating SSH key (no passphrase — FileVault protects at rest)..."
+        ssh-keygen -t ed25519 -N "" -f "$SSH_KEY_PATH" -C "$HOSTNAME_TO_SET"
+    else
+        info "Key $SSH_KEY_PATH already exists, reusing"
+    fi
+else
+    read -rp "  Path to existing SSH signing key [~/.ssh/$default_key_name]: " key_path
+    key_path="${key_path:-$HOME/.ssh/$default_key_name}"
+    SSH_KEY_PATH="${key_path/#\~/$HOME}"
+    [[ -f "$SSH_KEY_PATH" ]] || error "Key not found: $SSH_KEY_PATH"
+fi
+info "Public key:"
+cat "${SSH_KEY_PATH}.pub"
+echo ""
+echo "  Add this key to GitHub as a Signing key:"
+echo "  https://github.com/settings/keys"
+echo ""
+read -rp "  Press Enter when done..."
 
 # ─── Git identity ─────────────────────────────────────────────────
 if [[ ! -f "$HOME/.gitconfig.local" ]]; then
     info "Creating ~/.gitconfig.local..."
-    if $HEADLESS; then
-        cat > "$HOME/.gitconfig.local" <<EOF
+    cat > "$HOME/.gitconfig.local" <<EOF
 [user]
 	signingkey = $SSH_KEY_PATH
 EOF
-    else
-        echo "  Add your 1Password SSH signing key (from 1Password > SSH Keys > Public Key)"
-        read -rp "  SSH signing key (ssh-ed25519 ...): " signing_key
-        cat > "$HOME/.gitconfig.local" <<EOF
-[user]
-	signingkey = $signing_key
-[gpg "ssh"]
-	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
-EOF
-    fi
     info "Created ~/.gitconfig.local"
 else
     info "~/.gitconfig.local already exists"

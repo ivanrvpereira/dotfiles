@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+log()  { echo "[install-markedit-preview] $*"; }
+warn() { echo "[install-markedit-preview] WARN: $*" >&2; }
+
+if [[ "$(uname)" != "Darwin" ]]; then
+    warn "MarkEdit Preview is macOS-only; skipping"
+    exit 0
+fi
+
+if [[ ! -d "/Applications/MarkEdit.app" && ! -d "$HOME/Applications/MarkEdit.app" ]]; then
+    warn "MarkEdit.app not found; install MarkEdit first"
+    exit 0
+fi
+
+scripts_dir="${MARKEDIT_SCRIPTS_DIR:-$HOME/Library/Containers/app.cyan.markedit/Data/Documents/scripts}"
+plugin_url="${MARKEDIT_PREVIEW_URL:-https://raw.githubusercontent.com/MarkEdit-app/MarkEdit-preview/main/dist/markedit-preview.js}"
+plugin_path="$scripts_dir/markedit-preview.js"
+
+tmp="$(mktemp "${TMPDIR:-/tmp}/markedit-preview.XXXXXX")"
+trap 'rm -f "$tmp"' EXIT
+
+mkdir -p "$scripts_dir"
+curl -fsSL "$plugin_url" -o "$tmp"
+
+if [[ -f "$plugin_path" ]] && cmp -s "$tmp" "$plugin_path"; then
+    log "MarkEdit Preview plugin already installed"
+    exit 0
+fi
+
+install -m 0644 "$tmp" "$plugin_path"
+log "Installed $plugin_path"
+log "Restart MarkEdit to load the plugin"

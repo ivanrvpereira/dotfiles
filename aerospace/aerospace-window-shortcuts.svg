@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <style>
+      .title { font: 800 56px -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, sans-serif; fill: #f8fafc; }
+      .subtitle { font: 500 25px -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; fill: #94a3b8; }
+      .card { fill: #111827; stroke: #334155; stroke-width: 1.5; rx: 28; filter: url(#shadow); }
+      .card-title { font: 800 34px -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, sans-serif; fill: #e2e8f0; }
+      .key { font: 800 31px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; fill: #f8fafc; }
+      .label { font: 650 29px -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; fill: #cbd5e1; }
+      .hint { font: 500 23px -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; fill: #94a3b8; }
+      .small { font: 500 20px -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; fill: #64748b; }
+      .line { stroke: #334155; stroke-width: 1.25; }
+      .blue { fill: #2563eb; }
+      .green { fill: #059669; }
+      .purple { fill: #7c3aed; }
+      .orange { fill: #d97706; }
+      .boxText { font: 800 28px -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; fill: #f8fafc; }
+      .boxSub { font: 600 20px -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; fill: #dbeafe; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="900" fill="url(#bg)"/>
+
+  <text x="60" y="82" class="title">AeroSpace window controls</text>
+  <text x="62" y="122" class="subtitle">No workspace shortcuts — just moving, focusing, and shaping layouts</text>
+
+  <!-- Focus / move -->
+  <rect x="60" y="165" width="610" height="285" class="card"/>
+  <text x="100" y="220" class="card-title">Move around</text>
+  <g transform="translate(100 270)">
+    <text y="0" class="key">⌥ h j k l</text>
+    <text x="260" y="0" class="label">focus window</text>
+    <line x1="0" y1="34" x2="505" y2="34" class="line"/>
+    <text y="82" class="key">⌥⇧ h j k l</text>
+    <text x="260" y="82" class="label">move window</text>
+    <line x1="0" y1="116" x2="505" y2="116" class="line"/>
+    <text y="164" class="key">⌥ ↑ / ↓</text>
+    <text x="260" y="164" class="label">focus monitor</text>
+  </g>
+
+  <!-- Join / reshape -->
+  <rect x="730" y="165" width="610" height="285" class="card"/>
+  <text x="770" y="220" class="card-title">Shape the layout</text>
+  <g transform="translate(770 270)">
+    <text y="0" class="key">⌃⌥⇧ h j k l</text>
+    <text x="315" y="0" class="label">join with neighbor</text>
+    <text y="45" class="hint">Use this to make side-by-side windows become stacked,</text>
+    <text y="78" class="hint">or stacked windows become side-by-side again.</text>
+    <line x1="0" y1="112" x2="505" y2="112" class="line"/>
+    <text y="160" class="key">⌥ m</text>
+    <text x="315" y="160" class="label">toggle tile direction</text>
+  </g>
+
+  <!-- Visual examples -->
+  <rect x="60" y="500" width="610" height="300" class="card"/>
+  <text x="100" y="555" class="card-title">Example: stack below</text>
+  <g transform="translate(105 590)">
+    <rect x="0" y="0" width="120" height="145" rx="14" class="blue"/>
+    <text x="45" y="75" class="boxText">A</text>
+    <rect x="140" y="0" width="120" height="145" rx="14" class="green"/>
+    <text x="185" y="75" class="boxText">B</text>
+    <rect x="280" y="0" width="120" height="145" rx="14" class="purple"/>
+    <text x="325" y="75" class="boxText">C</text>
+    <text x="430" y="80" class="key">→</text>
+    <rect x="485" y="0" width="90" height="67" rx="12" class="green"/>
+    <text x="517" y="43" class="boxText">B</text>
+    <rect x="485" y="78" width="90" height="67" rx="12" class="purple"/>
+    <text x="517" y="122" class="boxText">C</text>
+  </g>
+  <text x="100" y="770" class="hint">Focus B, press ⌃⌥⇧L</text>
+
+  <rect x="730" y="500" width="610" height="300" class="card"/>
+  <text x="770" y="555" class="card-title">Example: put back to side</text>
+  <g transform="translate(775 590)">
+    <rect x="0" y="0" width="120" height="145" rx="14" class="blue"/>
+    <text x="45" y="75" class="boxText">A</text>
+    <rect x="140" y="0" width="95" height="67" rx="12" class="green"/>
+    <text x="173" y="43" class="boxText">B</text>
+    <rect x="140" y="78" width="95" height="67" rx="12" class="purple"/>
+    <text x="173" y="122" class="boxText">C</text>
+    <text x="280" y="80" class="key">→</text>
+    <rect x="350" y="0" width="95" height="145" rx="14" class="green"/>
+    <text x="383" y="75" class="boxText">B</text>
+    <rect x="465" y="0" width="95" height="145" rx="14" class="purple"/>
+    <text x="498" y="75" class="boxText">C</text>
+  </g>
+  <text x="770" y="770" class="hint">Focus C, press ⌃⌥⇧H</text>
+
+  <!-- Bottom reminders -->
+  <rect x="60" y="830" width="1280" height="44" rx="18" fill="#0b1220" stroke="#1e293b"/>
+  <text x="90" y="859" class="small">h/j/k/l = left/down/up/right · ⇧ means move · ⌃⌥⇧ means reshape/join · service reset: ⌘⇧, then r</text>
+</svg>

@@ -106,6 +106,5 @@
 	allowedSignersFile = ~/.config/git/allowed_signers
 [commit]
 	gpgsign = true
-# [gpg "ssh"] program is set per-machine in ~/.gitconfig.local
-# GUI (1Password): program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
-# Headless (disk key): omitted — git uses ssh-keygen by default
+# Keep the signing key path in ~/.gitconfig.local.
+# Do not set gpg.ssh.program here; git uses ssh-keygen with the local key.

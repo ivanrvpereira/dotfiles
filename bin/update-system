@@ -19,6 +19,9 @@ brew bundle --file="$HOME/.dotfiles/Brewfile.cli" --jobs=1 2>&1 || warn "brew bu
 log "Installing from Brewfile.desktop..."
 brew bundle --file="$HOME/.dotfiles/Brewfile.desktop" --jobs=1 2>&1 || warn "brew bundle Brewfile.desktop failed"
 
+log "Ensuring MarkEdit Preview plugin is installed..."
+"$HOME/.dotfiles/bin/install-markedit-preview" 2>&1 || warn "MarkEdit Preview plugin install failed"
+
 log "Cleaning up..."
 brew cleanup 2>&1 || warn "brew cleanup failed"
 

@@ -24,6 +24,7 @@ brew "syncthing"    # P2P file synchronization
 
 # Notes & Productivity
 cask "notion"
+cask "obsidian"
 cask "dayflow"      # Journaling app
 
 # File Management

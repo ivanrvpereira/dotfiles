@@ -28,6 +28,7 @@ black = "latest"
 "pipx:crawl4ai" = "latest"
 "pipx:shell-gpt" = "latest"
 "pipx:youtube-transcript-api" = "latest"
+"pipx:headroom-ai" = { version = "latest", extras = "all,proxy" }   # `headroom` CLI + proxy — context compression for AI agents
 
 # ─── Language Servers ────────────────────────────────────
 "npm:basedpyright" = "latest"

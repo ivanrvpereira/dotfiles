@@ -21,9 +21,9 @@ The bootstrap script handles everything: Xcode CLT, Homebrew, packages, Fish as 
 ### Post-Bootstrap
 
 1. Open a new terminal (or restart your shell)
-2. Run `tmux` then press `Ctrl-a I` to install tmux plugins
-3. Copy `git/gitconfig.local.example` to `~/.gitconfig.local` and fill in your details
-4. Run `auth` to load ephemeral secrets (1Password)
+2. Run `tmux` then press `Ctrl-s I` to install tmux plugins
+3. Ensure the local SSH commit-signing public key is registered on GitHub
+4. Run `auth` to load ephemeral secrets from 1Password when needed
 
 ## Structure
 
@@ -111,13 +111,13 @@ brewcheck       # Diff Brewfile entries vs installed packages
 cleanup         # Remove .DS_Store files recursively
 lg              # lazygit
 mux             # tmuxinator
-auth            # Load ephemeral secrets from 1Password
+auth            # Load ephemeral secrets from 1Password on demand
 secret-scan     # Gitleaks scan on current repo
 ```
 
 ## Tmux
 
-- **Prefix:** `Ctrl-a`
+- **Prefix:** `Ctrl-s`
 - **Vi mode** enabled
 - **Pane navigation:** `prefix + h/j/k/l` and `Ctrl-h/j/k/l` (vim-tmux-navigator)
 - **Window switching:** `F1`–`F5`
@@ -136,8 +136,8 @@ secret-scan     # Gitleaks scan on current repo
 ## Security
 
 - **Secret scanning:** Gitleaks pre-commit hook prevents accidental secret commits
-- **1Password SSH agent:** SSH keys managed by 1Password, no keys on disk
-- **Ephemeral secrets:** API keys loaded from 1Password into `$TMPDIR` (cleared on reboot)
+- **Local SSH commit signing:** Git signs with a local key path, avoiding 1Password prompts during commits
+- **Ephemeral secrets:** API keys are loaded from 1Password only via `auth`, then cached in `$TMPDIR` until reboot
 
 ```bash
 secret-scan           # Scan current state
