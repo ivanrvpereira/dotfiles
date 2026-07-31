@@ -60,7 +60,6 @@ cask "cmux"
 # Utility                                                   #
 #############################################################
 
-cask "jazzyalex/agent-sessions/agent-sessions", trusted: true # AI agent session manager
 cask "orbstack"
 cask "devpod"       # Development environments
 cask "openinterminal" # Finder button, opens directory in terminal

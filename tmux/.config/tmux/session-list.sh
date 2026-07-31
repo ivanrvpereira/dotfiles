@@ -21,6 +21,17 @@
 #
 # Usage: session-list.sh <current-session-name>
 
+# macOS ships bash 3.2, which lacks associative arrays (`declare -A`). tmux runs
+# status `#()` commands via /bin/sh, where `env bash` can resolve to that old
+# bash rather than a modern one — killing this script and blanking the status
+# bar. Re-exec under bash >= 4 if we landed on 3.x.
+if [ "${BASH_VERSINFO[0]:-0}" -lt 4 ]; then
+    for _bash in /opt/homebrew/bin/bash /usr/local/bin/bash /usr/bin/bash; do
+        [ -x "$_bash" ] && exec "$_bash" "$0" "$@"
+    done
+    exit 1
+fi
+
 set -u
 
 current="${1:-}"

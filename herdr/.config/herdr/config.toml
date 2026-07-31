@@ -1,0 +1,74 @@
+onboarding = false
+
+#[theme]
+#name = "catppuccin-latte"
+
+# Keep Herdr's core controls aligned with tmux/.tmux.conf.
+[keys]
+prefix = "ctrl+s"
+
+# Sessions in tmux correspond to workspaces in Herdr.
+new_workspace = "prefix+n"
+workspace_picker = "prefix+w"
+goto = ["prefix+g", "prefix+ctrl+f"]
+previous_workspace = "prefix+("
+next_workspace = "prefix+)"
+switch_workspace = "prefix+1..9"
+
+# Windows in tmux correspond to tabs in Herdr.
+new_tab = "prefix+c"
+previous_tab = "prefix+ctrl+p"
+next_tab = "prefix+ctrl+n"
+switch_tab = "prefix+shift+1..9"
+
+# Preserve both prefix+h/j/k/l and the Ctrl keys emitted by Ghostty's
+# Cmd+H/J/K/L mappings. Direct Ctrl bindings take precedence in terminal apps.
+focus_pane_left = ["prefix+h", "ctrl+h"]
+focus_pane_down = ["prefix+j", "ctrl+j"]
+focus_pane_up = ["prefix+k", "ctrl+k"]
+focus_pane_right = ["prefix+l", "ctrl+l"]
+
+split_vertical = "prefix+|"
+split_horizontal = "prefix+minus"
+close_pane = "prefix+x"
+copy_mode = "prefix+v"
+swap_pane_up = "prefix+<"
+swap_pane_down = "prefix+>"
+
+# Keep resize on the easier key; reload is used less often.
+resize_mode = "prefix+r"
+reload_config = "prefix+shift+r"
+
+# Herdr only supports digit ranges for native indexed tab switching, so use
+# custom commands to preserve tmux's direct F1-F5 window/tab bindings.
+[[keys.command]]
+key = "f1"
+type = "shell"
+command = "~/.config/herdr/focus-tab.sh 1"
+description = "switch to tab 1"
+
+[[keys.command]]
+key = "f2"
+type = "shell"
+command = "~/.config/herdr/focus-tab.sh 2"
+description = "switch to tab 2"
+
+[[keys.command]]
+key = "f3"
+type = "shell"
+command = "~/.config/herdr/focus-tab.sh 3"
+description = "switch to tab 3"
+
+[[keys.command]]
+key = "f4"
+type = "shell"
+command = "~/.config/herdr/focus-tab.sh 4"
+description = "switch to tab 4"
+
+[[keys.command]]
+key = "f5"
+type = "shell"
+command = "~/.config/herdr/focus-tab.sh 5"
+description = "switch to tab 5"
+
+

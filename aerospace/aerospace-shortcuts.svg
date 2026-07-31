@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#0b1020"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+    <style>
+      .title { font: 800 54px -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, sans-serif; fill: #f8fafc; }
+      .subtitle { font: 500 24px -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; fill: #94a3b8; }
+      .card-title { font: 800 29px -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, sans-serif; fill: #e2e8f0; }
+      .key { font: 800 25px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; fill: #f8fafc; }
+      .label { font: 600 25px -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; fill: #cbd5e1; }
+      .hint { font: 500 21px -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; fill: #94a3b8; }
+      .tiny { font: 500 18px -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif; fill: #64748b; }
+      .card { fill: #172033; stroke: #334155; stroke-width: 1.5; rx: 24; filter: url(#shadow); }
+      .pill { fill: #2563eb; rx: 11; }
+      .pill2 { fill: #7c3aed; rx: 11; }
+      .pill3 { fill: #059669; rx: 11; }
+      .line { stroke: #334155; stroke-width: 1; }
+      .accent { fill: #38bdf8; }
+      .warn { fill: #f59e0b; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+
+  <text x="70" y="82" class="title">AeroSpace shortcuts</text>
+  <text x="72" y="121" class="subtitle">Your current workspace order + layout controls</text>
+
+  <!-- Workspace map -->
+  <rect x="60" y="160" width="1480" height="210" class="card"/>
+  <text x="95" y="210" class="card-title">Workspaces</text>
+  <text x="1265" y="210" class="hint">switch: ⌘F# · move window: ⌘⌥#</text>
+
+  <g transform="translate(95 240)">
+    <g><rect width="135" height="84" class="pill"/><text x="18" y="35" class="key">⌘F1</text><text x="18" y="67" class="label">T1</text></g>
+    <g transform="translate(155 0)"><rect width="135" height="84" class="pill"/><text x="18" y="35" class="key">⌘F2</text><text x="18" y="67" class="label">T2</text></g>
+    <g transform="translate(310 0)"><rect width="135" height="84" class="pill"/><text x="18" y="35" class="key">⌘F3</text><text x="18" y="67" class="label">T3</text></g>
+    <g transform="translate(465 0)"><rect width="155" height="84" class="pill2"/><text x="18" y="35" class="key">⌘F4</text><text x="18" y="67" class="label">BROWSER</text></g>
+    <g transform="translate(640 0)"><rect width="135" height="84" class="pill2"/><text x="18" y="35" class="key">⌘F5</text><text x="18" y="67" class="label">CHAT</text></g>
+    <g transform="translate(795 0)"><rect width="175" height="84" class="pill2"/><text x="18" y="35" class="key">⌘F6</text><text x="18" y="67" class="label">MEETING</text></g>
+    <g transform="translate(990 0)"><rect width="135" height="84" class="pill3"/><text x="18" y="35" class="key">⌘F7</text><text x="18" y="67" class="label">M1</text></g>
+    <g transform="translate(1145 0)"><rect width="135" height="84" class="pill3"/><text x="18" y="35" class="key">⌘F8</text><text x="18" y="67" class="label">M2</text></g>
+    <g transform="translate(1300 0)"><rect width="135" height="84" class="pill3"/><text x="18" y="35" class="key">⌘F9</text><text x="18" y="67" class="label">M3</text></g>
+  </g>
+  <text x="96" y="347" class="tiny">T1/T2/T3 = coding workspaces · M1/M2/M3 = monitor parking workspaces assigned left/middle/right, with fallbacks for fewer monitors</text>
+
+  <!-- Navigation card -->
+  <rect x="60" y="410" width="470" height="365" class="card"/>
+  <text x="95" y="460" class="card-title">Focus + navigation</text>
+  <g transform="translate(95 495)">
+    <text y="0" class="key">⌥ ← / →</text><text x="190" y="0" class="label">prev / next workspace</text>
+    <line x1="0" y1="25" x2="390" y2="25" class="line"/>
+    <text y="65" class="key">⌥ ↑ / ↓</text><text x="190" y="65" class="label">focus monitor</text>
+    <line x1="0" y1="90" x2="390" y2="90" class="line"/>
+    <text y="130" class="key">⌥ h j k l</text><text x="190" y="130" class="label">focus window</text>
+    <line x1="0" y1="155" x2="390" y2="155" class="line"/>
+    <text y="195" class="key">⌥⇧ h j k l</text><text x="190" y="195" class="label">move window</text>
+    <line x1="0" y1="220" x2="390" y2="220" class="line"/>
+    <text y="260" class="key">⌥ Tab</text><text x="190" y="260" class="label">back and forth</text>
+  </g>
+
+  <!-- Layout card -->
+  <rect x="565" y="410" width="520" height="365" class="card"/>
+  <text x="600" y="460" class="card-title">Layout shaping</text>
+  <g transform="translate(600 495)">
+    <text y="0" class="key">⌃⌥⇧ h/j/k/l</text><text x="245" y="0" class="label">join with neighbor</text>
+    <text y="34" class="hint">Use to stack a right-side window below/above, or flatten back sideways.</text>
+    <line x1="0" y1="58" x2="445" y2="58" class="line"/>
+    <text y="100" class="key">⌥ m</text><text x="245" y="100" class="label">tiles orientation</text>
+    <line x1="0" y1="125" x2="445" y2="125" class="line"/>
+    <text y="166" class="key">⌥ n</text><text x="245" y="166" class="label">accordion</text>
+    <line x1="0" y1="191" x2="445" y2="191" class="line"/>
+    <text y="232" class="key">⌥ f</text><text x="245" y="232" class="label">floating / tiling</text>
+    <line x1="0" y1="257" x2="445" y2="257" class="line"/>
+    <text y="298" class="key">⌥ c</text><text x="245" y="298" class="label">center floating window</text>
+  </g>
+
+  <!-- Maintenance / monitors card -->
+  <rect x="1120" y="410" width="420" height="365" class="card"/>
+  <text x="1155" y="460" class="card-title">Monitors + service</text>
+  <g transform="translate(1155 495)">
+    <text y="0" class="key">⌥⇧ 1..4</text><text x="175" y="0" class="label">move workspace</text>
+    <text y="34" class="hint">to monitor 1..4</text>
+    <line x1="0" y1="58" x2="345" y2="58" class="line"/>
+    <text y="100" class="key">⌃⌥ 1..4</text><text x="175" y="100" class="label">move window</text>
+    <text y="134" class="hint">to monitor 1..4</text>
+    <line x1="0" y1="158" x2="345" y2="158" class="line"/>
+    <text y="200" class="key">⌘⇧ ,</text><text x="175" y="200" class="label">service mode</text>
+    <text y="234" class="hint">r reset · b balance · f float</text>
+    <line x1="0" y1="258" x2="345" y2="258" class="line"/>
+    <text y="300" class="key">⌘ m / F11</text><text x="175" y="300" class="label">fullscreen</text>
+  </g>
+
+  <!-- Memory tip -->
+  <rect x="60" y="820" width="1480" height="110" class="card"/>
+  <text x="95" y="865" class="card-title">Memory tip</text>
+  <text x="95" y="905" class="label">h/j/k/l = left/down/up/right. Add ⇧ to move. Add ⌃⌥⇧ to reshape with join-with.</text>
+  <text x="95" y="936" class="hint">For “put new right window below”: focus the upper window and press ⌃⌥⇧L. To pull it back sideways, focus the lower window and press ⌃⌥⇧H.</text>
+</svg>

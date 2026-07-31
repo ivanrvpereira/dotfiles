@@ -138,6 +138,6 @@ brew "yazi"
 
 cask "1password-cli"
 cask "codex"         # OpenAI Codex CLI
-cask "claude-code@latest"
+# claude-code: managed via native installer (~/.local/bin/claude), not Homebrew
 cask "ngrok"
 brew "iproute2mac"   # MacOS port of netstat and ifconfig

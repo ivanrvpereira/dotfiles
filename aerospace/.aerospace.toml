@@ -54,7 +54,7 @@ automatically-unhide-macos-hidden-apps = true
 
 # Keep all named workspaces alive even when empty and invisible,
 # so they never drop out of cycling/listing. Requires config-version = 2.
-persistent-workspaces = ['TERM', 'CODE', 'BROWSE', 'MAIN', 'CHAT', 'PLAN', 'MEETING', 'NOTES', 'BG']
+persistent-workspaces = ['M1', 'M2', 'M3']
 
 
 
@@ -73,13 +73,14 @@ outer.top = 5
 outer.bottom = 5
 outer.right = 5
 
-# Default monitor homes. Patterns are case-insensitive regex substrings;
-# arrays are fallbacks — first matching pattern wins (handles docked vs laptop-only).
+# Monitor parking workspaces. Numeric monitor patterns are ordered left-to-right
+# (1-based). Fallbacks keep config valid when only 1 or 2 monitors are attached.
 # Note: move-workspace-to-monitor (alt-shift-tab, alt-shift-1..4) fails for these workspaces.
 # See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [workspace-to-monitor-force-assignment]
-MAIN = ['HP', 'ultrawide', 'main']  # HP when docked, else LG, else main monitor
-CHAT = ['built-in']    # always the MacBook screen
+M1 = 1
+M2 = [2, 1]
+M3 = [3, 2, 1]
 
 [mode.main.binding]
 
@@ -121,8 +122,8 @@ CHAT = ['built-in']    # always the MacBook screen
 # cmd-q = 'close'
     cmd-e = 'macos-native-minimize'
     cmd-m = 'fullscreen'
-    alt-left = 'workspace --wrap-around prev'
-    alt-right = 'workspace --wrap-around next'
+    alt-left = 'echo -- T1 T2 T3 BROWSER CHAT MEETING M1 M2 M3 | workspace --wrap-around --stdin prev'
+    alt-right = 'echo -- T1 T2 T3 BROWSER CHAT MEETING M1 M2 M3 | workspace --wrap-around --stdin next'
     alt-up = 'focus-monitor prev'
     alt-down = 'focus-monitor next'
 #    cmd-shift-left = 'move-workspace-to-monitor prev'
@@ -135,10 +136,14 @@ CHAT = ['built-in']    # always the MacBook screen
     cmd-shift-r = 'mode resize'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
+
+    # Vim-like window focus.
     alt-h = 'focus left'
     alt-j = 'focus down'
     alt-k = 'focus up'
     alt-l = 'focus right'
+    ctrl-alt-h = 'focus-monitor --wrap-around left'
+    ctrl-alt-l = 'focus-monitor --wrap-around right'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
     alt-shift-h = 'move left'
@@ -146,41 +151,56 @@ CHAT = ['built-in']    # always the MacBook screen
     alt-shift-k = 'move up'
     alt-shift-l = 'move right'
 
+    # See: https://nikitabobko.github.io/AeroSpace/commands#join-with
+    ctrl-alt-shift-h = 'join-with left'
+    ctrl-alt-shift-j = 'join-with down'
+    ctrl-alt-shift-k = 'join-with up'
+    ctrl-alt-shift-l = 'join-with right'
+
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    cmd-f1 = 'workspace TERM'
-    cmd-f2 = 'workspace CODE'
-    cmd-f3 = 'workspace BROWSE'
-    cmd-f4 = 'workspace MAIN'
+    cmd-f1 = 'workspace T1'
+    cmd-f2 = 'workspace T2'
+    cmd-f3 = 'workspace T3'
+    cmd-f4 = 'workspace BROWSER'
     cmd-f5 = 'workspace CHAT'
-    cmd-f6 = 'workspace PLAN'
-    cmd-f7 = 'workspace MEETING'
-    cmd-f8 = 'workspace NOTES'
-    cmd-f9 = 'workspace BG'
+    cmd-f6 = 'workspace MEETING'
+    cmd-f7 = 'workspace M1'
+    cmd-f8 = 'workspace M2'
+    cmd-f9 = 'workspace M3'
 
     # Summon: bring the workspace to the monitor you're looking at (Xmonad-style),
     # instead of jumping focus to the workspace's monitor.
     # See: https://nikitabobko.github.io/AeroSpace/commands#summon-workspace
-    cmd-shift-f1 = 'summon-workspace TERM'
-    cmd-shift-f2 = 'summon-workspace CODE'
-    cmd-shift-f3 = 'summon-workspace BROWSE'
-    cmd-shift-f4 = 'summon-workspace MAIN'
+    cmd-shift-f1 = 'summon-workspace T1'
+    cmd-shift-f2 = 'summon-workspace T2'
+    cmd-shift-f3 = 'summon-workspace T3'
+    cmd-shift-f4 = 'summon-workspace BROWSER'
     cmd-shift-f5 = 'summon-workspace CHAT'
-    cmd-shift-f6 = 'summon-workspace PLAN'
-    cmd-shift-f7 = 'summon-workspace MEETING'
-    cmd-shift-f8 = 'summon-workspace NOTES'
-    cmd-shift-f9 = 'summon-workspace BG'
+    cmd-shift-f6 = 'summon-workspace MEETING'
+    cmd-shift-f7 = 'summon-workspace M1'
+    cmd-shift-f8 = 'summon-workspace M2'
+    cmd-shift-f9 = 'summon-workspace M3'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    cmd-alt-1 = ['move-node-to-workspace TERM', 'workspace TERM']
-    cmd-alt-2 = ['move-node-to-workspace CODE', 'workspace CODE']
-    cmd-alt-3 = ['move-node-to-workspace BROWSE', 'workspace BROWSE']
-    cmd-alt-4 = ['move-node-to-workspace MAIN', 'workspace MAIN']
+    cmd-alt-1 = ['move-node-to-workspace T1', 'workspace T1']
+    cmd-alt-f1 = ['move-node-to-workspace T1', 'workspace T1']
+    cmd-alt-2 = ['move-node-to-workspace T2', 'workspace T2']
+    cmd-alt-f2 = ['move-node-to-workspace T2', 'workspace T2']
+    cmd-alt-3 = ['move-node-to-workspace T3', 'workspace T3']
+    cmd-alt-f3 = ['move-node-to-workspace T3', 'workspace T3']
+    cmd-alt-4 = ['move-node-to-workspace BROWSER', 'workspace BROWSER']
+    cmd-alt-f4 = ['move-node-to-workspace BROWSER', 'workspace BROWSER']
     cmd-alt-5 = ['move-node-to-workspace CHAT', 'workspace CHAT']
-    cmd-alt-6 = ['move-node-to-workspace PLAN', 'workspace PLAN']
-    cmd-alt-7 = ['move-node-to-workspace MEETING', 'workspace MEETING']
-    cmd-alt-8 = ['move-node-to-workspace NOTES', 'workspace NOTES']
-    cmd-alt-9 = ['move-node-to-workspace BG']  # Don't follow - background workspace
+    cmd-alt-f5 = ['move-node-to-workspace CHAT', 'workspace CHAT']
+    cmd-alt-6 = ['move-node-to-workspace MEETING', 'workspace MEETING']
+    cmd-alt-f6 = ['move-node-to-workspace MEETING', 'workspace MEETING']
+    cmd-alt-7 = ['move-node-to-workspace M1', 'workspace M1']
+    cmd-alt-f7 = ['move-node-to-workspace M1', 'workspace M1']
+    cmd-alt-8 = ['move-node-to-workspace M2', 'workspace M2']
+    cmd-alt-f8 = ['move-node-to-workspace M2', 'workspace M2']
+    cmd-alt-9 = ['move-node-to-workspace M3', 'workspace M3']
+    cmd-alt-f9 = ['move-node-to-workspace M3', 'workspace M3']
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
@@ -188,7 +208,7 @@ CHAT = ['built-in']    # always the MacBook screen
     alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
     # Move workspace to monitor by display arrangement: left-to-right, 1-based.
-    # NOTE: fails for force-assigned workspaces (MAIN, CHAT) — use summon-workspace instead
+    # NOTE: fails for force-assigned workspaces (M1, M2, M3) — use summon-workspace instead
     alt-shift-1 = 'move-workspace-to-monitor 1'
     alt-shift-2 = 'move-workspace-to-monitor 2'
     alt-shift-3 = 'move-workspace-to-monitor 3'
@@ -203,7 +223,6 @@ CHAT = ['built-in']    # always the MacBook screen
 
 
     #
-    cmd-h = [] # Disable "hide application"
     cmd-alt-h = [] # Disable "hide others"
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
   #salt-shift-semicolon = 'mode service'
@@ -271,56 +290,24 @@ run = 'layout floating'
 
 # Workspace assignments
 [[on-window-detected]]
-if.app-id = 'com.anthropic.claudefordesktop'
-run = 'move-node-to-workspace MAIN'
-
-[[on-window-detected]]
-if.app-id = 'notion.id'
-run = 'move-node-to-workspace NOTES'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Notes'
-run = 'move-node-to-workspace NOTES'
-
-[[on-window-detected]]
-if.app-id = 'md.obsidian'
-run = 'move-node-to-workspace NOTES'
-
-[[on-window-detected]]
-if.app-id = 'net.shinyfrog.bear'
-run = 'move-node-to-workspace NOTES'
-
-[[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
-run = 'move-node-to-workspace BROWSE'
+run = 'move-node-to-workspace BROWSER'
 
 [[on-window-detected]]
 if.app-id = 'com.todesktop.230313mzl4w4u92'
-run = 'move-node-to-workspace CODE'
+run = 'move-node-to-workspace T3'
 
 [[on-window-detected]]
 if.app-id = 'com.jetbrains.pycharm'
-run = 'move-node-to-workspace CODE'
+run = 'move-node-to-workspace T3'
 
 #[[on-window-detected]]
 #if.app-id = 'com.github.wez.wezterm'
-#run = 'move-node-to-workspace TERM'
+#run = 'move-node-to-workspace T1'
 
 #[[on-window-detected]]
 #if.app-id = 'com.mitchellh.ghostty'
-#run = 'move-node-to-workspace TERM'
-
-[[on-window-detected]]
-if.app-id = 'com.microsoft.Outlook'
-run = 'move-node-to-workspace PLAN'
-
-[[on-window-detected]]
-if.app-id = 'com.todoist.mac.Todoist'
-run = 'move-node-to-workspace PLAN'
-
-[[on-window-detected]]
-if.app-id = 'com.todesktop.210203cqcj00tw1'
-run = 'move-node-to-workspace PLAN'
+#run = 'move-node-to-workspace T1'
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'

@@ -74,7 +74,7 @@ Fisher manages plugins (gitnow, fzf.fish, zoxide.fish, grc, replay). Plugin list
 
 ### tmux
 
-- **Prefix:** `Ctrl-a`
+- **Prefix:** `Ctrl-s`
 - **Vi mode** enabled
 - **Pane nav:** `prefix + h/j/k/l` and `C-h/j/k/l` (vim-tmux-navigator)
 - **Window switching:** `F1-F5`

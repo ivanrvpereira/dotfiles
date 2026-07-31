@@ -34,17 +34,17 @@ if set -q DOTFILES_HEADLESS
     # Headless: load from ~/.secrets (populated once during bootstrap)
     test -f ~/.secrets; and source ~/.secrets
 else
-    # GUI: load ephemeral secrets via 1Password (first shell triggers Touch ID)
+    # GUI: load only cached ephemeral secrets at startup. Run `auth` explicitly
+    # when the cache is missing so agents do not trigger 1Password prompts.
     if test -s $TMPDIR/.exa-api-key
         set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
-    else if status is-interactive
-        op read "op://development/exa-api-key/credential" 2>/dev/null | read -l _key
-        and test -n "$_key"
-        and printf '%s' "$_key" > $TMPDIR/.exa-api-key
-        and chmod 600 $TMPDIR/.exa-api-key
-        and set -gx EXA_API_KEY "$_key"
     end
 end
+
+# ─── Pi ──────────────────────────────────────────────────────
+# Pin pi's agent dir so pi-subagents doesn't treat ~/.agents (config repo) as an agents dir
+set -gx PI_CODING_AGENT_DIR "$HOME/.pi/agent"
+set -gx PI_CACHE_RETENTION long
 
 # ─── Sideshow ────────────────────────────────────────────────
 # Keep the token out of dotfiles; load the private .env if present.

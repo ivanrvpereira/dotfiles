@@ -1,6 +1,6 @@
 # tmux cheatsheet
 
-Prefix: `Ctrl-a`
+Prefix: `Ctrl-s`
 
 ## Sessions
 
