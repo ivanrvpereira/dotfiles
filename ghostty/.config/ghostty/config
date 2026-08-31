@@ -51,6 +51,13 @@ keybind = alt+backspace=text:\x1b\x7f
 # Prevent Ctrl+T from triggering macOS "New Tab" menu action
 keybind = ctrl+t=unbind
 
+# Claude Code Alt shortcuts (alt+p model picker, alt+o fast mode, alt+t thinking).
+# Sent as Esc-prefixed sequences so Option still composes accents elsewhere
+# (i.e. no global macos-option-as-alt).
+keybind = alt+o=text:\x1bo
+keybind = alt+p=text:\x1bp
+keybind = alt+t=text:\x1bt
+
 # Tab switching with cmd+function keys
 keybind = cmd+f1=goto_tab:1
 keybind = cmd+f2=goto_tab:2
