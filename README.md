@@ -18,6 +18,40 @@ Or if you've already cloned the repo:
 
 The bootstrap script handles everything: Xcode CLT, Homebrew, packages, Fish as default shell, stow symlinks, pre-commit hooks, mise runtimes, and TPM.
 
+### Private dotfiles (optional)
+
+`~/.dotfiles-private` holds private config in a separate repository.
+Both setup scripts deploy an existing checkout after the public packages.
+Setup never clones or pulls the private repository.
+The public setup works without it.
+
+Each non-hidden top-level directory in the private repository is a Stow package that maps to `$HOME`.
+Keep private files at separate paths, such as `~/.config/mise/conf.d/*.toml`, `~/.config/fish/conf.d/*.fish`, or `~/.gitconfig.local`.
+Stow does not merge files or replace conflicting files.
+Do not put credentials or exported secrets in either repository.
+
+Clone the private repository to `~/.dotfiles-private` with your own authenticated Git URL.
+Then preview and deploy its packages:
+
+```bash
+~/.dotfiles/bin/stow-private --dry-run
+~/.dotfiles/bin/stow-private
+```
+
+macOS setup selects all private packages.
+Linux setup selects only `fish`, `git`, `tmux`, `atuin`, `btop`, `htop`, `nvim`, and `mise`.
+Only existing packages from that list are deployed.
+Use package names to select packages manually:
+
+```bash
+~/.dotfiles/bin/stow-private --dry-run mise fish
+~/.dotfiles/bin/stow-private mise fish
+```
+
+Set `DOTFILES_PRIVATE` to use another checkout path.
+Keep machine paths, account details, secret references, and infrastructure details in the private repository.
+Moving a file does not remove it from public Git history.
+
 ### Post-Bootstrap
 
 1. Open a new terminal (or restart your shell)
@@ -114,6 +148,15 @@ mux             # tmuxinator
 auth            # Load ephemeral secrets from 1Password on demand
 secret-scan     # Gitleaks scan on current repo
 ```
+
+## Terminals
+
+Rex is the primary terminal and uses its built-in shortcuts.
+This repository does not manage its installation or configuration.
+`Brewfile.desktop` keeps Ghostty on the stable release channel.
+The Ghostty configuration retains tmux shortcuts: Cmd+D and Cmd+Shift+D split panes, Cmd+W closes a pane, and Cmd+1–6 selects sessions.
+These shortcuts send tmux prefix sequences and require tmux in the active terminal.
+They do not configure Rex.
 
 ## Tmux
 

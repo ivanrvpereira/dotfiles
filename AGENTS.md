@@ -4,7 +4,7 @@ Instructions for AI coding agents (Claude Code, Pi, Cursor, etc.) working in thi
 
 ## Repository Overview
 
-Personal dotfiles repository for macOS (Fish shell, Ghostty, tmux, neovim). Managed with GNU Stow.
+Personal dotfiles repository for macOS (Fish shell, Ghostty, tmux, neovim). Managed with GNU Stow. Rex is the primary terminal, installed and configured separately.
 
 ## Installation
 
@@ -35,6 +35,23 @@ fisher plugins, TPM, stows the Linux package subset, and makes fish the default
 shell. Tools that ship under Debian names (`batcat`/`fdfind`) are handled by the
 guarded aliases in `fish/.config/fish/aliases.fish` — no symlinks required.
 
+## Private Companion Repository
+
+`~/.dotfiles-private` holds private config as separate GNU Stow packages.
+Both setup scripts call `bin/stow-private` after the public packages.
+macOS selects all private packages.
+Linux selects its public package subset plus private `mise` drop-ins.
+The helper skips an absent checkout and refuses Stow conflicts.
+Set `DOTFILES_PRIVATE` to use another checkout path.
+Use `bin/stow-private --dry-run` to preview deployment.
+Setup never clones or pulls the private repository.
+
+- Keep machine paths, account details, secret references, and infrastructure details out of this public repository.
+- Keep credentials and exported secrets out of both repositories.
+- Use separate private drop-in files or existing local include paths. Stow cannot merge public and private files at the same target path.
+- Do not copy private contents into public docs, examples, or audit reports.
+- Ask before moving files or changing public Git history. A migration does not remove old public commits.
+
 ## Non-Obvious Path Conventions
 
 - **Ghostty config (macOS):** Real path is `~/Library/Application Support/com.mitchellh.ghostty/config`. Convenience symlink at `~/.config/ghostty`. Source of truth is `~/.dotfiles/ghostty/.config/ghostty/config`.
@@ -58,7 +75,7 @@ All configs are organized as GNU Stow packages. Each directory mirrors `$HOME`:
 
 ```
 git/  shell/  fish/  tmux/  tmuxinator/  ghostty/  aerospace/
-atuin/  btop/  htop/  zed/  mise/  nvim/  lazygit/  launchd/
+atuin/  btop/  htop/  zed/  mise/  nvim/  lazygit/  launchd/  worktrunk/
 ```
 
 Deployed via: `stow --no-folding -R <package>`
@@ -71,6 +88,12 @@ Fish config sources three files in order:
 3. `activate.fish` — Starship prompt, mise activation, atuin, 1Password plugins
 
 Fisher manages plugins (gitnow, fzf.fish, zoxide.fish, grc, replay). Plugin list tracked in `fish_plugins`.
+
+### Terminals
+
+- Rex is the primary terminal. This repository does not manage its installation or configuration.
+- Ghostty remains available through the stable `ghostty` cask in `Brewfile.desktop`.
+- Ghostty's pane and session shortcuts send tmux prefix sequences. They do not configure Rex.
 
 ### tmux
 
@@ -110,7 +133,7 @@ Automated updates via macOS launchd agents in `launchd/` stow package:
 - **`update-agents`** — daily 7 AM: claude-code, gemini-cli, pi, skills
 - **`update-system`** — Wednesday noon: brew, mise, macOS software updates
 
-Scripts live in `bin/`. `launch-in-terminal` opens Terminal.app via osascript (Ghostty can't open windows from launchd context).
+Scripts live in `bin/`. `launch-in-terminal` opens Terminal.app via osascript.
 
 ## Key Commands
 

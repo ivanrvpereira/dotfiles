@@ -17,6 +17,7 @@ docs/
 todo.txt
 teste.md
 *.local.md
+/pi-tmux-rendering-handoff-*.md
 
 
 # OS

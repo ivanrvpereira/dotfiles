@@ -68,7 +68,7 @@ keybind = cmd+f6=goto_tab:6
 keybind = cmd+f7=goto_tab:7
 keybind = cmd+f8=goto_tab:8
 
-# OpenSessions: Cmd+1..6 switch visible tmux/Herdr workspaces
+# Cmd+1..6 switch tmux sessions via Ctrl-s and the session index
 keybind = cmd+digit_1=text:\x13\x31
 keybind = cmd+1=text:\x13\x31
 keybind = cmd+digit_2=text:\x13\x32
@@ -92,18 +92,12 @@ keybind = ctrl+three=text:\x13\x33
 keybind = ctrl+four=text:\x13\x34
 keybind = ctrl+five=text:\x13\x35
 
-# tmux/Herdr splits via Cmd+D / Cmd+Shift+D (sends Ctrl-s | and Ctrl-s -)
+# tmux splits via Cmd+D / Cmd+Shift+D (sends Ctrl-s | and Ctrl-s -)
 keybind = cmd+d=text:\x13|
 keybind = cmd+shift+d=text:\x13-
 
-# Close current tmux/Herdr pane via Cmd+W (sends Ctrl-s x)
+# Close current tmux pane via Cmd+W (sends Ctrl-s x)
 keybind = cmd+w=text:\x13x
-
-# tmux/vim pane navigation via Cmd+H/J/K/L (sends Ctrl+H/J/K/L)
-keybind = cmd+h=text:\x08
-keybind = cmd+j=text:\x0a
-keybind = cmd+k=text:\x0b
-keybind = cmd+l=text:\x0c
 
 # Disable fading for non-active panels
 unfocused-split-opacity = 1

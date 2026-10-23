@@ -3,7 +3,7 @@ set -euo pipefail
 
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/ivanrvpereira/dotfiles.git"
-STOW_PACKAGES=(shell git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit herdr launchd)
+STOW_PACKAGES=(shell git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit launchd worktrunk)
 
 # Colors
 RED='\033[0;31m'
@@ -200,6 +200,10 @@ fi
 # ─── Stow packages ───────────────────────────────────────────────
 info "Stowing dotfile packages..."
 stow --no-folding -R "${STOW_PACKAGES[@]}"
+
+# ─── Private packages (optional, existing checkout only) ──────────
+info "Checking for private dotfiles..."
+"$DOTFILES/bin/stow-private"
 
 # ─── Launch Agents ────────────────────────────────────────────────
 info "Loading launch agents..."

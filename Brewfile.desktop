@@ -53,7 +53,7 @@ vscode "vscodevim.vim"
 # Terminals                                                 #
 #############################################################
 
-cask "ghostty@tip"      # New native terminal
+cask "ghostty"          # Stable release
 cask "cmux"
 
 #############################################################
