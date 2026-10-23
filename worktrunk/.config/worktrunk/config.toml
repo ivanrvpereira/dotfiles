@@ -1,0 +1,3 @@
+# Worktrunk user config: https://worktrunk.dev/config/
+# Worktrees grouped beside the repo: <parent>/worktrees/<repo>/<branch>, e.g. ~/code/x/worktrees/agentmailguard/threads
+worktree-path = "{{ repo_path }}/../worktrees/{{ repo }}/{{ branch | sanitize }}"
