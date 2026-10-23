@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PRIVATE="${DOTFILES_PRIVATE:-$HOME/.dotfiles-private}"
+STOW_OPTIONS=(--no-folding --restow)
+if [[ "${1:-}" == "--dry-run" ]]; then
+    STOW_OPTIONS+=(--simulate --verbose)
+    shift
+fi
+
+if [[ ! -d "$PRIVATE" ]]; then
+    echo "Private dotfiles not found; skipping."
+    exit 0
+fi
+
+# Each non-hidden top-level directory in the private repo is a Stow package.
+# Explicit names select only existing packages (used by Linux setup).
+candidates=("$@")
+if [[ $# -eq 0 ]]; then
+    for directory in "$PRIVATE"/*/; do
+        [[ -d "$directory" ]] || continue
+        directory="${directory%/}"
+        candidates+=("${directory##*/}")
+    done
+fi
+
+if [[ ${#candidates[@]} -eq 0 ]]; then
+    echo "No private Stow packages; skipping."
+    exit 0
+fi
+
+packages=()
+for package in "${candidates[@]}"; do
+    if [[ ! "$package" =~ ^[a-zA-Z0-9][a-zA-Z0-9._-]*$ ]]; then
+        echo "Invalid private package name: $package" >&2
+        exit 1
+    fi
+    [[ ! -d "$PRIVATE/$package" ]] || packages+=("$package")
+done
+
+if [[ ${#packages[@]} -eq 0 ]]; then
+    echo "No matching private Stow packages; skipping."
+    exit 0
+fi
+
+# Stow checks the whole batch for conflicts before changing links. Never adopt.
+stow "${STOW_OPTIONS[@]}" --dir="$PRIVATE" --target="$HOME" "${packages[@]}"

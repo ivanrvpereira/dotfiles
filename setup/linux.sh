@@ -80,6 +80,10 @@ for pkg in "${LINUX_PKGS[@]}"; do
     fi
 done
 
+# ─── Private packages (optional, Linux subset + mise drop-ins) ───
+info "Checking for private dotfiles..."
+"$DOTFILES/bin/stow-private" "${LINUX_PKGS[@]}" mise
+
 # ─── Fisher + fish plugins ───────────────────────────────────────
 # NB: every `fish -c` redirects stdin from /dev/null. fisher reads from
 # stdin internally; if this script is piped (e.g. `bash -s < linux.sh`),
