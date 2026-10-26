@@ -119,6 +119,7 @@ Fisher manages plugins (gitnow, fzf.fish, zoxide.fish, grc, replay). Plugin list
 | **Personal tools** | Homebrew (`brew bundle`) | optional personal apps and Mac App Store apps | `Brewfile.personal` |
 | **Language runtimes & dev tools** | mise | node, python, go, rust, java, lua, uv, gh, jq, just, ruff, black | `mise/.config/mise/config.toml` |
 | **Python CLI tools** | mise (`pipx:` backend) | poetry, shell-gpt, markitdown, etc. | `mise/.config/mise/config.toml` |
+| **GitHub CLI extensions** | `gh extension` (bootstrap installs, `update-system` upgrades) | gh-stack, gh-local-runner | `gh-extensions` |
 
 **Strategy:** Homebrew for global CLI tools. mise for language runtimes and dev tools. No overlap.
 

@@ -20,6 +20,10 @@ pnpm = "latest"
 "npm:@llamaindex/liteparse" = "latest"
 ruff = "latest"
 black = "latest"
+# Tart: macOS VMs for local GitHub Actions runners (gh local-runner --macos).
+# The release tarball holds the notarized tart.app; the binary must run from inside it.
+# Not from Homebrew: the cirruslabs/cli/tart formula fails with current Homebrew.
+"github:cirruslabs/tart" = { version = "latest", bin_path = "tart.app/Contents/MacOS", os = ["macos"] }
 
 # ─── Python CLI Tools (pipx backend, uses uv) ────────────
 "pipx:git-filter-repo" = "latest"

@@ -236,6 +236,21 @@ if command -v npm &>/dev/null && [[ -f "$DOTFILES/npm-packages" ]]; then
     done < "$DOTFILES/npm-packages"
 fi
 
+# ─── GitHub CLI extensions ───────────────────────────────────────
+if command -v gh &>/dev/null && [[ -f "$DOTFILES/gh-extensions" ]]; then
+    if gh auth status &>/dev/null; then
+        info "Installing gh extensions..."
+        installed="$(gh extension list 2>/dev/null | cut -f1)"
+        while IFS= read -r ext; do
+            [[ "$ext" =~ ^#|^$ ]] && continue
+            grep -qx "gh ${ext#*/gh-}" <<<"$installed" && continue
+            gh extension install "$ext" || warn "Could not install gh extension $ext"
+        done < "$DOTFILES/gh-extensions"
+    else
+        warn "gh is not logged in; skipped gh extensions (run 'gh auth login', then re-run bootstrap)"
+    fi
+fi
+
 # ─── TPM (Tmux Plugin Manager) ───────────────────────────────────
 TPM_DIR="$HOME/.tmux/plugins/tpm"
 if [[ ! -x "$TPM_DIR/tpm" || ! -x "$TPM_DIR/bin/install_plugins" ]]; then
