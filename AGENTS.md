@@ -40,7 +40,7 @@ guarded aliases in `fish/.config/fish/aliases.fish` — no symlinks required.
 `~/.dotfiles-private` holds private config as separate GNU Stow packages.
 Both setup scripts call `bin/stow-private` after the public packages.
 macOS selects all private packages.
-Linux selects its public package subset plus private `mise` drop-ins.
+Linux selects its public package subset plus private `git` and `mise` packages.
 The helper skips an absent checkout and refuses Stow conflicts.
 Set `DOTFILES_PRIVATE` to use another checkout path.
 Use `bin/stow-private --dry-run` to preview deployment.
@@ -57,7 +57,7 @@ Setup never clones or pulls the private repository.
 - **Ghostty config (macOS):** Real path is `~/Library/Application Support/com.mitchellh.ghostty/config`. Convenience symlink at `~/.config/ghostty`. Source of truth is `~/.dotfiles/ghostty/.config/ghostty/config`.
 - **lazygit config (macOS):** `~/Library/Application Support/lazygit/config.yml` — stow package mirrors this path.
 - **Fish files:** `exports.fish`, `aliases.fish`, and `activate.fish` are **sourced** (not standalone) from `config.fish`, in that order.
-- **Git local overrides:** `~/.gitconfig.local` is included by `.gitconfig` but intentionally untracked (see `git/gitconfig.local.example`).
+- **Git configuration:** The entire `git` Stow package lives in `~/.dotfiles-private`. Keep identities, signing settings, and global ignore rules there.
 
 ## Don't Do
 
@@ -74,7 +74,7 @@ Setup never clones or pulls the private repository.
 All configs are organized as GNU Stow packages. Each directory mirrors `$HOME`:
 
 ```
-git/  shell/  fish/  tmux/  tmuxinator/  ghostty/  aerospace/
+shell/  fish/  tmux/  tmuxinator/  ghostty/  aerospace/
 atuin/  btop/  htop/  zed/  mise/  nvim/  lazygit/  launchd/  worktrunk/
 ```
 
@@ -105,10 +105,9 @@ Fisher manages plugins (gitnow, fzf.fish, zoxide.fish, grc, replay). Plugin list
 
 ### Git
 
-- Default branch: `main`
-- Auto-setup rebase on pull, auto-prune on fetch
-- `push.autoSetupRemote = true`
-- Auth via `gh` CLI
+Git configuration is private. Both setup scripts deploy the private `git` package through `bin/stow-private`.
+Public setup must not create Git identity files or ask for email addresses.
+GitHub's browser-created commits use GitHub account settings, not the local Git configuration.
 
 ### Package Management
 

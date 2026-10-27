@@ -1,5 +1,5 @@
 # NOTE: This is the REPO .gitignore (what git tracks in this dotfiles repo).
-# The GLOBAL .gitignore (stowed to ~/.gitignore) lives at git/.gitignore.
+# The global ~/.gitignore is managed by the private dotfiles repository.
 
 # Homebrew
 Brewfile.lock.json

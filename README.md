@@ -23,10 +23,11 @@ The bootstrap script handles everything: Xcode CLT, Homebrew, packages, Fish as 
 `~/.dotfiles-private` holds private config in a separate repository.
 Both setup scripts deploy an existing checkout after the public packages.
 Setup never clones or pulls the private repository.
-The public setup works without it.
+The public setup works without it, but does not configure Git.
 
 Each non-hidden top-level directory in the private repository is a Stow package that maps to `$HOME`.
-Keep private files at separate paths, such as `~/.config/mise/conf.d/*.toml`, `~/.config/fish/conf.d/*.fish`, or `~/.gitconfig.local`.
+Git configuration lives entirely in the private repository's `git` package.
+Keep other private files at separate paths, such as `~/.config/mise/conf.d/*.toml` or `~/.config/fish/conf.d/*.fish`.
 Stow does not merge files or replace conflicting files.
 Do not put credentials or exported secrets in either repository.
 
@@ -65,7 +66,6 @@ Dotfiles are organized as **GNU Stow packages** — each directory maps to `$HOM
 
 ```
 ~/.dotfiles/
-├── git/              → ~/.gitconfig, ~/.gitignore
 ├── fish/             → ~/.config/fish/{config,exports,aliases,activate}.fish
 ├── tmux/             → ~/.tmux.conf
 ├── tmuxinator/       → ~/.config/tmuxinator/dev.yml
@@ -93,13 +93,16 @@ Dotfiles are organized as **GNU Stow packages** — each directory maps to `$HOM
 
 ```bash
 # Deploy a package (creates symlinks)
-stow --no-folding -R git
+stow --no-folding -R fish
 
-# Deploy all packages
-stow --no-folding -R git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit
+# Deploy public packages
+stow --no-folding -R tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit
+
+# Deploy private Git configuration
+bin/stow-private git
 
 # Remove a package's symlinks
-stow -D git
+stow -D fish
 ```
 
 ## Package Management
@@ -170,11 +173,13 @@ They do not configure Rex.
 
 ## Git
 
-- Default branch: `main`
-- Auto-setup rebase on pull, auto-prune on fetch
-- `push.autoSetupRemote = true`
-- Auth via `gh` CLI
-- Local overrides in `~/.gitconfig.local` (untracked — see `git/gitconfig.local.example`)
+The private `git` package manages all Git configuration, identities, signing settings, and global ignore rules.
+Neither public setup script creates identity files or asks for email addresses.
+macOS bootstrap configures the signing key only when the private Git configuration exists.
+
+Git configuration controls local commits, not commits created through GitHub's website.
+Enable GitHub's email privacy settings and select a noreply author address for browser-created commits.
+Moving configuration does not remove email addresses from existing public commits.
 
 ## Security
 

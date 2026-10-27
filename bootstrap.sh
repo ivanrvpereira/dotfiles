@@ -3,7 +3,7 @@ set -euo pipefail
 
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/ivanrvpereira/dotfiles.git"
-STOW_PACKAGES=(shell git tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit launchd worktrunk)
+STOW_PACKAGES=(shell tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit launchd worktrunk)
 
 # Colors
 RED='\033[0;31m'
@@ -278,61 +278,41 @@ if command -v fish &>/dev/null; then
 fi
 
 # ─── SSH key for commit signing ─────────────────────────────────
-echo ""
-if $HEADLESS; then
-    default_key_name="id_ed25519"
-else
-    default_key_name="git_signing_ed25519"
-fi
-read -rp "Generate a new local SSH signing key or use an existing one? [g/E] " ssh_choice
-if [[ "$ssh_choice" =~ ^[Gg]([Ee][Nn][Ee][Rr][Aa][Tt][Ee])?$ ]]; then
-    read -rp "  Key name [$default_key_name]: " key_name
-    key_name="${key_name:-$default_key_name}"
-    SSH_KEY_PATH="$HOME/.ssh/$key_name"
-    if [[ ! -f "$SSH_KEY_PATH" ]]; then
-        info "Generating SSH key (no passphrase — FileVault protects at rest)..."
-        ssh-keygen -t ed25519 -N "" -f "$SSH_KEY_PATH" -C "$HOSTNAME_TO_SET"
+private_git_config="${DOTFILES_PRIVATE:-$HOME/.dotfiles-private}/git/.gitconfig"
+if [[ -f "$private_git_config" ]]; then
+    echo ""
+    if $HEADLESS; then
+        default_key_name="id_ed25519"
     else
-        info "Key $SSH_KEY_PATH already exists, reusing"
+        default_key_name="git_signing_ed25519"
     fi
-else
-    read -rp "  Path to existing SSH signing key [~/.ssh/$default_key_name]: " key_path
-    key_path="${key_path:-$HOME/.ssh/$default_key_name}"
-    SSH_KEY_PATH="${key_path/#\~/$HOME}"
-    [[ -f "$SSH_KEY_PATH" ]] || error "Key not found: $SSH_KEY_PATH"
-fi
-info "Public key:"
-cat "${SSH_KEY_PATH}.pub"
-echo ""
-echo "  Add this key to GitHub as a Signing key:"
-echo "  https://github.com/settings/keys"
-echo ""
-read -rp "  Press Enter when done..."
-
-# ─── Git identity ─────────────────────────────────────────────────
-if [[ ! -f "$HOME/.gitconfig.local" ]]; then
-    info "Creating ~/.gitconfig.local..."
-    cat > "$HOME/.gitconfig.local" <<EOF
-[user]
-	signingkey = $SSH_KEY_PATH
-EOF
-    info "Created ~/.gitconfig.local"
-else
-    info "~/.gitconfig.local already exists"
-fi
-
-if [[ ! -f "$HOME/.gitconfig.work" ]]; then
-    read -rp "Set up work git identity? (y/N): " setup_work
-    if is_yes "$setup_work"; then
-        read -rp "  Work email: " work_email
-        cat > "$HOME/.gitconfig.work" <<EOF
-[user]
-	email = $work_email
-EOF
-        info "Created ~/.gitconfig.work"
+    read -rp "Generate a new local SSH signing key or use an existing one? [g/E] " ssh_choice
+    if [[ "$ssh_choice" =~ ^[Gg]([Ee][Nn][Ee][Rr][Aa][Tt][Ee])?$ ]]; then
+        read -rp "  Key name [$default_key_name]: " key_name
+        key_name="${key_name:-$default_key_name}"
+        SSH_KEY_PATH="$HOME/.ssh/$key_name"
+        if [[ ! -f "$SSH_KEY_PATH" ]]; then
+            info "Generating SSH key (no passphrase — FileVault protects at rest)..."
+            ssh-keygen -t ed25519 -N "" -f "$SSH_KEY_PATH" -C "$HOSTNAME_TO_SET"
+        else
+            info "Key $SSH_KEY_PATH already exists, reusing"
+        fi
+    else
+        read -rp "  Path to existing SSH signing key [~/.ssh/$default_key_name]: " key_path
+        key_path="${key_path:-$HOME/.ssh/$default_key_name}"
+        SSH_KEY_PATH="${key_path/#\~/$HOME}"
+        [[ -f "$SSH_KEY_PATH" ]] || error "Key not found: $SSH_KEY_PATH"
     fi
+    git config --file "$private_git_config" user.signingkey "$SSH_KEY_PATH"
+    info "Public key:"
+    cat "${SSH_KEY_PATH}.pub"
+    echo ""
+    echo "  Add this key to GitHub as a Signing key:"
+    echo "  https://github.com/settings/keys"
+    echo ""
+    read -rp "  Press Enter when done..."
 else
-    info "~/.gitconfig.work already exists"
+    info "Private Git configuration not found; skipping commit-signing setup."
 fi
 
 # ─── Headless secrets (one-time export from 1Password) ───────────

@@ -68,7 +68,7 @@ fi
 # are intentionally excluded. Stow is best-effort: a pre-existing real
 # file (e.g. a hand-written ~/.config/atuin) is reported, never clobbered.
 mkdir -p ~/.config/fish/conf.d
-LINUX_PKGS=(fish git tmux atuin btop htop nvim)
+LINUX_PKGS=(fish tmux atuin btop htop nvim)
 info "Stowing Linux dotfiles packages..."
 cd "$DOTFILES"
 for pkg in "${LINUX_PKGS[@]}"; do
@@ -82,7 +82,7 @@ done
 
 # ─── Private packages (optional, Linux subset + mise drop-ins) ───
 info "Checking for private dotfiles..."
-"$DOTFILES/bin/stow-private" "${LINUX_PKGS[@]}" mise
+"$DOTFILES/bin/stow-private" "${LINUX_PKGS[@]}" git mise
 
 # ─── Fisher + fish plugins ───────────────────────────────────────
 # NB: every `fish -c` redirects stdin from /dev/null. fisher reads from
