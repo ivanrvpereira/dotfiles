@@ -87,7 +87,7 @@ Fish config sources three files in order:
 2. `aliases.fish` — Modern CLI replacements, abbreviations, commands
 3. `activate.fish` — Starship prompt, mise activation, atuin, 1Password plugins
 
-Fisher manages plugins (gitnow, fzf.fish, zoxide.fish, grc, replay). Plugin list tracked in `fish_plugins`.
+Fisher manages plugins (fzf.fish, zoxide.fish, grc, replay). Plugin list tracked in `fish_plugins`.
 
 ### Terminals
 
