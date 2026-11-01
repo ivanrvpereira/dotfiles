@@ -24,6 +24,41 @@
                         ]
                     },
                     {
+                        "description": "Hyper + key: open app (OmniWM then jumps to its workspace)",
+                        "manipulators": [
+                            {
+                                "from": { "key_code": "e", "modifiers": { "mandatory": ["control", "option", "command"] } },
+                                "to": [{ "shell_command": "open -b com.superlogical.rex" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "w", "modifiers": { "mandatory": ["control", "option", "command"] } },
+                                "to": [{ "shell_command": "open -b company.thebrowser.Browser" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "c", "modifiers": { "mandatory": ["control", "option", "command"] } },
+                                "to": [{ "shell_command": "open -b com.tinyspeck.slackmacgap" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "m", "modifiers": { "mandatory": ["control", "option", "command"] } },
+                                "to": [{ "shell_command": "open -b com.microsoft.teams2" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "d", "modifiers": { "mandatory": ["control", "option", "command"] } },
+                                "to": [{ "shell_command": "open -b notion.id" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "g", "modifiers": { "mandatory": ["control", "option", "command"] } },
+                                "to": [{ "shell_command": "open -b com.anysphere.sand" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Disable Command + H (hide app) and Command + Option + H (hide others)",
                         "manipulators": [
                             {
