@@ -22,7 +22,6 @@ cask "font-monaspace"
 # Browsers                                                  #
 #############################################################
 
-cask "arc"
 cask "google-chrome"
 
 #############################################################
@@ -67,6 +66,7 @@ cask "qlmarkdown"     # Quick Look previews for Markdown files
 cask "sloth"          # Shows open files/sockets by process
 cask "openlogi"       # Lightweight Logitech Options+ alternative
 cask "handy"          # Speech to text app
+cask "anomalyco/tap/hex", trusted: true # Local voice dictation
 
 #############################################################
 # Security and Network                                      #
@@ -80,7 +80,6 @@ cask "proxyman"
 # Productivity and macOS Desktop                            #
 #############################################################
 
-cask "raycast"
 cask "nikitabobko/tap/aerospace", trusted: true
 cask "omniwm"         # Niri/Hyprland-style tiling window manager
 cask "karabiner-elements" # Caps Lock: hold = Hyper, tap = Escape
