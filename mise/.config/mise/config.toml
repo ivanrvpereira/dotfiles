@@ -18,6 +18,8 @@ uv = "latest"
 bun = "latest"
 pnpm = "latest"
 "npm:@llamaindex/liteparse" = "latest"
+# OpenCode V2 (registry: aqua:anomalyco/opencode). Hex's Annotate "Send to…" and Modes rewriting need its local service.
+opencode = "latest"
 ruff = "latest"
 black = "latest"
 # Tart: macOS VMs for local GitHub Actions runners (gh local-runner --macos).
