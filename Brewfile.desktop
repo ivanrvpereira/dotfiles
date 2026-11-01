@@ -82,4 +82,5 @@ cask "proxyman"
 
 cask "raycast"
 cask "nikitabobko/tap/aerospace", trusted: true
+cask "omniwm"         # Niri/Hyprland-style tiling window manager
 brew "felixkratz/formulae/borders", trusted: true
