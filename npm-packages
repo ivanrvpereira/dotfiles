@@ -1,2 +1,4 @@
 # Global npm packages — one per line
 @earendil-works/pi-coding-agent
+# Puppeteer API used by the shared skill; npm latest is still Playwright-based.
+dev-browser@1.0.0-rc.4

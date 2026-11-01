@@ -15,8 +15,9 @@ claude update 2>&1 || warn "claude update failed"
 log "Updating pi coding agent..."
 npm install -g --force @earendil-works/pi-coding-agent 2>&1 || warn "npm install pi failed"
 
-log "Updating agent-browser..."
-npm install -g agent-browser@latest 2>&1 || warn "npm install agent-browser failed"
+# Keep the Puppeteer API used by the shared skill; npm latest is still Playwright-based.
+log "Updating dev-browser..."
+npm install -g dev-browser@1.0.0-rc.4 2>&1 || warn "npm install dev-browser failed"
 
 log "Running pi update..."
 pi update 2>&1 || warn "pi update failed"
