@@ -200,6 +200,9 @@ fi
 # ─── Stow packages ───────────────────────────────────────────────
 info "Stowing dotfile packages..."
 stow --no-folding -R "${STOW_PACKAGES[@]}"
+# Karabiner only reloads its config when ~/.config/karabiner is a directory
+# symlink, so this package is stowed with folding.
+stow -R karabiner
 
 # ─── Private packages (optional, existing checkout only) ──────────
 info "Checking for private dotfiles..."

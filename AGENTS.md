@@ -75,10 +75,10 @@ All configs are organized as GNU Stow packages. Each directory mirrors `$HOME`:
 
 ```
 shell/  fish/  tmux/  tmuxinator/  ghostty/  aerospace/
-atuin/  btop/  htop/  zed/  mise/  nvim/  lazygit/  launchd/  worktrunk/
+atuin/  btop/  htop/  zed/  mise/  nvim/  lazygit/  launchd/  worktrunk/  karabiner/
 ```
 
-Deployed via: `stow --no-folding -R <package>`
+Deployed via: `stow --no-folding -R <package>`. Exception: `karabiner` is stowed with folding (`stow -R karabiner`), because Karabiner only reloads its config when `~/.config/karabiner` is a directory symlink.
 
 ### Shell (Fish)
 

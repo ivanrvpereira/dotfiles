@@ -10,6 +10,9 @@ Brewfile.lock.json
 # Pi
 .pi/
 
+# Karabiner writes backups next to karabiner.json
+karabiner/.config/karabiner/automatic_backups/
+
 # Local files (not tracked)
 todos/
 backups/
