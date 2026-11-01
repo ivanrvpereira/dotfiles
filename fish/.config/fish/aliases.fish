@@ -116,6 +116,50 @@ if set -q DOTFILES_HEADLESS
 else
     alias ubi='op run -- ubi'
 end
+# For older projects whose .env holds op:// references. Do not let mise load such a file
+# (`_.file`): mise sets its variables again at every prompt and undoes `opx`.
+# A .env mounted by 1Password Environments needs neither: see ~/code/DEV-SETUP.md.
+if not set -q DOTFILES_HEADLESS
+    # pi with ./.env (if present) loaded and its op:// references resolved, for pi only
+    function opi --wraps=pi --description 'pi with ./.env loaded and op:// refs resolved'
+        set -l runargs
+        test -f .env; and set runargs --env-file .env
+        op run $runargs --no-masking -- pi $argv
+    end
+
+    # Export every variable in ./.env (or the given file) into the current shell, with
+    # op:// references resolved by 1Password. One op prompt. Values stay in memory until
+    # the shell exits or `opx -u` removes every variable that opx loaded in this shell.
+    function opx --description 'Export all vars from .env (or given file), op:// refs resolved; -u unloads'
+        argparse u/unload -- $argv; or return 1
+        if set -q _flag_unload
+            set -q __opx_loaded[1]; or begin; echo "Nothing loaded by opx in this shell"; return 0; end
+            for n in $__opx_loaded
+                set -eg $n
+            end
+            echo "Unloaded: $__opx_loaded"
+            set -eg __opx_loaded
+            return 0
+        end
+        set -l file .env
+        test -n "$argv[1]"; and set file $argv[1]
+        test -e $file; or begin; echo "No such file: $file"; return 1; end
+        # Read the file once: a 1Password-mounted .env is a named pipe, and each read is a new request.
+        set -l content (cat $file | string collect); or return 1
+        set -l names (printf '%s\n' $content | string match -rg '^\s*(?:export\s+)?([A-Za-z_]\w*)\s*=')
+        test (count $names) -gt 0; or begin; echo "No variables in $file"; return 1; end
+        # op run parses the dotenv text and resolves any op:// references (no 1Password call when there are none).
+        # NUL-separated, so empty and multi-line values survive. Names are identifiers, so eval is safe.
+        set -l values (printf '%s\n' $content | op run --env-file /dev/stdin --no-masking -- sh -c 'for n; do eval "v=\${$n-}"; printf "%s\0" "$v"; done' sh $names | string split0)
+        test $pipestatus[1] -eq 0; or return 1
+        test (count $values) -eq (count $names); or begin; echo "Resolved value count mismatch"; return 1; end
+        for i in (seq (count $names))
+            set -gx $names[$i] $values[$i]
+            contains -- $names[$i] $__opx_loaded; or set -g __opx_loaded $__opx_loaded $names[$i]
+        end
+        echo "Loaded from $file: $names"
+    end
+end
 
 # Authenticate ephemeral secrets (once per reboot, stored in TMPDIR)
 function auth
