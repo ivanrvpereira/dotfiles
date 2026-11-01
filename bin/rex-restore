@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+# Rebuild Rex sessions from a file written by rex-save.
+#
+# Each saved session is created again with its tabs, splits, split sizes, pane
+# names, and working directories. Panes start a fresh shell; programs that were
+# running are not started again. Sessions whose name already exists are skipped.
+#
+# Usage: rex-restore [FILE]   (default: $XDG_STATE_HOME/rex-layout/latest.json)
+#        rex-restore --list   (show saved snapshots)
+set -euo pipefail
+
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/rex-layout"
+
+if [ "${1:-}" = "--list" ]; then
+  # shellcheck disable=SC2012 # file names are timestamps we control
+  ls -1t "$state_dir/history"/*.json 2>/dev/null || echo "no snapshots in $state_dir/history"
+  exit 0
+fi
+
+file="${1:-$state_dir/latest.json}"
+[ -f "$file" ] || { echo "rex-restore: $file not found" >&2; exit 1; }
+
+# Turn a split tree into an ordered list of split operations. Each pane is
+# identified by the old block ID of the first pane in its subtree.
+split_ops='
+  def first_leaf: if .block_id then .block_id else (.split.before | first_leaf) end;
+  def ops:
+    if .split then
+      [{
+        from: first_leaf,
+        to: (.split.after | first_leaf),
+        dir: (if .split.direction == "horizontal" then "right" else "below" end),
+        pct: ((1 - .split.ratio) * 100 | round | if . < 1 then 1 elif . > 99 then 99 else . end)
+      }] + (.split.before | ops) + (.split.after | ops)
+    else [] end;
+  .layout | ops | .[]'
+
+# Generated tab names such as "Window 65390a6a" are not worth restoring.
+window_label='.label // "" | if test("^Window [0-9a-f]{8}$") then "" else . end'
+
+existing=$(rex ls --json | jq -r '.sessions[].label')
+echo "rex-restore: restoring from $file (saved $(jq -r '.saved_at' "$file"))"
+
+while IFS= read -r session; do
+  label=$(jq -r '.label' <<<"$session")
+  if grep -Fxq -- "$label" <<<"$existing"; then
+    echo "  skip '$label': a session with this name already exists"
+    continue
+  fi
+
+  session_id=""
+  window_ids=()
+  while IFS= read -r window; do
+    first=$(jq -r '.layout | def f: if .block_id then .block_id else (.split.before | f) end; f' <<<"$window")
+    cwd_of() { jq -r --arg id "$1" '.panes[$id].cwd // empty' <<<"$window"; }
+    cwd=$(cwd_of "$first")
+    wlabel=$(jq -r "$window_label" <<<"$window")
+
+    args=()
+    [ -n "$cwd" ] && [ -d "$cwd" ] && args+=(-c "$cwd")
+    if [ -z "$session_id" ]; then
+      [ -n "$wlabel" ] && args+=(--window "$wlabel")
+      created=$(rex new "$label" ${args[@]+"${args[@]}"} --json)
+      session_id=$(jq -er '.session_id' <<<"$created")
+      window_id=$(jq -er '.initial_windows[0].window_id' <<<"$created")
+      block=$(jq -er '.initial_windows[0].block_ids[0]' <<<"$created")
+    else
+      created=$(rex window new -s "$session_id" ${wlabel:+"$wlabel"} ${args[@]+"${args[@]}"} --focus=false --json)
+      window_id=$(jq -er '.window_id' <<<"$created")
+      block=$(jq -er '.block_ids[0]' <<<"$created")
+    fi
+    window_ids+=("$window_id")
+
+    # Map old block IDs to the new ones as panes are created.
+    map=$(jq -nc --arg old "$first" --arg new "$block" '{($old): $new}')
+    while IFS= read -r op; do
+      from=$(jq -r --argjson op "$op" '.[$op.from]' <<<"$map")
+      to=$(jq -r '.to' <<<"$op")
+      cwd=$(cwd_of "$to")
+      args=()
+      [ -n "$cwd" ] && [ -d "$cwd" ] && args+=(-c "$cwd")
+      created=$(rex split -s "$session_id" -b "$from" \
+        --split "$(jq -r '.dir' <<<"$op")" --ratio "$(jq -r '.pct' <<<"$op")" \
+        ${args[@]+"${args[@]}"} --focus=false --json)
+      new=$(jq -er '.block_ids[0]' <<<"$created")
+      map=$(jq -c --arg old "$to" --arg new "$new" '.[$old] = $new' <<<"$map")
+    done < <(jq -c "$split_ops" <<<"$window")
+
+    # Restore custom pane names.
+    while IFS=$'\t' read -r old plabel; do
+      new=$(jq -r --arg id "$old" '.[$id] // empty' <<<"$map")
+      [ -n "$new" ] && rex block rename -s "$session_id" "$new" "$plabel" >/dev/null
+    done < <(jq -r '.panes | to_entries[] | select(.value.label and .value.label != "shell") | [.key, .value.label] | @tsv' <<<"$window")
+  done < <(jq -c '.windows[]' <<<"$session")
+
+  if [ -z "$session_id" ]; then
+    echo "  skip '$label': no tabs saved"
+    continue
+  fi
+
+  active=$(jq -r '.active_window' <<<"$session")
+  [ "$active" -lt "${#window_ids[@]}" ] && rex focus -s "$session_id" "${window_ids[$active]}" >/dev/null 2>&1 || true
+  echo "  restored '$label' (${#window_ids[@]} tabs)"
+done < <(jq -c '.sessions[]' "$file")

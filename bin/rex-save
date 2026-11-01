@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+# Save the layout of every Rex session to a JSON file, so rex-restore can rebuild it
+# after the Rex server restarts (for example after a reboot).
+#
+# Saved: session names, tab names, split layout and sizes, pane names, and each
+# pane's working directory. Not saved: running programs, scrollback, floating panes.
+#
+# Usage: rex-save [FILE]   (default: $XDG_STATE_HOME/rex-layout/latest.json)
+set -euo pipefail
+
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/rex-layout"
+out="${1:-$state_dir/latest.json}"
+history_dir="$state_dir/history"
+keep_history=20
+
+mkdir -p "$(dirname "$out")" "$history_dir"
+
+# Pick the pane's shell (the process started by login) and report where it is.
+# A program running inside the shell is recorded for reference only.
+# shellcheck disable=SC2016 # jq program, not shell
+pane_info='
+  ([.foreground] + (.ancestors // [])) as $chain
+  | ($chain | map(.name) | index("login")) as $login
+  | (if $login and $login > 0 then $chain[$login - 1] else .foreground end) as $shell
+  | {
+      cwd: ($shell.cwd // .foreground.cwd // null),
+      program: (if .foreground and .foreground.pid != $shell.pid
+                then (.foreground.argv0 // .foreground.name) else null end)
+    }'
+
+sessions=()
+while IFS= read -r session_id; do
+  view=$(rex session inspect "$session_id" --json)
+
+  panes='{}'
+  while IFS= read -r block_id; do
+    info=$(rex block call -s "$session_id" -b "$block_id" process 2>/dev/null | jq -c "$pane_info" 2>/dev/null || echo '{}')
+    panes=$(jq -c --arg id "$block_id" --argjson info "$info" '.[$id] = $info' <<<"$panes")
+  done < <(jq -r '.windows[].layers[] | select(.kind == "tiled") | .blocks[].block_id' <<<"$view")
+
+  sessions+=("$(jq -c --argjson panes "$panes" '
+    . as $s
+    | {
+        label,
+        active_window: ([.windows[].window_id] | index($s.active_window_id) // 0),
+        windows: [
+          .windows[]
+          | (first(.layers[] | select(.kind == "tiled")) // null) as $tiled
+          | select($tiled != null)
+          | {
+              label,
+              layout: $tiled.layout,
+              panes: [$tiled.blocks[] | {(.block_id): ($panes[.block_id] + {label, flavor})}] | add
+            }
+        ]
+      }' <<<"$view")")
+done < <(rex ls --json | jq -r '.sessions[].session_id')
+
+if [ "${#sessions[@]}" -eq 0 ]; then
+  echo "rex-save: no sessions found, nothing saved" >&2
+  exit 1
+fi
+
+snapshot=$(printf '%s\n' "${sessions[@]}" | jq -s --arg at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '{saved_at: $at, sessions: .}')
+
+# Skip the write when nothing changed since the last save.
+if [ -f "$out" ] && [ "$(jq -S 'del(.saved_at)' "$out")" = "$(jq -S 'del(.saved_at)' <<<"$snapshot")" ]; then
+  echo "rex-save: no changes since last save ($out)"
+  exit 0
+fi
+
+tmp=$(mktemp "$(dirname "$out")/.rex-save.XXXXXX")
+printf '%s\n' "$snapshot" >"$tmp"
+mv "$tmp" "$out"
+cp "$out" "$history_dir/$(date +%Y%m%d-%H%M%S).json"
+
+# Keep only the newest snapshots in history.
+# shellcheck disable=SC2012 # file names are timestamps we control
+ls -1t "$history_dir"/*.json 2>/dev/null | tail -n +"$((keep_history + 1))" | while IFS= read -r old; do rm -f "$old"; done
+
+echo "rex-save: saved ${#sessions[@]} sessions to $out"
