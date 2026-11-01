@@ -22,6 +22,27 @@
                                 "type": "basic"
                             }
                         ]
+                    },
+                    {
+                        "description": "Disable Command + H (hide app) and Command + Option + H (hide others)",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": { "mandatory": ["command"] }
+                                },
+                                "to": [{ "key_code": "vk_none" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": { "mandatory": ["command", "option"] }
+                                },
+                                "to": [{ "key_code": "vk_none" }],
+                                "type": "basic"
+                            }
+                        ]
                     }
                 ]
             },
