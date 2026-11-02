@@ -4,8 +4,8 @@
 #
 # Brings a Debian/Ubuntu box to parity for daily SSH dev use:
 #   • modern CLI tools via apt (eza, bat, fd, rg, fzf, zoxide, delta,
-#     atuin, neovim, grc)
-#   • the few tools apt lacks via mise (lazygit, dua)
+#     starship, neovim, grc)
+#   • tools apt lacks or ships too old via mise (lazygit, dua, atuin)
 #   • fish plugins (fisher) + tmux plugins (TPM)
 #   • stow of the Linux-relevant dotfiles packages
 #   • fish as the default shell
@@ -34,7 +34,7 @@ command -v apt-get >/dev/null || error "This script expects Debian/Ubuntu (apt)"
 # batcat/fdfind; aliases.fish probes both names, so no symlinks needed.
 APT_PKGS=(
     git tmux fish stow curl unzip
-    eza bat fd-find ripgrep fzf zoxide git-delta atuin neovim grc
+    eza bat fd-find ripgrep fzf zoxide git-delta starship neovim grc
 )
 info "Installing apt packages (sudo)..."
 sudo apt-get update -qq
@@ -46,10 +46,12 @@ if ! command -v mise >/dev/null; then
     curl -fsSL https://mise.run | sh
 fi
 MISE="$(command -v mise || echo "$HOME/.local/bin/mise")"
-# lazygit + dua aren't in apt — let mise manage them. `use -g` writes to
-# this box's local ~/.config/mise/config.toml (not the shared repo config).
-info "Installing mise gap tools (lazygit, dua)..."
-"$MISE" use -g lazygit dua || warn "mise gap-tool install failed"
+# lazygit + dua aren't in apt; apt's atuin (18.8 on Ubuntu 26.04) emits the
+# `bind -k` syntax fish 4 dropped. `use -g` writes to this box's local
+# ~/.config/mise/config.toml (not the shared repo config). Starship stays in
+# apt: activate.fish runs `starship init` before `mise activate`.
+info "Installing mise gap tools (lazygit, dua, atuin)..."
+"$MISE" use -g lazygit dua atuin || warn "mise gap-tool install failed"
 "$MISE" install -y || warn "mise install reported issues"
 
 # ─── fish as default shell ───────────────────────────────────────
