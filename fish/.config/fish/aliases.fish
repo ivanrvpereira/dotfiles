@@ -161,22 +161,6 @@ if not set -q DOTFILES_HEADLESS
     end
 end
 
-# Authenticate ephemeral secrets (once per reboot, stored in TMPDIR)
-function auth
-    if set -q DOTFILES_HEADLESS
-        echo "Headless machine — secrets loaded from ~/.secrets"
-        test -f ~/.secrets; and source ~/.secrets
-    else
-        op read "op://development/exa-api-key/credential" 2>/dev/null | read -l _key
-        or begin; echo "op read failed"; return 1; end
-        test -n "$_key"; or begin; echo "Empty key returned"; return 1; end
-        printf '%s' "$_key" > $TMPDIR/.exa-api-key
-        chmod 600 $TMPDIR/.exa-api-key
-        set -gx EXA_API_KEY "$_key"
-        echo "Authenticated for this session"
-    end
-end
-
 #############################################################
 # SECRET DETECTION
 #############################################################

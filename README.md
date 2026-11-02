@@ -58,7 +58,6 @@ Moving a file does not remove it from public Git history.
 1. Open a new terminal (or restart your shell)
 2. Run `tmux` then press `Ctrl-s I` to install tmux plugins
 3. Ensure the local SSH commit-signing public key is registered on GitHub
-4. Run `auth` to load ephemeral secrets from 1Password when needed
 
 ## Structure
 
@@ -148,7 +147,6 @@ brewcheck       # Diff Brewfile entries vs installed packages
 cleanup         # Remove .DS_Store files recursively
 lg              # lazygit
 mux             # tmuxinator
-auth            # Load ephemeral secrets from 1Password on demand
 secret-scan     # Gitleaks scan on current repo
 ```
 
@@ -185,7 +183,6 @@ Moving configuration does not remove email addresses from existing public commit
 
 - **Secret scanning:** Gitleaks pre-commit hook prevents accidental secret commits
 - **Local SSH commit signing:** Git signs with a local key path, avoiding 1Password prompts during commits
-- **Ephemeral secrets:** API keys are loaded from 1Password only via `auth`, then cached in `$TMPDIR` until reboot
 
 ```bash
 secret-scan           # Scan current state

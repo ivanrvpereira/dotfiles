@@ -318,33 +318,6 @@ else
     info "Private Git configuration not found; skipping commit-signing setup."
 fi
 
-# ─── Headless secrets (one-time export from 1Password) ───────────
-if $HEADLESS && [[ ! -f "$HOME/.secrets" ]]; then
-    echo ""
-    info "Exporting secrets from 1Password to ~/.secrets..."
-    echo "  You need to sign in to 1Password CLI once."
-    echo "  Run: eval \$(op signin)"
-    read -rp "  Press Enter when signed in..."
-
-    exa_key=$(op read "op://development/exa-api-key/credential" 2>/dev/null) || true
-    if [[ -n "$exa_key" ]]; then
-        cat > "$HOME/.secrets" <<EOF
-# Machine secrets — exported from 1Password during bootstrap
-# chmod 600, not in dotfiles repo, FileVault protects at rest
-set -gx EXA_API_KEY $exa_key
-EOF
-        chmod 600 "$HOME/.secrets"
-        info "Created ~/.secrets with exported secrets"
-    else
-        warn "Could not read secrets from 1Password — create ~/.secrets manually"
-        cat > "$HOME/.secrets" <<'EOF'
-# Machine secrets — add manually
-# set -gx EXA_API_KEY your-key-here
-EOF
-        chmod 600 "$HOME/.secrets"
-    fi
-fi
-
 # ─── Done ─────────────────────────────────────────────────────────
 echo ""
 info "Bootstrap complete!"
@@ -354,8 +327,6 @@ echo "  1. Log out and back in (for keyboard/trackpad settings)"
 echo "  2. Open a new terminal (or restart your shell)"
 if $HEADLESS; then
     echo "  3. Verify: ssh -T git@github.com"
-    echo "  4. Secrets are in ~/.secrets (edit to add more)"
-else
-    echo "  3. Run 'auth' to load ephemeral secrets (1Password)"
+    echo "  4. Optional: put machine secrets in ~/.secrets (fish syntax, chmod 600)"
 fi
 echo ""

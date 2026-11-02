@@ -30,15 +30,9 @@ set -gx VISUAL nvim
 set -gx TMS_CONFIG_FILE "$HOME/.config/tms/config.toml"
 
 # ─── Secrets ─────────────────────────────────────────────────
-if set -q DOTFILES_HEADLESS
-    # Headless: load from ~/.secrets (populated once during bootstrap)
-    test -f ~/.secrets; and source ~/.secrets
-else
-    # GUI: load only cached ephemeral secrets at startup. Run `auth` explicitly
-    # when the cache is missing so agents do not trigger 1Password prompts.
-    if test -s $TMPDIR/.exa-api-key
-        set -gx EXA_API_KEY (cat $TMPDIR/.exa-api-key)
-    end
+# Headless: machine secrets added by hand to ~/.secrets (not in dotfiles).
+if set -q DOTFILES_HEADLESS; and test -f ~/.secrets
+    source ~/.secrets
 end
 
 # ─── Pi ──────────────────────────────────────────────────────
