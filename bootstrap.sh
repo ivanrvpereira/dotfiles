@@ -239,6 +239,12 @@ if command -v npm &>/dev/null && [[ -f "$DOTFILES/npm-packages" ]]; then
     done < "$DOTFILES/npm-packages"
 fi
 
+# ─── Pi (managed install, not npm) ───────────────────────────────
+if [[ ! -x "$HOME/.pi/agent/bin/pi" ]]; then
+    info "Installing pi (managed install)..."
+    curl -fsSL https://pi.dev/install.sh | sh || warn "pi install failed"
+fi
+
 # ─── GitHub CLI extensions ───────────────────────────────────────
 if command -v gh &>/dev/null && [[ -f "$DOTFILES/gh-extensions" ]]; then
     if gh auth status &>/dev/null; then

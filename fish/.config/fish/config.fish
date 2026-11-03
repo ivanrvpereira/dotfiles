@@ -12,8 +12,5 @@ end
 # This won't be added again if you remove it.
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
 
-# Pi
-fish_add_path "/Users/ivanpereira/.local/share/mise/installs/node/26.3.0/bin"
-
 # Hermes Agent — ensure ~/.local/bin is on PATH
 fish_add_path "$HOME/.local/bin"

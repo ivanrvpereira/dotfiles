@@ -12,13 +12,12 @@ brew upgrade gemini-cli 2>&1 || warn "brew upgrade failed"
 log "Updating claude-code (native installer)..."
 claude update 2>&1 || warn "claude update failed"
 
-log "Updating pi coding agent..."
-npm install -g --force @earendil-works/pi-coding-agent 2>&1 || warn "npm install pi failed"
-
 # Keep the Puppeteer API used by the shared skill; npm latest is still Playwright-based.
 log "Updating dev-browser..."
 npm install -g dev-browser@1.0.0-rc.4 2>&1 || warn "npm install dev-browser failed"
 
+# pi is a managed install (~/.pi/agent, from https://pi.dev/install.sh); `pi update` updates it.
+# Do not install it with npm: a global npm copy lands in mise's node bin and shadows it on PATH.
 log "Running pi update..."
 pi update 2>&1 || warn "pi update failed"
 
