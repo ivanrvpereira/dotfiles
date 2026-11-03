@@ -1,3 +1,27 @@
 # Worktrunk user config: https://worktrunk.dev/config/
 # Worktrees grouped beside the repo: <parent>/worktrees/<repo>/<branch>, e.g. ~/code/x/worktrees/agentmailguard/threads
 worktree-path = "{{ repo_path }}/../worktrees/{{ repo }}/{{ branch | sanitize }}"
+
+# Every new worktree gets the main checkout's personal untracked files (.env mount, mise.local.toml, files in
+# .git/info/exclude such as a personal compose.yaml) as symlinks. Blocking, so later hooks can use them.
+[pre-start]
+link-local = "~/.config/worktrunk/link-local-files '{{ primary_worktree_path }}' '{{ worktree_path }}'"
+
+# JS/TS and Python run in OrbStack containers (~/code/DEV-SETUP.md): build the worktree's images in the
+# background. It never starts services, so ports of the main checkout stay free.
+[post-start]
+docker-build = """
+if { [ -e package.json ] || [ -e pyproject.toml ] || [ -e requirements.txt ]; } && ls compose.y*ml docker-compose.y*ml >/dev/null 2>&1; then
+  docker compose build
+fi
+"""
+
+# Stop the worktree's containers before its folder goes. Volumes stay: database volumes are not disposable.
+[pre-remove]
+# docker ps reads no .env, so removing a worktree without containers never asks 1Password.
+docker-down = "if [ -n \"$(docker ps -q --filter label=com.docker.compose.project.working_dir=\"$PWD\" 2>/dev/null)\" ]; then docker compose down --remove-orphans; fi"
+
+# Go stays on the Mac: Go's module cache is shared, so only fetch what a new branch's go.mod needs.
+[projects."github.com/ivanrvpereira/agentmailguard"]
+pre-start.deps = "go mod download"
+pre-merge.check = "make"
