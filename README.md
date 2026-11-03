@@ -69,6 +69,7 @@ Dotfiles are organized as **GNU Stow packages** — each directory maps to `$HOM
 ├── tmux/             → ~/.tmux.conf
 ├── tmuxinator/       → ~/.config/tmuxinator/dev.yml
 ├── ghostty/          → ~/.config/ghostty/config
+├── rex/              → ~/.config/rex/init.lua
 ├── aerospace/        → ~/.aerospace.toml, ~/.config/aerospace/center-window.sh
 ├── atuin/            → ~/.config/atuin/config.toml
 ├── btop/             → ~/.config/btop/btop.conf
@@ -95,7 +96,7 @@ Dotfiles are organized as **GNU Stow packages** — each directory maps to `$HOM
 stow --no-folding -R fish
 
 # Deploy public packages
-stow --no-folding -R tmux tmuxinator fish ghostty aerospace atuin btop htop zed mise nvim lazygit
+stow --no-folding -R tmux tmuxinator fish ghostty rex aerospace atuin btop htop zed mise nvim lazygit
 
 # Deploy private Git configuration
 bin/stow-private git
@@ -152,8 +153,9 @@ secret-scan     # Gitleaks scan on current repo
 
 ## Terminals
 
-Rex is the primary terminal and uses its built-in shortcuts.
-This repository does not manage its installation or configuration.
+Rex is the primary terminal.
+This repository does not install Rex, but the `rex` package holds its config, `~/.config/rex/init.lua`.
+The config binds shortcuts by physical key position, so they stay on the same keys in the Portuguese and US keyboard layouts.
 `Brewfile.desktop` keeps Ghostty on the stable release channel.
 The Ghostty configuration retains tmux shortcuts: Cmd+D and Cmd+Shift+D split panes, Cmd+W closes a pane, and Cmd+1–6 selects sessions.
 These shortcuts send tmux prefix sequences and require tmux in the active terminal.

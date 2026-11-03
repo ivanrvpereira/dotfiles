@@ -1,0 +1,18 @@
+rex.bind("cmd+shift+h", "pane.focus.left")
+rex.bind("cmd+shift+j", "pane.focus.down")
+rex.bind("cmd+shift+k", "pane.focus.up")
+rex.bind("cmd+shift+l", "pane.focus.right")
+
+-- Physical-key bindings: same keys in Portuguese and US layouts
+rex.unbind("cmd+-")
+rex.bind("cmd+[BracketLeft]",        "pane.focus_previous")
+rex.bind("cmd+[BracketRight]",       "pane.focus_next")
+rex.bind("shift+cmd+[BracketLeft]",  "client.tab.previous")
+rex.bind("shift+cmd+[BracketRight]", "client.tab.next")
+rex.bind("cmd+[Slash]",              "client.sidebar.toggle")
+rex.bind("cmd+[Equal]",              "client.font.increase")
+rex.bind("shift+cmd+[Equal]",        "client.font.increase")
+rex.bind("cmd+[Minus]",              "client.font.decrease")
+rex.bind("cmd+[Period]",             "client.sidebar.activity.toggle")
+rex.bind("shift+cmd+[Period]",       "client.notice.dismiss")
+rex.bind("cmd+[Comma]",              "client.settings")

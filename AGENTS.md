@@ -4,7 +4,7 @@ Instructions for AI coding agents (Claude Code, Pi, Cursor, etc.) working in thi
 
 ## Repository Overview
 
-Personal dotfiles repository for macOS (Fish shell, Ghostty, tmux, neovim). Managed with GNU Stow. Rex is the primary terminal, installed and configured separately.
+Personal dotfiles repository for macOS (Fish shell, Ghostty, tmux, neovim). Managed with GNU Stow. Rex is the primary terminal, installed separately; its config lives in the `rex` package.
 
 ## Installation
 
@@ -74,7 +74,7 @@ Setup never clones or pulls the private repository.
 All configs are organized as GNU Stow packages. Each directory mirrors `$HOME`:
 
 ```
-shell/  fish/  tmux/  tmuxinator/  ghostty/  aerospace/
+shell/  fish/  tmux/  tmuxinator/  ghostty/  rex/  aerospace/
 atuin/  btop/  htop/  zed/  mise/  nvim/  lazygit/  launchd/  worktrunk/  karabiner/
 ```
 
@@ -91,7 +91,8 @@ Fisher manages plugins (fzf.fish, zoxide.fish, grc, replay). Plugin list tracked
 
 ### Terminals
 
-- Rex is the primary terminal. This repository does not manage its installation or configuration.
+- Rex is the primary terminal. This repository does not install it. The `rex` package holds `~/.config/rex/init.lua`.
+- Rex shortcuts with symbol keys use physical key names such as `cmd+[BracketLeft]`, so they work in both the Portuguese and US layouts. Keep new symbol-key bindings in that form. Run `rex config check` and `rex config reload` after editing.
 - Ghostty remains available through the stable `ghostty` cask in `Brewfile.desktop`.
 - Ghostty's pane and session shortcuts send tmux prefix sequences. They do not configure Rex.
 
