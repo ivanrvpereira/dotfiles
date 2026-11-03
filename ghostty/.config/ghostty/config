@@ -43,7 +43,10 @@
 # resize-overlay-duration = 4s 200ms
 
 # Theme
-theme = Ghostty Default Style Dark
+theme = Cobweb
+# Lift any foreground/background pair below this ratio so dim text stays
+# readable on low-PPI monitors. 3 is a mild floor; 4.5 is the WCAG AA level.
+minimum-contrast = 3
 
 # oh-my-posh
 keybind = alt+backspace=text:\x1b\x7f
@@ -123,5 +126,8 @@ window-save-state = always
 shell-integration = fish
 window-inherit-working-directory=true
 
-font-family = "TX-02"
+# Medium weight renders cleaner than Regular at ~110 PPI (1x external monitors)
+font-family = "JetBrains Mono"
+font-style = Medium
+font-style-bold = Bold
 font-size = 13

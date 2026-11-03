@@ -66,6 +66,7 @@ cask "qlmarkdown"     # Quick Look previews for Markdown files
 cask "sloth"          # Shows open files/sockets by process
 cask "openlogi"       # Lightweight Logitech Options+ alternative
 cask "handy"          # Speech to text app
+cask "betterdisplay"  # HiDPI scaling for low-PPI external monitors
 cask "anomalyco/tap/hex", trusted: true # Local voice dictation
 
 #############################################################

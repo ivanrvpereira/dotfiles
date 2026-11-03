@@ -145,6 +145,12 @@ defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
 # Disable tiled window margins (Sequoia)
 defaults write -g EnableTiledWindowMargins -bool false
 
+# Font smoothing off: macOS fattens glyph outlines ("dilation") on top of
+# antialiasing, which makes text bolder but blurrier on non-Retina external
+# monitors. 0 = off, 1 = light, 2 = medium (default), 3 = strong.
+# Requires logout/login to take effect. Reset: defaults -currentHost delete -g AppleFontSmoothing
+defaults -currentHost write -g AppleFontSmoothing -int 0
+
 # Menu bar: tighten spacing between status items (Tahoe defaults are very roomy).
 # Affects third-party/extra menu bar icons. Requires logout/login to take effect.
 defaults -currentHost write -globalDomain NSStatusItemSpacing -int 6
@@ -162,4 +168,4 @@ done
 
 echo ""
 info "macOS defaults applied!"
-warn "Some settings (keyboard repeat, trackpad, menu bar spacing) require logout/reboot to take effect."
+warn "Some settings (keyboard repeat, trackpad, menu bar spacing, font smoothing) require logout/reboot to take effect."
