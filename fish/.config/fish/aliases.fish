@@ -111,6 +111,21 @@ alias brewcheck='brew bundle dump --force --file=/tmp/Brewfile.current && diff ~
 alias claudeyolo='claude --dangerously-skip-permissions'
 alias cly=claudeyolo
 alias codexyolo='codex --dangerously-bypass-approvals-and-sandbox'
+# pi in a fixed directory; the shell returns to the current directory afterwards
+function __pi_in --argument-names dir
+    set -l prev $PWD
+    builtin cd $dir; or return 1
+    pi $argv[2..]
+    set -l s $status
+    builtin cd $prev
+    return $s
+end
+function pidot --wraps=pi --description 'pi in ~/.dotfiles'
+    __pi_in ~/.dotfiles $argv
+end
+function piagent --wraps=pi --description 'pi in ~/.agents'
+    __pi_in ~/.agents $argv
+end
 if set -q DOTFILES_HEADLESS
     alias ubi='ubi'
 else
